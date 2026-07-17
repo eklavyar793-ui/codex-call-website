@@ -261,7 +261,8 @@
 <footer class="mt-8 text-center">
 <p class="font-body-sm text-on-surface-variant">
                 Don't have an account? 
-                <a class="text-primary font-semibold hover:underline underline-offset-4 decoration-primary/30 transition-all" href="{{DATA:SCREEN:SCREEN_13}}">Create an account</a>
+                <a class="text-primary font-semibold hover:underline underline-offset-4 decoration-primary/30 transition-all" href="signup.html">Create an account</a>
+
 </p>
 </footer>
 </main>
@@ -272,17 +273,44 @@
 </div>
 <!-- Mouse Gradient Interaction Script -->
 <script>
-        document.addEventListener('mousemove', (e) => {
-            const orbs = document.querySelectorAll('.orb');
-            const x = e.clientX;
-            const y = e.clientY;
-            
-            orbs.forEach((orb, index) => {
-                const speed = (index + 1) * 0.05;
-                const tx = (x - window.innerWidth / 2) * speed;
-                const ty = (y - window.innerHeight / 2) * speed;
-                orb.style.transform = `translate(${tx}px, ${ty}px)`;
-            });
-        });
-    </script>
-</body></html>
+document.addEventListener('mousemove', (e) => {
+    const orbs = document.querySelectorAll('.orb');
+    const x = e.clientX;
+    const y = e.clientY;
+
+    orbs.forEach((orb, index) => {
+        const speed = (index + 1) * 0.05;
+        const tx = (x - window.innerWidth / 2) * speed;
+        const ty = (y - window.innerHeight / 2) * speed;
+
+        orb.style.transform = `translate(${tx}px, ${ty}px)`;
+    });
+});
+
+<!-- Firebase SDK -->
+<script 
+src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script 
+src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyBQfaDWU25bMxTmKQKEe8W1Hb_Y2LHe3Hc",
+    authDomain: "codexcallai.firebaseapp.com",
+    projectId: "codexcallai",
+    storageBucket: "codexcallai.firebasestorage.app",
+    messagingSenderId: "560219905261",
+    appId: "1:560219905261:web:a8dc2fc3f70aed8d0ec0e4"
+};
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
+const auth = firebase.auth();
+</script>
+ 
+<script src="script.js"></script>
+
+</body>
+  </html> 
