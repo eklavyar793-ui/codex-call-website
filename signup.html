@@ -205,12 +205,11 @@
                     </label>
 </div>
 <!-- Action Button -->
-<button class="gradient-button w-full h-14 rounded-xl text-on-surface font-bold font-headline-md shadow-lg shadow-primary/20 hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2" onclick="registerUser(document.getElementById('email').value, document.getElementById('password').value)">
- 
-
-                    Create Account
-                    <span class="material-symbols-outlined">arrow_forward</span>
+<button class="flex-grow h-14 btn-primary-gradient rounded-xl font-headline-md text-headline-md text-white shadow-lg shadow-primary/20 flex items-center justify-center gap-2" onclick="registerUser(document.getElementById('full_name').value, document.getElementById('email').value, document.getElementById('password').value)" type="button">
+    <span>Create Account</span>
+    <span class="material-symbols-outlined">arrow_forward</span>
 </button>
+
 </form>
 <!-- Social Divider -->
 <div class="flex items-center gap-4 my-8">
@@ -234,7 +233,9 @@
 <div class="mt-8 text-center">
 <p class="font-body-md text-on-surface-variant">
                 Already have an account? 
-                <a class="text-primary font-bold hover:text-secondary transition-colors underline-offset-4 hover:underline" href="{{DATA:SCREEN:SCREEN_25}}">Log In</a>
+<a class="text-primary font-semibold hover:underline underline-offset-4 decoration-primary/30  transition-all" href="index.html">Log In</a>
+
+
 </p>
 </div>
 <!-- System Status Indicator (Micro-Interaction) -->
@@ -261,6 +262,11 @@
             });
         });
     
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+<script>
 const firebaseConfig = {
     apiKey: "AIzaSyBQfaDWU25bMxTmKQKEe8W1Hb_Y2LHe3Hc",
     authDomain: "codexcallai.firebaseapp.com",
@@ -268,13 +274,16 @@ const firebaseConfig = {
     storageBucket: "codexcallai.firebasestorage.app",
     messagingSenderId: "560219905261",
     appId: "1:560219905261:web:a8dc2fc3f70aed8d0ec0e4"
-  };
+};
 
-  // Initialize Firebase
-  if (!firebase.apps.length) {
+if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
- 
 
+const auth = firebase.auth();
 </script>
-</body></html>
+
+<script src="script.js"></script>
+
+</body>
+</html>

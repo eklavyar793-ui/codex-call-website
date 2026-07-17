@@ -287,6 +287,10 @@
 <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
 <span class="font-label-md text-label-md">Analytics</span>
 </button>
+<button onclick="logoutUser()" class="flex flex-col items-center justify-center text-red-400 hover:text-red-300 transition-colors active:scale-90">
+    <span class="material-symbols-outlined">logout</span>
+    <span class="font-label-md text-label-md">Logout</span>
+</button>
 </nav>
 <script>
         // Micro-interaction: Active session wave bar height variation
@@ -306,5 +310,30 @@
                 }
             });
         });
-    </script>
-</body></html>
+   <!-- Firebase SDK -->
+<script 
+src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script 
+src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyBQfaDWU25bMxTmKQKEe8W1Hb_Y2LHe3Hc",
+    authDomain: "codexcallai.firebaseapp.com",
+    projectId: "codexcallai",
+    storageBucket: "codexcallai.firebasestorage.app",
+    messagingSenderId: "560219905261",
+    appId: "1:560219905261:web:a8dc2fc3f70aed8d0ec0e4"
+};
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
+const auth = firebase.auth();
+</script>
+ 
+<script src="script.js"></script>
+    
+</body>
+  </html>
