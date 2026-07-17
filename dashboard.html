@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Codex Call AI - Enterprise Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#908fa0",
+                    "tertiary-container": "#008395",
+                    "error-container": "#93000a",
+                    "on-surface": "#e2e2e8",
+                    "on-secondary-fixed": "#2c0051",
+                    "secondary-fixed-dim": "#ddb7ff",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "on-primary-fixed": "#07006c",
+                    "secondary-container": "#6f00be",
+                    "surface-container-lowest": "#0c0e12",
+                    "tertiary": "#2fd9f4",
+                    "secondary": "#ddb7ff",
+                    "primary-fixed": "#e1e0ff",
+                    "surface-bright": "#37393e",
+                    "surface-variant": "#333539",
+                    "surface": "#111318",
+                    "on-secondary-fixed-variant": "#6900b3",
+                    "on-error": "#690005",
+                    "surface-container-highest": "#333539",
+                    "primary": "#c0c1ff",
+                    "surface-container": "#1e2024",
+                    "error": "#ffb4ab",
+                    "surface-dim": "#111318",
+                    "on-tertiary-container": "#000608",
+                    "on-primary-container": "#0d0096",
+                    "background": "#111318",
+                    "tertiary-fixed-dim": "#2fd9f4",
+                    "surface-tint": "#c0c1ff",
+                    "on-tertiary-fixed-variant": "#004e5a",
+                    "on-surface-variant": "#c7c4d7",
+                    "primary-container": "#8083ff",
+                    "on-background": "#e2e2e8",
+                    "surface-container-high": "#282a2e",
+                    "on-tertiary-fixed": "#001f25",
+                    "tertiary-fixed": "#a2eeff",
+                    "secondary-fixed": "#f0dbff",
+                    "outline-variant": "#464554",
+                    "on-tertiary": "#00363e",
+                    "on-secondary-container": "#d6a9ff",
+                    "on-error-container": "#ffdad6",
+                    "inverse-primary": "#494bd6",
+                    "inverse-surface": "#e2e2e8",
+                    "on-primary": "#1000a9",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "on-secondary": "#490080",
+                    "inverse-on-surface": "#2f3035",
+                    "surface-container-low": "#1a1c20"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max-width": "1440px",
+                    "margin-mobile": "20px",
+                    "gutter": "24px",
+                    "unit": "8px",
+                    "margin-desktop": "48px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "headline-xl": ["Hanken Grotesk"],
+                    "body-sm": ["Geist"],
+                    "label-md": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-md": ["Geist"],
+                    "mono-md": ["Geist"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%) 1;
+        }
+
+        .active-glow {
+            box-shadow: 0 0 15px rgba(47, 217, 244, 0.3);
+        }
+
+        .voice-wave {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            height: 20px;
+        }
+
+        .wave-bar {
+            width: 2px;
+            background: #2fd9f4;
+            border-radius: 1px;
+            animation: wave-animation 1s ease-in-out infinite;
+        }
+
+        @keyframes wave-animation {
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
+        }
+
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        .safe-top {
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        body {
+          min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+<!-- TopAppBar Shell -->
+<header class="bg-surface/50 dark:bg-surface/50 backdrop-blur-xl fixed top-0 w-full z-50 border-b border-white/10 flex justify-between items-center px-margin-mobile h-16 w-full safe-top">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-headline-md" data-icon="bubble_chart">bubble_chart</span>
+<h1 class="font-headline-md text-headline-md font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Codex Call AI</h1>
+</div>
+<button class="text-on-surface-variant hover:bg-white/5 transition-colors p-2 rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-20 pb-24 px-margin-mobile space-y-6">
+<!-- Quick Action Bento Grid -->
+<section class="grid grid-cols-2 gap-4">
+<button class="glass-card rounded-xl p-4 flex flex-col items-start gap-3 active:scale-95 transition-transform">
+<div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="add_circle">add_circle</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">New Agent</span>
+</button>
+<button class="glass-card rounded-xl p-4 flex flex-col items-start gap-3 active:scale-95 transition-transform">
+<div class="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="dialpad">dialpad</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Add Number</span>
+</button>
+<button class="glass-card rounded-xl p-4 flex flex-col items-start gap-3 active:scale-95 transition-transform">
+<div class="w-10 h-10 rounded-lg bg-tertiary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">AI Training</span>
+</button>
+<button class="glass-card rounded-xl p-4 flex flex-col items-start gap-3 active:scale-95 transition-transform">
+<div class="w-10 h-10 rounded-lg bg-outline/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="settings">settings</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Config</span>
+</button>
+</section>
+<!-- Session Health Summary -->
+<section class="glass-card rounded-2xl p-5 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl -z-10"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Active Sessions</h2>
+<p class="font-body-sm text-body-sm text-outline">Real-time health monitoring</p>
+</div>
+<div class="voice-wave">
+<div class="wave-bar" style="animation-delay: 0.1s"></div>
+<div class="wave-bar" style="animation-delay: 0.3s"></div>
+<div class="wave-bar" style="animation-delay: 0.2s"></div>
+<div class="wave-bar" style="animation-delay: 0.5s"></div>
+<div class="wave-bar" style="animation-delay: 0.4s"></div>
+</div>
+</div>
+<div class="flex items-end justify-between">
+<div class="space-y-1">
+<span class="font-headline-xl text-headline-xl text-primary">12</span>
+<p class="font-label-md text-label-md text-outline">Live Agents</p>
+</div>
+<div class="text-right">
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-sm" data-icon="speed">speed</span>
+<span class="font-mono-md text-mono-md">98.4%</span>
+</div>
+<p class="font-label-md text-label-md text-outline">Accuracy</p>
+</div>
+</div>
+</section>
+<!-- Recent Call Activity -->
+<section class="space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Recent Activity</h3>
+<button class="text-primary font-label-md text-label-md">View All</button>
+</div>
+<div class="space-y-3">
+<!-- Activity Item 1 -->
+<div class="glass-card rounded-xl p-4 flex items-center justify-between hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-white/10">
+<img alt="AI Agent Portrait" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXjGrWm_5CPkSqoBXxud2aWr9CA94FdzpdXo_tq8lA1WsQZNWkocc65WZSiIbhURGck1zWqIcziWTREGfezki3nQNleJDtsCwSYv3s7doYkQ1ImnhpVojZpI2Te4Lbo-Mebho5JytBcV2GLBgTGXzuTkXYyraDF2bbLQdgLIxlDh6El1zpmgZlvNsXuT4ByOlZTp1wB_ThyhILudUNIGf6ddBNLFOWLOJcuTYU36oUpFMkV02gh_df3obm2TWS7GEGpLPrEjaNY4p5"/>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Inbound: Tech Support</p>
+<p class="font-body-sm text-body-sm text-outline">04:12 • Completed</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary" data-icon="check_circle">check_circle</span>
+</div>
+<!-- Activity Item 2 -->
+<div class="glass-card rounded-xl p-4 flex items-center justify-between hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-white/10">
+<img alt="Enterprise Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjSOMzC5UL_-3xhbCtg6zjwrGCSQ_e51nhG0XgtWaXBg5mMSEgayQWjTIal263AfFFtDn-GbHKAHi-GdmWHMkBosX9bssf5th3jAaA2Xc2Gfcvjqx4_rEtizAsfbwEwGVNaeDmEzS8gtT-JHFBoz3mPXeaKseqDikWzR7XRthgUfuLbAPuzozupyl8nMwlVo5nXb7ueg3aHTlx02OScZtCSpLxWWGkZB_fVz_WscfnTP9FQ9atuvmxkUdX9JnfkgI--YDeCjWm-t0v"/>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Outbound: Lead Qual</p>
+<p class="font-body-sm text-body-sm text-outline">01:45 • In Progress</p>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-tertiary active-glow animate-pulse"></div>
+</div>
+<!-- Activity Item 3 -->
+<div class="glass-card rounded-xl p-4 flex items-center justify-between hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-white/10">
+<img alt="AI Billing Assistant" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1juFglOUqQSStu1oD9nNrVZjH3w009uAHSRAm8933giEkhi0iKD1SdmjZylolJSgwv1ZNN7mcG2ZQENKVM3HWNJLVPbDcEUBcGI65IEIK4TQ-RD5zmDuAAHSVS995CIzZNN6lzoVo2q4IwOCo6vyVf6pyPcdAc0pf6yKsbLEnTuEZHOuPI1nacnetwFktS6aA_xEHKqlziVYEeJ5f9s1ejc2bQ_07gJnkydXLc7_kLLcPXxe8g6fUg7Zq2xdqumVCTv6LtLUNCTgm"/>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Inbound: Billing Query</p>
+<p class="font-body-sm text-body-sm text-outline">Just now • Escalated</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="arrow_forward_ios" style="font-size: 16px;">arrow_forward_ios</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe border-t border-white/10 rounded-t-xl shadow-2xl">
+<button class="flex flex-col items-center justify-center text-primary font-bold bg-primary/10 rounded-xl px-3 py-1 transition-transform active:scale-90">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline hover:text-secondary transition-colors active:scale-90">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline hover:text-secondary transition-colors active:scale-90">
+<span class="material-symbols-outlined" data-icon="phone_in_talk">phone_in_talk</span>
+<span class="font-label-md text-label-md">Phone</span>
+</button>
+<button class="flex flex-col items-center justify-center text-outline hover:text-secondary transition-colors active:scale-90">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction: Active session wave bar height variation
+        const bars = document.querySelectorAll('.wave-bar');
+        setInterval(() => {
+            bars.forEach(bar => {
+                const randomHeight = Math.floor(Math.random() * 16) + 4;
+                bar.style.height = `${randomHeight}px`;
+            });
+        }, 300);
+
+        // Simple haptic feedback simulation
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(5);
+                }
+            });
+        });
+    </script>
+</body></html>

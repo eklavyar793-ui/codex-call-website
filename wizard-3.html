@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Voice Selection - Codex Call AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "outline": "#908fa0",
+                        "surface-container-highest": "#333539",
+                        "primary-fixed": "#e1e0ff",
+                        "on-tertiary": "#00363e",
+                        "error-container": "#93000a",
+                        "surface-bright": "#37393e",
+                        "on-primary-fixed": "#07006c",
+                        "outline-variant": "#464554",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "surface-container": "#1e2024",
+                        "surface": "#111318",
+                        "on-error": "#690005",
+                        "surface-dim": "#111318",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "on-surface-variant": "#c7c4d7",
+                        "on-secondary": "#490080",
+                        "inverse-on-surface": "#2f3035",
+                        "on-tertiary-fixed-variant": "#004e5a",
+                        "secondary": "#ddb7ff",
+                        "on-primary-container": "#0d0096",
+                        "on-background": "#e2e2e8",
+                        "tertiary-fixed": "#a2eeff",
+                        "surface-tint": "#c0c1ff",
+                        "secondary-fixed": "#f0dbff",
+                        "on-primary": "#1000a9",
+                        "primary-container": "#8083ff",
+                        "on-surface": "#e2e2e8",
+                        "on-secondary-container": "#d6a9ff",
+                        "error": "#ffb4ab",
+                        "tertiary": "#2fd9f4",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "surface-container-lowest": "#0c0e12",
+                        "primary": "#c0c1ff",
+                        "on-tertiary-fixed": "#001f25",
+                        "inverse-surface": "#e2e2e8",
+                        "tertiary-container": "#008395",
+                        "surface-variant": "#333539",
+                        "background": "#111318",
+                        "surface-container-high": "#282a2e",
+                        "on-tertiary-container": "#000608",
+                        "tertiary-fixed-dim": "#2fd9f4",
+                        "secondary-container": "#6f00be",
+                        "on-secondary-fixed": "#2c0051",
+                        "surface-container-low": "#1a1c20",
+                        "inverse-primary": "#494bd6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "container-max-width": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-sm": ["Geist"],
+                        "body-md": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "body-lg": ["Geist"],
+                        "mono-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%) 1;
+        }
+        .glass-card-active {
+            background: rgba(192, 193, 255, 0.1);
+            border: 1px solid #c0c1ff;
+            box-shadow: 0 0 20px rgba(192, 193, 255, 0.2);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #8083ff 0%, #ddb7ff 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .step-pill {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .voice-visualizer {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            height: 24px;
+        }
+        .bar {
+            width: 3px;
+            background-color: #2fd9f4;
+            border-radius: 2px;
+            animation: sound 1s ease-in-out infinite;
+        }
+        @keyframes sound {
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md">
+<!-- Top App Bar (Shared Component Strategy) -->
+<header class="bg-surface/50 dark:bg-surface/50 backdrop-blur-xl border-b border-white/10 fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary font-headline-md text-headline-md">bubble_chart</span>
+<h1 class="font-headline-md text-headline-md font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Codex Call AI</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-white/5 transition-colors rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-label-md">
+                JD
+            </div>
+</div>
+</header>
+<main class="flex-grow pt-24 pb-32 px-margin-mobile md:px-margin-desktop max-w-container-max-width mx-auto w-full">
+<!-- Wizard Header & Progress -->
+<section class="mb-10 text-center md:text-left">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="text-primary font-label-md text-label-md tracking-widest uppercase">Step 3 of 8</span>
+<h2 class="font-headline-xl text-headline-xl mt-2">AI Voice Selection</h2>
+<p class="text-on-surface-variant max-w-xl mt-3 font-body-lg text-body-lg">Choose a vocal persona that resonates with your brand identity and customer demographic.</p>
+</div>
+<!-- Circular Progress Visual (Desktop) -->
+<div class="hidden md:flex items-center gap-1">
+<div class="flex gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-8 h-2 rounded-full bg-primary shadow-[0_0_10px_rgba(192,193,255,0.5)]"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-highest"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-highest"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-highest"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-highest"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-highest"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Search & Filter Bar -->
+<div class="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="md:col-span-2 relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-body-md focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none" placeholder="Search voices by name or accent..." type="text"/>
+</div>
+<select class="bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-body-md text-on-surface focus:ring-2 focus:ring-primary/50 outline-none">
+<option>All Accents</option>
+<option>American (US)</option>
+<option>British (UK)</option>
+<option>Australian (AU)</option>
+<option>Indian (IN)</option>
+</select>
+<select class="bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-body-md text-on-surface focus:ring-2 focus:ring-primary/50 outline-none">
+<option>All Tones</option>
+<option>Professional</option>
+<option>Friendly</option>
+<option>Excited</option>
+<option>Authoritative</option>
+</select>
+</div>
+<!-- Voice Selection Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Voice Card 1 (Active/Selected) -->
+<div class="glass-card glass-card-active rounded-xl p-6 relative group transition-all cursor-pointer flex flex-col h-full hover:scale-[1.02]">
+<div class="absolute top-4 right-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A stylized professional portrait of a woman with short dark hair, wearing a high-tech headset, set against a dark indigo and purple gradient background. The lighting is soft and corporate, matching a premium glassmorphic AI interface aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMOBGY7mk1jomMHPTR06-78wIgHz13Jm4Lq9yDemBI-ihSxCk76FaJjiaOzcU1qW3RxXY5FDpkFHjX1aBwGtYLQ3xpRZaV29tVOniVVzYeF5Wo1D58nuMGYA9DUO70tTCSW0tW5ceMG3wzyx4OdZkcU4KcnBvyHAoAAdwjKvsjozjNPeXr2iWOtwHOE_0EIBDQs7611KTWeqNdnNSe58rTBOjGRDdq6gxjv67nJZrw98drO643hzMIT3vtn2zT4gUOPtHW0ELcALZv"/>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md">Aria</h3>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span class="font-label-md text-label-md">HD VOICE</span>
+</div>
+</div>
+</div>
+<div class="space-y-4 flex-grow">
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">FEMALE</span>
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">US ACCENT</span>
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">PROFESSIONAL</span>
+</div>
+<p class="text-on-surface-variant text-body-sm line-clamp-2">Clear, articulate, and poised. Perfect for financial services and corporate customer support.</p>
+</div>
+<div class="mt-6 flex items-center justify-between">
+<button class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<div class="voice-visualizer opacity-100">
+<div class="bar" style="animation-delay: 0.1s"></div>
+<div class="bar" style="animation-delay: 0.3s"></div>
+<div class="bar" style="animation-delay: 0.2s"></div>
+<div class="bar" style="animation-delay: 0.4s"></div>
+<div class="bar" style="animation-delay: 0.1s"></div>
+<div class="bar" style="animation-delay: 0.3s"></div>
+</div>
+</div>
+</div>
+<!-- Voice Card 2 -->
+<div class="glass-card rounded-xl p-6 relative group transition-all cursor-pointer flex flex-col h-full hover:bg-white/[0.08] hover:scale-[1.02]">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A portrait of a charismatic middle-aged man with a groomed beard, wearing a casual blazer. The background is a deep charcoal with cyan glow accents. The style is modern, cinematic, and professional for an AI tech environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHxzMBGWHnhARpkvcFi4BXMm-alPlFgOSDMtVZ8qtVsmtu0Jfgpu2J8xZmFdAxaNKyI7V-teepEb39-jm8GzOjz9wLJ-tBZYKvmR7IDh0xbw86IuZ3WmrfdCyLtJQglsx1gZT8iNlCKS9tmZjekap1mnDVNBHK35eh2NeVf6dvzvCcnww0M5xE7Iz7dP5C8otv0n2bCVhTTjMXw-QG4sCwi_JyS23IvaPOWS5Oa7T9xgV38astkdC3Ms_JkDptnhIlJMrNUt4s4UzK"/>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md">Marcus</h3>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">record_voice_over</span>
+<span class="font-label-md text-label-md">NATURAL</span>
+</div>
+</div>
+</div>
+<div class="space-y-4 flex-grow">
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">MALE</span>
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">UK ACCENT</span>
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">AUTHORITATIVE</span>
+</div>
+<p class="text-on-surface-variant text-body-sm line-clamp-2">Deep, warm British tone. Ideal for luxury brands and educational narratives.</p>
+</div>
+<div class="mt-6 flex items-center justify-between">
+<button class="w-10 h-10 rounded-full border border-white/20 text-on-surface flex items-center justify-center hover:bg-white/10 transition-colors active:scale-90 transition-transform">
+<span class="material-symbols-outlined">play_arrow</span>
+</button>
+<span class="text-label-md text-outline">0:08s sample</span>
+</div>
+</div>
+<!-- Voice Card 3 -->
+<div class="glass-card rounded-xl p-6 relative group transition-all cursor-pointer flex flex-col h-full hover:bg-white/[0.08] hover:scale-[1.02]">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A bright, energetic portrait of a young woman with a friendly smile, blonde hair, wearing a mustard yellow top. Background is a vibrant wash of indigo and teal. The aesthetic is clean, high-contrast, and welcoming for a tech application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeWFvjRFYo1WvyFJrA5YFCK3kTsVmNro7nbMuHs-c7RO81ad5yK1THkhGeKU6dAyUTQNUYJeD8Ba91maAUg65UD8Vt7Z02qAHlzsweQCLVJNdRb160AOSbjRfDjIbxswvusTzw-8nQisHNL4y1uI4tdLFwqib2eBMwJgWf2I-0d4w86OSIp-pNwtIJEXyot7JRKRgzJd9B9AnIr6h6TZkSYMWxiPRSHhsN8S1254L0CnRo1DBcVcc3_dmPHiaLclYbmevYmr-_UNMo"/>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md">Chloe</h3>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">record_voice_over</span>
+<span class="font-label-md text-label-md">NATURAL</span>
+</div>
+</div>
+</div>
+<div class="space-y-4 flex-grow">
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">FEMALE</span>
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">AU ACCENT</span>
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">FRIENDLY</span>
+</div>
+<p class="text-on-surface-variant text-body-sm line-clamp-2">Cheerful and conversational. Best for outbound sales and engagement-focused tasks.</p>
+</div>
+<div class="mt-6 flex items-center justify-between">
+<button class="w-10 h-10 rounded-full border border-white/20 text-on-surface flex items-center justify-center hover:bg-white/10 transition-colors active:scale-90 transition-transform">
+<span class="material-symbols-outlined">play_arrow</span>
+</button>
+<span class="text-label-md text-outline">0:05s sample</span>
+</div>
+</div>
+<!-- Voice Card 4 -->
+<div class="glass-card rounded-xl p-6 relative group transition-all cursor-pointer flex flex-col h-full hover:bg-white/[0.08] hover:scale-[1.02]">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A focused portrait of a young man of South Asian descent, wearing glasses and a dark turtleneck. Soft blue studio lighting highlights his features against a dark background. Sophisticated and modern digital art style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgoFUXW0l5hzaWj-6dlPkeR9_4G3Ll_4UtdIMHx8mn8XQv5LVOI3f0jCZi9JMTA3sccUSI4z4S5TenVUWoBSjs8Ug8teKl2mklKIFopYQY3qg6VPg8EWbMVsur8q72h-gDQ-JqQX6s37whRyrft22svK0jRu7lhx529N4aXU-FOmkdaQESXkKoWREGgo-IwMYXN--6u8c71ZN8XckKYqJ3XLNheOOsgU9sAa8Ne-qjqlWQoJPM8eiQ96pAzFVVh1-FepMJtQpq7yFm"/>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md">Arjun</h3>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">record_voice_over</span>
+<span class="font-label-md text-label-md">NATURAL</span>
+</div>
+</div>
+</div>
+<div class="space-y-4 flex-grow">
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">MALE</span>
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">IN ACCENT</span>
+<span class="px-2 py-1 bg-white/5 rounded-md text-[10px] font-bold text-outline tracking-wider uppercase">CALM</span>
+</div>
+<p class="text-on-surface-variant text-body-sm line-clamp-2">Patient and soft-spoken. Great for technical support and customer care desks.</p>
+</div>
+<div class="mt-6 flex items-center justify-between">
+<button class="w-10 h-10 rounded-full border border-white/20 text-on-surface flex items-center justify-center hover:bg-white/10 transition-colors active:scale-90 transition-transform">
+<span class="material-symbols-outlined">play_arrow</span>
+</button>
+<span class="text-label-md text-outline">0:12s sample</span>
+</div>
+</div>
+<!-- More grid items could go here... -->
+</div>
+<!-- Custom Upload Option -->
+<div class="mt-12 p-8 border border-dashed border-white/20 rounded-2xl flex flex-col items-center justify-center text-center bg-white/[0.02]">
+<div class="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-outline text-3xl">upload_file</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-2">Cloning Your Own Voice?</h4>
+<p class="text-on-surface-variant text-body-md max-w-md mb-6">Upload a 30-second audio clip of your own voice or a brand representative to create a custom AI clone.</p>
+<button class="px-6 py-2 border border-primary text-primary rounded-xl font-label-md text-label-md hover:bg-primary/10 transition-all">
+                UPLOAD SAMPLE (.WAV / .MP3)
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation Actions -->
+<footer class="fixed bottom-0 left-0 w-full z-50 glass-card border-t border-white/10 py-6 px-margin-mobile md:px-margin-desktop">
+<div class="max-w-container-max-width mx-auto flex items-center justify-between">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-white transition-colors py-3 px-6 rounded-xl active:scale-95 transition-transform">
+<span class="material-symbols-outlined">arrow_back</span>
+<span class="font-bold">BACK</span>
+</button>
+<div class="flex items-center gap-6">
+<span class="hidden md:block text-outline text-label-md uppercase tracking-widest">Aria Selected</span>
+<button class="primary-gradient text-on-primary-fixed-variant px-10 py-4 rounded-xl font-bold flex items-center gap-2 shadow-[0_8px_24px_rgba(128,131,255,0.3)] hover:shadow-[0_12px_32px_rgba(128,131,255,0.4)] active:scale-95 transition-all">
+                    NEXT STEP
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</footer>
+<!-- Atmosphere/Micro-interactions -->
+<script>
+        // Simple micro-interaction for cards
+        const cards = document.querySelectorAll('.glass-card');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                cards.forEach(c => c.classList.remove('glass-card-active'));
+                card.classList.add('glass-card-active');
+            });
+        });
+
+        // Toggle Play Animation for visualizer
+        const playButtons = document.querySelectorAll('button');
+        playButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Don't trigger card selection
+                const icon = btn.querySelector('.material-symbols-outlined');
+                if (icon && icon.innerText === 'play_arrow') {
+                    icon.innerText = 'pause';
+                    // Simulation logic: reset after 3s
+                    setTimeout(() => {
+                        icon.innerText = 'play_arrow';
+                    }, 3000);
+                } else if (icon && icon.innerText === 'pause') {
+                    icon.innerText = 'play_arrow';
+                }
+            });
+        });
+    </script>
+</body></html>

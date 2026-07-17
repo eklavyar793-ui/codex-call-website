@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoiceOS AI - Billing &amp; Subscription</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#000608",
+                    "primary": "#c0c1ff",
+                    "on-surface-variant": "#c7c4d7",
+                    "on-surface": "#e2e2e8",
+                    "surface-container-lowest": "#0c0e12",
+                    "surface-bright": "#37393e",
+                    "surface-dim": "#111318",
+                    "surface": "#111318",
+                    "error": "#ffb4ab",
+                    "secondary": "#ddb7ff",
+                    "tertiary-fixed": "#a2eeff",
+                    "primary-container": "#8083ff",
+                    "outline": "#908fa0",
+                    "primary-fixed": "#e1e0ff",
+                    "on-secondary": "#490080",
+                    "on-secondary-fixed-variant": "#6900b3",
+                    "on-primary": "#1000a9",
+                    "inverse-on-surface": "#2f3035",
+                    "surface-container-high": "#282a2e",
+                    "outline-variant": "#464554",
+                    "on-tertiary": "#00363e",
+                    "on-tertiary-fixed": "#001f25",
+                    "secondary-fixed-dim": "#ddb7ff",
+                    "on-tertiary-fixed-variant": "#004e5a",
+                    "secondary-container": "#6f00be",
+                    "on-background": "#e2e2e8",
+                    "inverse-primary": "#494bd6",
+                    "tertiary-container": "#008395",
+                    "on-secondary-fixed": "#2c0051",
+                    "on-error": "#690005",
+                    "surface-container": "#1e2024",
+                    "tertiary": "#2fd9f4",
+                    "inverse-surface": "#e2e2e8",
+                    "on-secondary-container": "#d6a9ff",
+                    "background": "#111318",
+                    "on-primary-fixed": "#07006c",
+                    "error-container": "#93000a",
+                    "surface-container-highest": "#333539",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "on-primary-container": "#0d0096",
+                    "tertiary-fixed-dim": "#2fd9f4",
+                    "surface-container-low": "#1a1c20",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "surface-variant": "#333539",
+                    "surface-tint": "#c0c1ff",
+                    "secondary-fixed": "#f0dbff",
+                    "on-error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "margin-desktop": "48px",
+                    "gutter": "24px",
+                    "container-max-width": "1440px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Geist"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "label-md": ["Geist"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "headline-xl": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-md": ["Geist"],
+                    "mono-md": ["Geist"],
+                    "body-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%) 1;
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #8083ff 0%, #ddb7ff 100%);
+        }
+        .glow-accent {
+            box-shadow: 0 0 15px rgba(192, 193, 255, 0.3);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md pb-24">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 z-50 bg-surface/5 backdrop-blur-xl border-b border-white/10 shadow-none">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary font-headline-md text-headline-md">graphic_eq</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Billing &amp; Subscription</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</div>
+</header>
+<main class="px-margin-mobile pt-6 space-y-8 max-w-lg mx-auto">
+<!-- Section 1: Current Plan Overview -->
+<section>
+<div class="glass-card rounded-xl p-6 relative overflow-hidden">
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="text-label-md font-label-md text-primary uppercase tracking-wider">Current Plan</span>
+<h2 class="font-headline-lg text-headline-lg-mobile mt-1">Pro Plan</h2>
+<p class="text-on-surface-variant text-body-sm mt-1">Renews on Oct 24, 2024</p>
+</div>
+<div class="bg-primary/20 text-primary px-3 py-1 rounded-full text-label-md font-label-md">
+                        Active
+                    </div>
+</div>
+<button class="w-full primary-gradient text-on-primary py-3 rounded-xl font-bold active:scale-[0.98] transition-transform shadow-lg shadow-primary/20">
+                    Manage Subscription
+                </button>
+</div>
+</section>
+<!-- Section 2: Usage Meters -->
+<section class="space-y-4">
+<h3 class="text-on-surface font-semibold text-body-lg">Usage Statistics</h3>
+<div class="glass-card rounded-xl p-5 space-y-6">
+<!-- AI Call Minutes -->
+<div class="space-y-2">
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">AI Call Minutes</span>
+<span class="text-on-surface">2,450 / 3,000 min</span>
+</div>
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 81.6%"></div>
+</div>
+</div>
+<!-- AI Agents -->
+<div class="space-y-2">
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">AI Agents</span>
+<span class="text-on-surface">8 / 10 Active</span>
+</div>
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 80%"></div>
+</div>
+</div>
+<!-- Team Members -->
+<div class="space-y-2">
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">Team Members</span>
+<span class="text-on-surface">5 / 5 Seats</span>
+</div>
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 100%"></div>
+</div>
+<p class="text-[10px] text-tertiary text-right font-medium">Limit reached</p>
+</div>
+</div>
+</section>
+<!-- Section 3: Pricing Plans -->
+<section class="space-y-4">
+<div class="flex justify-between items-end">
+<h3 class="text-on-surface font-semibold text-body-lg">Available Plans</h3>
+<div class="flex items-center gap-2 p-1 bg-white/5 rounded-lg">
+<button class="px-3 py-1 text-label-md font-label-md bg-white/10 rounded-md">Monthly</button>
+<button class="px-3 py-1 text-label-md font-label-md text-on-surface-variant">Yearly</button>
+</div>
+</div>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar pb-4 -mx-margin-mobile px-margin-mobile">
+<!-- Free Plan -->
+<div class="min-w-[280px] glass-card rounded-xl p-6 flex flex-col">
+<h4 class="text-body-lg font-bold">Starter</h4>
+<div class="mt-2 flex items-baseline gap-1">
+<span class="text-headline-md font-bold">$0</span>
+<span class="text-on-surface-variant text-body-sm">/mo</span>
+</div>
+<ul class="mt-6 space-y-3 flex-grow">
+<li class="flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            100 Call Minutes
+                        </li>
+<li class="flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            1 AI Agent
+                        </li>
+</ul>
+<button class="mt-8 w-full border border-white/20 py-2 rounded-lg text-body-sm font-semibold hover:bg-white/5 transition-colors">Downgrade</button>
+</div>
+<!-- Pro Plan (Active) -->
+<div class="min-w-[280px] border-2 border-primary bg-primary/5 backdrop-blur-xl rounded-xl p-6 flex flex-col relative">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-on-primary px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest">Current</div>
+<h4 class="text-body-lg font-bold">Pro</h4>
+<div class="mt-2 flex items-baseline gap-1">
+<span class="text-headline-md font-bold">$49</span>
+<span class="text-on-surface-variant text-body-sm">/mo</span>
+</div>
+<ul class="mt-6 space-y-3 flex-grow">
+<li class="flex items-center gap-2 text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            3,000 Call Minutes
+                        </li>
+<li class="flex items-center gap-2 text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            10 AI Agents
+                        </li>
+<li class="flex items-center gap-2 text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Advanced Analytics
+                        </li>
+</ul>
+<button class="mt-8 w-full bg-white/10 py-2 rounded-lg text-body-sm font-semibold cursor-default opacity-50">Selected</button>
+</div>
+<!-- Business Plan -->
+<div class="min-w-[280px] glass-card rounded-xl p-6 flex flex-col">
+<h4 class="text-body-lg font-bold">Business</h4>
+<div class="mt-2 flex items-baseline gap-1">
+<span class="text-headline-md font-bold">$199</span>
+<span class="text-on-surface-variant text-body-sm">/mo</span>
+</div>
+<ul class="mt-6 space-y-3 flex-grow">
+<li class="flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            15,000 Call Minutes
+                        </li>
+<li class="flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Unlimited Agents
+                        </li>
+<li class="flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Custom Voices
+                        </li>
+</ul>
+<button class="mt-8 w-full primary-gradient text-on-primary py-2 rounded-lg text-body-sm font-semibold">Upgrade</button>
+</div>
+</div>
+</section>
+<!-- Section 4: Payment Methods -->
+<section class="space-y-4">
+<h3 class="text-on-surface font-semibold text-body-lg">Payment Methods</h3>
+<div class="space-y-3">
+<div class="glass-card rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-8 bg-black/40 rounded flex items-center justify-center border border-white/10">
+<img class="h-4" data-alt="Minimalist Visa card logo on a dark geometric background, professional fintech style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDlKt-ID6ow0uXv1Ks0NaR1KxvusU0kTxc--eloTIj-Gfhvw7lNZNo2lMxCo9GxDX6-JwvOOy3UqPHX0vPjkslnftA6URSP2EQn-jg00wht3zDkeBlcMlfKpO3afBMStYIRImSqbAY8s2Yj3Tl3XVLyZoXjiDlk0PFgq46jYHs_WsDOIEirmtYT-9a9b4bxntRpixMXLGjDxXeQpMPyYaesSlrcDwHSeFR_Czi7iiL9l5zzs-BQjh-ekxOG8zcLbLtyu-ish_FT4mu"/>
+</div>
+<div>
+<p class="text-body-sm font-semibold">Visa ending in 4242</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Expires 12/26</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">more_vert</span>
+</div>
+<button class="w-full flex items-center justify-center gap-2 p-4 rounded-xl border border-dashed border-white/20 text-on-surface-variant hover:bg-white/5 transition-all text-body-sm">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                    Add New Payment Method
+                </button>
+</div>
+</section>
+<!-- Section 5: Billing Details -->
+<section class="space-y-4">
+<h3 class="text-on-surface font-semibold text-body-lg">Billing Information</h3>
+<div class="glass-card rounded-xl p-5 space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-label-md text-on-surface-variant uppercase mb-1">Billing Address</p>
+<p class="text-body-sm leading-relaxed">123 Innovation Drive,<br/>Tech Valley, CA 94043,<br/>United States</p>
+</div>
+<button class="text-primary text-body-sm font-semibold">Edit</button>
+</div>
+<div class="pt-4 border-t border-white/5">
+<p class="text-label-md text-on-surface-variant uppercase mb-1">Tax ID / GST</p>
+<p class="text-body-sm font-mono uppercase">US9876543210</p>
+</div>
+</div>
+</section>
+<!-- Section 6: Recent Invoices -->
+<section class="space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="text-on-surface font-semibold text-body-lg">Recent Invoices</h3>
+<button class="text-primary text-body-sm font-semibold">View All</button>
+</div>
+<div class="glass-card rounded-xl overflow-hidden divide-y divide-white/5">
+<!-- Invoice 1 -->
+<div class="p-4 flex items-center justify-between hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<div>
+<p class="text-body-sm font-semibold">Sep 24, 2024</p>
+<p class="text-[10px] text-on-surface-variant">INV-2024-009</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right">
+<p class="text-body-sm font-bold">$49.00</p>
+<p class="text-[10px] text-tertiary">Paid</p>
+</div>
+<button class="p-2 hover:bg-primary/10 rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">download</span>
+</button>
+</div>
+</div>
+<!-- Invoice 2 -->
+<div class="p-4 flex items-center justify-between hover:bg-white/5 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<div>
+<p class="text-body-sm font-semibold">Aug 24, 2024</p>
+<p class="text-[10px] text-on-surface-variant">INV-2024-008</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right">
+<p class="text-body-sm font-bold">$49.00</p>
+<p class="text-[10px] text-tertiary">Paid</p>
+</div>
+<button class="p-2 hover:bg-primary/10 rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">download</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface/5 backdrop-blur-xl border-t border-white/10 shadow-none">
+<div class="flex justify-around items-center h-20 pb-safe px-4">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">settings_voice</span>
+<span class="font-label-md text-label-md">Agents</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl px-4 py-1 active:scale-90 duration-150">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Billing</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</div>
+</div>
+</nav>
+<script>
+        // Simple interactivity for the Monthly/Yearly toggle
+        const toggleButtons = document.querySelectorAll('.flex.items-center.gap-2.p-1.bg-white\\/5.rounded-lg button');
+        toggleButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                toggleButtons.forEach(b => {
+                    b.classList.remove('bg-white/10');
+                    b.classList.add('text-on-surface-variant');
+                });
+                btn.classList.add('bg-white/10');
+                btn.classList.remove('text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

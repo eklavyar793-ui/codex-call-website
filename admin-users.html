@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoiceOS Admin | User Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#494bd6",
+                    "on-error-container": "#ffdad6",
+                    "outline": "#908fa0",
+                    "error-container": "#93000a",
+                    "on-primary-container": "#0d0096",
+                    "error": "#ffb4ab",
+                    "on-primary": "#1000a9",
+                    "secondary-container": "#6f00be",
+                    "on-background": "#e2e2e8",
+                    "primary": "#c0c1ff",
+                    "on-surface": "#e2e2e8",
+                    "on-secondary-fixed": "#2c0051",
+                    "primary-fixed": "#e1e0ff",
+                    "tertiary-fixed": "#a2eeff",
+                    "on-tertiary-container": "#000608",
+                    "tertiary-fixed-dim": "#2fd9f4",
+                    "on-secondary-fixed-variant": "#6900b3",
+                    "on-secondary": "#490080",
+                    "surface-container-low": "#1a1c20",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "surface-container": "#1e2024",
+                    "surface-bright": "#37393e",
+                    "secondary-fixed-dim": "#ddb7ff",
+                    "on-surface-variant": "#c7c4d7",
+                    "surface-container-lowest": "#0c0e12",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed": "#001f25",
+                    "primary-container": "#8083ff",
+                    "outline-variant": "#464554",
+                    "tertiary": "#2fd9f4",
+                    "surface": "#111318",
+                    "on-tertiary-fixed-variant": "#004e5a",
+                    "tertiary-container": "#008395",
+                    "surface-container-high": "#282a2e",
+                    "secondary-fixed": "#f0dbff",
+                    "secondary": "#ddb7ff",
+                    "on-secondary-container": "#d6a9ff",
+                    "on-primary-fixed": "#07006c",
+                    "inverse-surface": "#e2e2e8",
+                    "on-tertiary": "#00363e",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "surface-container-highest": "#333539",
+                    "surface-variant": "#333539",
+                    "inverse-on-surface": "#2f3035",
+                    "background": "#111318",
+                    "surface-dim": "#111318",
+                    "surface-tint": "#c0c1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "margin-desktop": "48px",
+                    "unit": "8px",
+                    "container-max-width": "1440px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "mono-md": ["Geist"],
+                    "body-md": ["Geist"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-lg": ["Geist"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "body-sm": ["Geist"],
+                    "label-md": ["Geist"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-xl": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid;
+            border-image-source: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-image-slice: 1;
+        }
+
+        .primary-gradient-btn {
+            background: linear-gradient(135deg, #8083ff 0%, #6f00be 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .primary-gradient-btn:hover {
+            box-shadow: 0 0 20px rgba(128, 131, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .active-glow {
+            box-shadow: 0 0 15px rgba(47, 217, 244, 0.3);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0C10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333539;
+            border-radius: 4px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md antialiased">
+<!-- Sidebar Navigation Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container backdrop-blur-md border-r border-white/10 flex flex-col p-4 gap-2 z-[60] hidden md:flex">
+<div class="flex items-center gap-3 mb-8 px-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">settings_voice</span>
+<span class="font-headline-md text-headline-md text-primary font-bold">VoiceOS</span>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg group active-glow" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg group" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg group" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg group" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-white/10">
+<div class="flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden border border-primary/30">
+<img class="w-full h-full object-cover" data-alt="Close-up professional headshot of a futuristic system administrator with subtle glowing biometric overlays on their skin. The background is a dark, high-tech command center with soft blue and indigo ambient lighting. The style is ultra-modern, crisp, and high-performance enterprise AI aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJ3ikruFHgoi_QyOK-6lzzNn1KQiBj8C99vvE-yRy0B7n6XzLSQBx30N8rHX2w2HirXAVRqWeE8N3_0pK7BiQIAPZZYXywzOjZaL0tH4wLwHINefTdv0rFPKFpVHZD97D9Rn-AulUsr5jAjh6I7KMSGgSRLb321Fdoy2t_Tjf-cWcN35jX0w1-no7rqCbYbugtcNOeizoTEBm0TxUFvpO1jaH5q0PkdjbvhLAguBjWZ2bxs4XE350lNAdnvLercemFTuW2p4F4aSqT"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-on-surface">System Admin</span>
+<span class="text-[10px] text-outline uppercase tracking-wider">Superuser Access</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 min-h-screen flex flex-col relative overflow-hidden">
+<!-- Animated Background Element -->
+<div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+
+</div>
+<!-- Top AppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface/50 backdrop-blur-xl border-b border-white/10 shadow-xl flex justify-between items-center px-margin-desktop py-4">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-lg text-headline-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-tertiary">Users Management</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">notifications</span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<button class="primary-gradient-btn px-6 py-2.5 rounded-full text-on-primary font-bold flex items-center gap-2 text-sm shadow-lg">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                    Create New User
+                </button>
+</div>
+</header>
+<!-- Content Body -->
+<section class="flex-1 px-margin-desktop py-8 relative z-10">
+<!-- Bento Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-10">
+<div class="glass-card p-6 rounded-2xl flex flex-col gap-1">
+<span class="text-outline font-label-md text-label-md uppercase tracking-widest">Total Users</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-primary">12.4k</span>
+<span class="text-tertiary text-xs font-bold">+12%</span>
+</div>
+</div>
+<div class="glass-card p-6 rounded-2xl flex flex-col gap-1">
+<span class="text-outline font-label-md text-label-md uppercase tracking-widest">Active Now</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-tertiary">3,892</span>
+<div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-2xl flex flex-col gap-1">
+<span class="text-outline font-label-md text-label-md uppercase tracking-widest">Growth Rate</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-secondary">24.5%</span>
+<span class="material-symbols-outlined text-secondary text-lg">trending_up</span>
+</div>
+</div>
+<div class="glass-card p-6 rounded-2xl flex flex-col gap-1">
+<span class="text-outline font-label-md text-label-md uppercase tracking-widest">API Calls</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-on-surface">1.2M</span>
+<span class="text-outline text-xs">/day</span>
+</div>
+</div>
+</div>
+<!-- Table Controls -->
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+<div class="relative w-full md:w-96 group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-lowest border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all placeholder:text-outline/50 text-sm" placeholder="Search by name, email or role..." type="text"/>
+</div>
+<div class="flex items-center gap-3 w-full md:w-auto">
+<button class="flex items-center gap-2 px-4 py-3 bg-surface-container-high border border-white/5 rounded-xl hover:bg-white/5 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+                        Filter
+                    </button>
+<button class="flex items-center gap-2 px-4 py-3 bg-surface-container-high border border-white/5 rounded-xl hover:bg-white/5 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-on-surface-variant">download</span>
+                        Export CSV
+                    </button>
+</div>
+</div>
+<!-- User Management Table -->
+<div class="glass-card rounded-2xl overflow-hidden border-0">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-white/5 border-b border-white/5">
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider">User Profile</th>
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider">Role</th>
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider">Last Active</th>
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<!-- Row 1 -->
+<tr class="group hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center overflow-hidden border border-white/10">
+<img class="w-full h-full object-cover" data-alt="A clean professional avatar of a young female tech entrepreneur with glasses, set against a blurred dark studio background. The lighting is soft and directional, with subtle purple rim lighting to match the premium dark theme. High-resolution, cinematic quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC1JwSrnRfg5mcSNztBKZAYSMI3tvmqMnV1uPEglAyDUAv7lwPnaJkKQttf8p38Ft9YdP6m4qO1p0n8wbepyqMtXiGAS7kz_jiJrXHcSrl3ioHvlvUfOEmUZYHWMwmr1ttpIgdKzDUZBBTwn304vL_VagM3VSaccwwmitMiuZ3zMNb7EGXrFk4pB7Bk9j54AWpZo7nkGto7vq9-jy7tFVgd15trsGG_mmufewrQXOXpffevR0w4HAA_lMC_K6wIfS6V4vrx4vrtFYP"/>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-on-surface font-semibold">Sarah Jenkins</span>
+<span class="text-xs text-outline">s.jenkins@enterprise-ai.com</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2.5 py-1 rounded-md bg-secondary-container/10 border border-secondary-container/20 text-secondary text-[11px] font-bold uppercase tracking-wider">System Architect</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-sm text-tertiary font-medium">Active</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm text-outline">2 mins ago</td>
+<td class="px-6 py-5">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg hover:bg-primary/20 text-on-surface-variant hover:text-primary transition-all" title="Edit User">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-secondary/20 text-on-surface-variant hover:text-secondary transition-all" title="Reset Password">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-error/20 text-on-surface-variant hover:text-error transition-all" title="Suspend User">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center overflow-hidden border border-white/10">
+<img class="w-full h-full object-cover" data-alt="Portrait of a diverse male product manager with a modern haircut, wearing a black turtleneck. The aesthetic is sleek and high-end, featuring a dark background with hints of cyan and purple light rays. The composition is focused and professional for an enterprise dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIxjev4mwPLVjbQa1RXHK6gM4f0A1MQlk7ENUlE-au-mOWeqhnH_djWGVhRSUJEC_7KSDV-l5cKuyQZi63mkSnFiscg-fBaKyLIFnNJLUhP0JJ76XyWqITN_49Rk2MTjfhLIcOtWL0_XKn2GqCAO5x1cb0cQILOREjWi2aJfiapCvrGl8aowqtz9eR8zCy9v2kBOZoj5PbS6zKxmnv-0MN70q97qT_s_D2Y47Oz2CCxF5Hjc68clDAfaKxw90HfhZPmOv8Nl6cxU_q"/>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-on-surface font-semibold">David Chen</span>
+<span class="text-xs text-outline">d.chen@voiceos.io</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-outline text-[11px] font-bold uppercase tracking-wider">Product Owner</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-sm text-error font-medium">Suspended</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm text-outline">14 Oct, 2023</td>
+<td class="px-6 py-5">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg hover:bg-primary/20 text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-secondary/20 text-on-surface-variant hover:text-secondary transition-all">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+</button>
+<button class="p-2 rounded-lg bg-tertiary/20 text-tertiary" title="Reactivate User">
+<span class="material-symbols-outlined text-[20px]">settings_backup_restore</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center overflow-hidden border border-white/10">
+<img class="w-full h-full object-cover" data-alt="A portrait of a senior software developer with silver hair and a thoughtful expression. Dark, atmospheric background with subtle geometric glowing patterns. The style is professional and authoritative, consistent with a high-end enterprise AI platform's user management interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCimDmkUCNLxOww5xlcvczlUNL-gtHF_RijaPi27UcBVtmxBHt8hmpuU0hc8__fIMys1Wbky0drRheKSppQZphaBgTwX9ZrW_m49lZ788ixuajiTmuP3YxfmiCeqja0S19Fwf8BFn3_c0JeshzW5sZxn_eDc0n_1U7cDnzcihamGGRkKAzxt0Wue6eyG4KBUr64adWG3G0G9wIQpu-JGmeI-Wdq3ciAxH1zUtlv6rQHT_yugukYIAmTx_GynL8rVEheYJPLHk3dRfcE"/>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-on-surface font-semibold">Robert Wilson</span>
+<span class="text-xs text-outline">r.wilson@voice-labs.com</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2.5 py-1 rounded-md bg-secondary-container/10 border border-secondary-container/20 text-secondary text-[11px] font-bold uppercase tracking-wider">DevOps Lead</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-sm text-tertiary font-medium">Active</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm text-outline">1 hour ago</td>
+<td class="px-6 py-5">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-lg hover:bg-primary/20 text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-secondary/20 text-on-surface-variant hover:text-secondary transition-all">
+<span class="material-symbols-outlined text-[20px]">lock_reset</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-error/20 text-on-surface-variant hover:text-error transition-all">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="px-6 py-4 bg-white/5 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="text-sm text-outline">Showing 1 to 10 of 2,450 users</span>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg hover:bg-white/5 text-outline transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary font-bold text-sm">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-white/5 text-outline font-medium text-sm transition-colors">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-white/5 text-outline font-medium text-sm transition-colors">3</button>
+<span class="text-outline">...</span>
+<button class="w-8 h-8 rounded-lg hover:bg-white/5 text-outline font-medium text-sm transition-colors">245</button>
+<button class="p-2 rounded-lg hover:bg-white/5 text-outline transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Global Footer Shell -->
+<footer class="w-full mt-auto border-t border-white/5 flex justify-between items-center px-margin-desktop py-6 relative z-10">
+<span class="font-label-md text-label-md text-outline">© 2024 VoiceOS Intelligence. All rights reserved.</span>
+<div class="flex items-center gap-6">
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">Documentation</a>
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">API Reference</a>
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">Status</a>
+</div>
+</footer>
+</main>
+<!-- Micro-interaction Scripts -->
+<script>
+        // Simple search input focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.01]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.01]');
+        });
+
+        // Table row hover highlight (visual only)
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.transform = 'translateX(4px)';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+</body></html>

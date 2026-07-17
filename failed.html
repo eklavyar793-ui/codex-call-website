@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Payment Failed | VoiceOS AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&family=Geist:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#000608",
+                    "primary": "#c0c1ff",
+                    "on-surface-variant": "#c7c4d7",
+                    "on-surface": "#e2e2e8",
+                    "surface-container-lowest": "#0c0e12",
+                    "surface-bright": "#37393e",
+                    "surface-dim": "#111318",
+                    "surface": "#111318",
+                    "error": "#ffb4ab",
+                    "secondary": "#ddb7ff",
+                    "tertiary-fixed": "#a2eeff",
+                    "primary-container": "#8083ff",
+                    "outline": "#908fa0",
+                    "primary-fixed": "#e1e0ff",
+                    "on-secondary": "#490080",
+                    "on-secondary-fixed-variant": "#6900b3",
+                    "on-primary": "#1000a9",
+                    "inverse-on-surface": "#2f3035",
+                    "surface-container-high": "#282a2e",
+                    "outline-variant": "#464554",
+                    "on-tertiary": "#00363e",
+                    "on-tertiary-fixed": "#001f25",
+                    "secondary-fixed-dim": "#ddb7ff",
+                    "on-tertiary-fixed-variant": "#004e5a",
+                    "secondary-container": "#6f00be",
+                    "on-background": "#e2e2e8",
+                    "inverse-primary": "#494bd6",
+                    "tertiary-container": "#008395",
+                    "on-secondary-fixed": "#2c0051",
+                    "on-error": "#690005",
+                    "surface-container": "#1e2024",
+                    "tertiary": "#2fd9f4",
+                    "inverse-surface": "#e2e2e8",
+                    "on-secondary-container": "#d6a9ff",
+                    "background": "#111318",
+                    "on-primary-fixed": "#07006c",
+                    "error-container": "#93000a",
+                    "surface-container-highest": "#333539",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "on-primary-container": "#0d0096",
+                    "tertiary-fixed-dim": "#2fd9f4",
+                    "surface-container-low": "#1a1c20",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "surface-variant": "#333539",
+                    "surface-tint": "#c0c1ff",
+                    "secondary-fixed": "#f0dbff",
+                    "on-error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "margin-desktop": "48px",
+                    "gutter": "24px",
+                    "container-max-width": "1440px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Geist"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "label-md": ["Geist"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "headline-xl": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-md": ["Geist"],
+                    "mono-md": ["Geist"],
+                    "body-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .glass-panel::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .error-glow {
+            filter: drop-shadow(0 0 20px rgba(255, 180, 171, 0.4));
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #8083ff 0%, #6f00be 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-gradient:hover {
+            box-shadow: 0 0 24px rgba(128, 131, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .noise-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.02;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md antialiased selection:bg-primary/30 min-h-screen flex flex-col">
+<div class="noise-bg"></div>
+<!-- Navigation Shell (TopAppBar) -->
+<header class="w-full sticky top-0 z-50 bg-surface/5 dark:bg-surface/5 backdrop-blur-xl border-b border-white/10 shadow-none">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">VoiceOS AI</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full text-on-surface-variant hover:bg-white/5 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container/20 border border-primary/20 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a female tech executive in a high-tech office environment. The scene is illuminated by soft, cool-toned ambient light from large digital displays, creating a sophisticated corporate AI atmosphere. The style is clean, modern, and high-end with subtle glass reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbeAHkH8rPIhPV42o6kZuxp30sECIZG-b9ALLnKCmaBxe6530bALRFDbDMpyI-Ade0L4YKTNEh-E3PnnhhB34lhzokqugc74Dx238ybeV5wwFe23XTOCTqzpn1bQ4sWqMg5Fuck3pYEhNEWekXtpPXhUW3LFGva11bg-nEX-RiqSQ-nwC5L1g6rc_ArM_qbSyfjWfX8aldmTofEYaqbFkQz_MQYU4fHICLVXbhi3wYtjPsP6t-6yE2QOLoEXVm2AXWr3ze-fNUVEB-"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow flex items-center justify-center px-margin-mobile py-12 relative overflow-hidden">
+<!-- Atmospheric Background Element -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-error/10 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="w-full max-container-max-width max-w-2xl z-10">
+<div class="glass-panel rounded-3xl p-8 md:p-12 text-center flex flex-col items-center">
+<!-- Status Icon -->
+<div class="mb-8 relative">
+<div class="absolute inset-0 bg-error/20 blur-3xl rounded-full scale-150 animate-pulse"></div>
+<div class="w-24 h-24 md:w-32 md:h-32 rounded-full border border-error/30 flex items-center justify-center bg-error-container/10 error-glow relative z-10">
+<span class="material-symbols-outlined text-6xl md:text-8xl text-error" style="font-variation-settings: 'wght' 300;">error</span>
+</div>
+</div>
+<!-- Text Content -->
+<h2 class="font-headline-xl text-headline-xl text-on-surface mb-4 tracking-tight md:text-[56px]">Payment Failed</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-md mx-auto">
+                    We couldn't process your transaction. Please check your payment details or try a different method.
+                </p>
+<!-- Error Metadata Card -->
+<div class="w-full bg-black/20 rounded-2xl border border-white/5 p-5 mb-10 flex items-start gap-4 text-left">
+<span class="material-symbols-outlined text-error mt-0.5" style="font-variation-settings: 'wght' 500;">info</span>
+<div>
+<p class="font-mono-md text-mono-md text-on-surface-variant uppercase tracking-widest opacity-60 mb-1">Error Details</p>
+<p class="font-body-md text-body-md text-error/90 font-medium leading-relaxed">
+                            Reason: Insufficient funds or card expired.
+                        </p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+<button class="btn-gradient px-8 py-4 rounded-xl text-white font-semibold text-body-md flex items-center justify-center gap-2 group active:scale-95">
+                        Try Again
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">refresh</span>
+</button>
+<button class="bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 px-8 py-4 rounded-xl text-on-surface font-semibold text-body-md transition-all active:scale-95">
+                        Update Payment Method
+                    </button>
+</div>
+<!-- Support Link -->
+<p class="mt-12 text-on-surface-variant text-body-sm">
+                    Having trouble? <a class="text-primary hover:underline underline-offset-4 font-medium" href="#">Contact our support team</a>
+</p>
+</div>
+</div>
+</main>
+<!-- Footer Space / Shell Padding for Mobile -->
+<div class="h-24 md:hidden"></div>
+<!-- Navigation Shell (BottomNavBar - Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface/5 dark:bg-surface/5 backdrop-blur-xl border-t border-white/10 flex justify-around items-center h-20 pb-safe px-4 shadow-none">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">settings_voice</span>
+<span class="font-label-md text-label-md mt-1">Agents</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl px-4 py-1 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-md text-label-md mt-1">Billing</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md mt-1">Analytics</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Subtle parallax on the glow
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.querySelector('.error-glow');
+            if (!glow) return;
+            
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+            
+            glow.style.transform = `translate(${mouseX * 10}px, ${mouseY * 10}px)`;
+        });
+
+        // Shake animation for the card on mount
+        window.addEventListener('DOMContentLoaded', () => {
+            const card = document.querySelector('.glass-panel');
+            card.animate([
+                { transform: 'translateX(0px)' },
+                { transform: 'translateX(-5px)' },
+                { transform: 'translateX(5px)' },
+                { transform: 'translateX(-5px)' },
+                { transform: 'translateX(5px)' },
+                { transform: 'translateX(0px)' }
+            ], {
+                duration: 400,
+                easing: 'ease-in-out'
+            });
+        });
+    </script>
+</body></html>

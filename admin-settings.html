@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoiceOS Admin | Settings &amp; Configuration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            font-family: 'Geist', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%) 1;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(192, 193, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #8083ff 0%, #6f00be 100%);
+        }
+        .accent-glow {
+            box-shadow: 0 0 20px rgba(128, 131, 255, 0.2);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#494bd6",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#908fa0",
+                      "error-container": "#93000a",
+                      "on-primary-container": "#0d0096",
+                      "error": "#ffb4ab",
+                      "on-primary": "#1000a9",
+                      "secondary-container": "#6f00be",
+                      "on-background": "#e2e2e8",
+                      "primary": "#c0c1ff",
+                      "on-surface": "#e2e2e8",
+                      "on-secondary-fixed": "#2c0051",
+                      "primary-fixed": "#e1e0ff",
+                      "tertiary-fixed": "#a2eeff",
+                      "on-tertiary-container": "#000608",
+                      "tertiary-fixed-dim": "#2fd9f4",
+                      "on-secondary-fixed-variant": "#6900b3",
+                      "on-secondary": "#490080",
+                      "surface-container-low": "#1a1c20",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "surface-container": "#1e2024",
+                      "surface-bright": "#37393e",
+                      "secondary-fixed-dim": "#ddb7ff",
+                      "on-surface-variant": "#c7c4d7",
+                      "surface-container-lowest": "#0c0e12",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed": "#001f25",
+                      "primary-container": "#8083ff",
+                      "outline-variant": "#464554",
+                      "tertiary": "#2fd9f4",
+                      "surface": "#111318",
+                      "on-tertiary-fixed-variant": "#004e5a",
+                      "tertiary-container": "#008395",
+                      "surface-container-high": "#282a2e",
+                      "secondary-fixed": "#f0dbff",
+                      "secondary": "#ddb7ff",
+                      "on-secondary-container": "#d6a9ff",
+                      "on-primary-fixed": "#07006c",
+                      "inverse-surface": "#e2e2e8",
+                      "on-tertiary": "#00363e",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "surface-container-highest": "#333539",
+                      "surface-variant": "#333539",
+                      "inverse-on-surface": "#2f3035",
+                      "background": "#111318",
+                      "surface-dim": "#111318",
+                      "surface-tint": "#c0c1ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "20px",
+                      "margin-desktop": "48px",
+                      "unit": "8px",
+                      "container-max-width": "1440px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "mono-md": ["Geist"],
+                      "body-md": ["Geist"],
+                      "headline-lg": ["Hanken Grotesk"],
+                      "body-lg": ["Geist"],
+                      "headline-lg-mobile": ["Hanken Grotesk"],
+                      "body-sm": ["Geist"],
+                      "label-md": ["Geist"],
+                      "headline-md": ["Hanken Grotesk"],
+                      "headline-xl": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                      "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- Navigation Drawer -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container dark:bg-surface-container backdrop-blur-md border-r border-white/10 shadow-2xl flex flex-col h-full p-4 gap-2 z-[60]">
+<div class="mb-8 px-2 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">settings_voice</span>
+<span class="font-headline-md text-headline-md text-primary tracking-tight">Codex Call AI</span>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Security</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Billing</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 cursor-pointer">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</div>
+</nav>
+<div class="mt-auto border-t border-white/10 pt-4 flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden border border-primary/30">
+<img class="w-full h-full object-cover" data-alt="A professional high-fidelity 3D avatar headshot of a futuristic system administrator with subtle glowing cybernetic interfaces around the eye, set against a deep indigo and black technological background. The style is hyper-realistic with cinematic lighting and a premium corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1WSkfLlhtvA99mzujM-eZYIqmOIGf11FK-ZkmD4_wqxCm50qPZfuTL4hjtIZV4uoW9eeLNTdqfsSkedD0RnGrRbGvkUUrnAOwPNbdi9sTsPR9gI-brQYGJXlq3uW06GtyNw79qkpPkfmJd2Wekzn8moCn4F3MveGg6OIiAn_1Gqj0VHvV-LBqYCWtxrHi-cTwDXaUl4wKi8XIFXEv8NKiAax3altuIHihVtjZj_Te9m3XXpy0q0wnQyGfAqrFL9dqeI2Rir8kmDW6"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">System Admin</span>
+<span class="font-body-sm text-body-sm text-outline">Superuser Access</span>
+</div>
+</div>
+</aside>
+<main class="ml-64 min-h-screen flex flex-col relative">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 z-50 bg-surface/50 dark:bg-surface/50 backdrop-blur-xl border-b border-white/10 shadow-xl flex justify-between items-center px-margin-desktop py-4">
+<h1 class="font-headline-lg text-headline-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-tertiary">Settings &amp; Configuration</h1>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-tertiary">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-md text-label-md uppercase tracking-widest">System Online</span>
+</div>
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">help_outline</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-margin-desktop space-y-gutter flex-1 overflow-y-auto">
+<!-- Global System Defaults Section -->
+<section class="grid grid-cols-12 gap-gutter">
+<div class="col-span-12">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Global System Defaults</h2>
+<p class="font-body-md text-body-md text-outline">Control the fundamental operational parameters of the Codex Call AI core.</p>
+</div>
+<!-- Model Selection Card -->
+<div class="col-span-12 lg:col-span-8 glass-card p-6 rounded-xl space-y-6">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-body-lg text-body-lg text-primary font-bold">AI Model Governance</h3>
+<p class="font-body-sm text-body-sm text-outline">Define the orchestration layer for inference and routing.</p>
+</div>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">memory</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-outline block">PRIMARY INFERENCE MODEL</label>
+<select class="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:border-primary outline-none transition-all">
+<option>VoiceOS-Quantum-V4 (Proprietary)</option>
+<option>GPT-4o-Audio</option>
+<option>Claude-3.5-Sonnet</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-outline block">FALLBACK PROTOCOL</label>
+<select class="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface focus:border-primary outline-none transition-all">
+<option>Seamless Model Switch</option>
+<option>Graceful Degradation</option>
+<option>Manual Approval Required</option>
+</select>
+</div>
+</div>
+<div class="pt-4 space-y-4">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-body-md text-body-md text-on-surface block">Dynamic Routing</span>
+<span class="font-body-sm text-body-sm text-outline">Optimize for latency vs quality automatically</span>
+</div>
+<button class="w-12 h-6 bg-primary-container rounded-full relative transition-all">
+<div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full shadow-md"></div>
+</button>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<span class="font-body-md text-body-md text-on-surface block">Multi-Region Redundancy</span>
+<span class="font-body-sm text-body-sm text-outline">Deploy models across 3 global regions</span>
+</div>
+<button class="w-12 h-6 bg-white/10 rounded-full relative transition-all">
+<div class="absolute left-1 top-1 w-4 h-4 bg-outline rounded-full shadow-md"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- API Connectivity Card -->
+<div class="col-span-12 lg:col-span-4 glass-card p-6 rounded-xl flex flex-col justify-between">
+<div class="space-y-4">
+<h3 class="font-body-lg text-body-lg text-tertiary font-bold">API Connectivity</h3>
+<div class="space-y-4">
+<div class="bg-black/20 p-4 rounded-lg border border-white/5 space-y-2">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-outline">UPTIME</span>
+<span class="text-tertiary font-mono-md text-mono-md">99.998%</span>
+</div>
+<div class="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+<div class="w-[99.9%] h-full bg-tertiary"></div>
+</div>
+</div>
+<div class="space-y-1">
+<span class="font-label-md text-label-md text-outline uppercase tracking-wider">Master Key</span>
+<div class="flex items-center gap-2 bg-black/40 border border-white/10 rounded px-3 py-2">
+<span class="font-mono-md text-mono-md flex-1 overflow-hidden text-ellipsis">v_os_live_********************8z2</span>
+<button class="material-symbols-outlined text-on-surface-variant text-sm">content_copy</button>
+</div>
+</div>
+</div>
+</div>
+<button class="mt-8 w-full border border-tertiary/30 text-tertiary font-label-md text-label-md py-3 rounded-lg hover:bg-tertiary/10 transition-all uppercase tracking-widest">Rotate Keys</button>
+</div>
+</section>
+<!-- Branding & Identity Bento Grid -->
+<section class="grid grid-cols-12 gap-gutter">
+<div class="col-span-12">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Branding &amp; System Identity</h2>
+<p class="font-body-md text-body-md text-outline">Manage the visual and sensory personality of the platform.</p>
+</div>
+<!-- Logo & Visuals -->
+<div class="col-span-12 md:col-span-4 glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center space-y-4">
+<div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-primary/20 to-tertiary/20 flex items-center justify-center border border-white/10 relative overflow-hidden">
+<span class="material-symbols-outlined text-5xl text-primary" style="font-variation-settings: 'FILL' 1;">waves</span>
+<div class="absolute inset-0 opacity-20">
+</div>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface font-bold">System Logo</h3>
+<p class="font-body-sm text-body-sm text-outline">SVG or Vector formats preferred</p>
+</div>
+<button class="bg-white/5 border border-white/10 px-6 py-2 rounded-full font-label-md text-label-md hover:bg-white/10 transition-all">Replace Assets</button>
+</div>
+<!-- Color Palette -->
+<div class="col-span-12 md:col-span-8 glass-card p-6 rounded-xl space-y-6">
+<h3 class="font-body-lg text-body-lg text-on-surface font-bold">Brand Environment</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="space-y-2">
+<div class="h-16 rounded-lg bg-primary accent-glow border border-white/20"></div>
+<span class="font-label-md text-label-md text-outline">Primary Indigo</span>
+</div>
+<div class="space-y-2">
+<div class="h-16 rounded-lg bg-secondary border border-white/20"></div>
+<span class="font-label-md text-label-md text-outline">Secondary Violet</span>
+</div>
+<div class="space-y-2">
+<div class="h-16 rounded-lg bg-tertiary border border-white/20"></div>
+<span class="font-label-md text-label-md text-outline">Accent Cyan</span>
+</div>
+<div class="space-y-2">
+<div class="h-16 rounded-lg bg-surface-container border border-white/20"></div>
+<span class="font-label-md text-label-md text-outline">Surface Dark</span>
+</div>
+</div>
+<div class="flex items-center gap-6 pt-4 border-t border-white/5">
+<div class="flex-1 space-y-2">
+<label class="font-label-md text-label-md text-outline block">UI THEME ENGINE</label>
+<div class="flex gap-2">
+<button class="flex-1 py-2 bg-primary-container text-on-primary-container font-label-md text-label-md rounded border border-primary/30">Deep Glass</button>
+<button class="flex-1 py-2 bg-white/5 text-outline font-label-md text-label-md rounded border border-white/10">Ultra Flat</button>
+<button class="flex-1 py-2 bg-white/5 text-outline font-label-md text-label-md rounded border border-white/10">Neon High-Viz</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Model Parameters -->
+<section class="grid grid-cols-12 gap-gutter">
+<div class="col-span-12">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Advanced Intelligence Tuning</h2>
+</div>
+<div class="col-span-12 glass-card p-8 rounded-2xl overflow-hidden relative">
+<!-- Background aesthetic -->
+<div class="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
+</div>
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
+<div class="space-y-8">
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-body-md text-body-md text-on-surface font-semibold">Temperature (Creativity)</label>
+<span class="font-mono-md text-mono-md text-primary">0.85</span>
+</div>
+<input class="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-primary" max="1" min="0" step="0.01" type="range" value="0.85"/>
+<p class="font-body-sm text-body-sm text-outline">Lower values result in more deterministic, focused responses. Higher values increase variability.</p>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-body-md text-body-md text-on-surface font-semibold">Voice Latency Buffer</label>
+<span class="font-mono-md text-mono-md text-tertiary">120ms</span>
+</div>
+<input class="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-tertiary" max="500" min="50" step="10" type="range" value="120"/>
+<p class="font-body-sm text-body-sm text-outline">Adjust the pre-fetch buffer for real-time text-to-speech synthesis.</p>
+</div>
+</div>
+<div class="space-y-8">
+<div class="space-y-4">
+<label class="font-body-md text-body-md text-on-surface font-semibold block">System Prompt Prefix (Global)</label>
+<textarea class="w-full bg-black/40 border border-white/10 rounded-xl p-4 font-body-sm text-body-sm text-on-surface-variant focus:border-primary outline-none transition-all resize-none" rows="6">You are an advanced Codex Call AI Intelligence Agent. Your tone is professional, technical, yet helpful. You prioritize low-latency interactions and clear, concise verbal outputs. Avoid over-explaining technical jargon unless asked. Maintain a helpful business persona at all times...</textarea>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="w-full mt-auto border-t border-white/5 bg-transparent flex justify-between items-center px-margin-desktop py-6">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary">Codex Call AI Intelligence</span>
+<span class="font-label-md text-label-md text-outline">© 2024 Codex Call AI Intelligence. All rights reserved.</span>
+</div>
+<div class="flex gap-8">
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">Documentation</a>
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">API Reference</a>
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">Status</a>
+</div>
+</footer>
+<!-- Action FAB -->
+<div class="fixed bottom-12 right-12 z-50">
+<button class="w-16 h-16 primary-gradient rounded-full accent-glow flex items-center justify-center text-white shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300">
+<span class="material-symbols-outlined text-3xl">save</span>
+</button>
+</div>
+</main>
+<script>
+        // Micro-interactions and atmospheric effects
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            });
+
+            // Smooth entrance animation for sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    section.style.transition = 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body></html>

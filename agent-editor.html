@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Edit Agent | Codex Call AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800&amp;family=Geist:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#2f3035",
+                        "on-secondary-container": "#d6a9ff",
+                        "on-tertiary-container": "#000608",
+                        "on-secondary": "#490080",
+                        "surface-tint": "#c0c1ff",
+                        "primary": "#c0c1ff",
+                        "on-secondary-fixed": "#2c0051",
+                        "surface-container-high": "#282a2e",
+                        "on-background": "#e2e2e8",
+                        "primary-container": "#8083ff",
+                        "on-primary": "#1000a9",
+                        "surface-dim": "#111318",
+                        "error-container": "#93000a",
+                        "outline-variant": "#464554",
+                        "outline": "#908fa0",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "surface-bright": "#37393e",
+                        "surface": "#111318",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "on-primary-container": "#0d0096",
+                        "on-tertiary-fixed-variant": "#004e5a",
+                        "inverse-primary": "#494bd6",
+                        "secondary-container": "#6f00be",
+                        "secondary": "#ddb7ff",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#333539",
+                        "tertiary-fixed": "#a2eeff",
+                        "surface-container-low": "#1a1c20",
+                        "background": "#111318",
+                        "tertiary-container": "#008395",
+                        "surface-variant": "#333539",
+                        "on-primary-fixed": "#07006c",
+                        "on-tertiary": "#00363e",
+                        "inverse-surface": "#e2e2e8",
+                        "surface-container": "#1e2024",
+                        "tertiary-fixed-dim": "#2fd9f4",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-surface-variant": "#c7c4d7",
+                        "on-surface": "#e2e2e8",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#e1e0ff",
+                        "surface-container-lowest": "#0c0e12",
+                        "on-tertiary-fixed": "#001f25",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "tertiary": "#2fd9f4",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#f0dbff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "margin-desktop": "48px",
+                        "container-max-width": "1440px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-sm": ["Geist"],
+                        "mono-md": ["Geist"],
+                        "body-md": ["Geist"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "body-lg": ["Geist"],
+                        "label-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0C10;
+            font-family: 'Geist', sans-serif;
+            color: #e2e2e8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02)) 1;
+            transition: all 0.3s ease;
+        }
+        .glass-card:active {
+            transform: scale(0.98);
+        }
+        .gradient-border-button {
+            position: relative;
+            background: linear-gradient(135deg, #8083ff, #6f00be);
+            box-shadow: 0 4px 15px rgba(128, 131, 255, 0.3);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 20px rgba(47, 217, 244, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #c0c1ff;
+        }
+        .toggle-checkbox:checked + .toggle-label:before {
+            transform: translateX(1.5rem);
+            background-color: #1000a9;
+        }
+        .voice-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background selection:bg-primary/30">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/50 backdrop-blur-xl border-b border-white/10 flex justify-between items-center px-margin-mobile h-16 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl">bubble_chart</span>
+<h1 class="font-headline-md text-headline-md font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                Edit Agent
+            </h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md text-on-surface-variant">Live</span>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 outline-none" id="publish-toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-outline-variant cursor-pointer transition-colors duration-200 before:content-[''] before:absolute before:top-0 before:left-0 before:w-6 before:h-6 before:rounded-full before:transition-transform before:duration-200" for="publish-toggle"></label>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-white/5 p-2 rounded-full transition-colors active:scale-95">notifications</button>
+</div>
+</header>
+<main class="pt-20 pb-32 px-margin-mobile max-w-lg mx-auto space-y-6">
+<!-- Agent Identity Summary Card -->
+<div class="glass-card rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute -right-12 -top-12 w-32 h-32 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all duration-700"></div>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container-highest border border-white/10 flex items-center justify-center relative">
+<img class="w-full h-full object-cover" data-alt="A futuristic AI avatar portrait, minimalist humanoid shape with glowing cyan circuits on high-tech matte black surface, professional corporate AI aesthetic with soft cinematic lighting against a deep navy blue background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMgacMruaMm7Hr1mw9tjJ9HvyZqp9J3KLkmVB6dRUebh5BOEhU2_dJNPQUszMTa2HWV4D2JLNySPgaHf_9SUzJOEj-EBcWB9B14OvE98EqxuEcmJv1jruDdhIqYdzyxSEqN_nyK2sGR9Tc0fNP0CYmt-dArcrBQ-pEE3BLID8QfV6USxIDRXhRVHM9uNaZSVoKxT1XKDqo3NaaQ1q_muyU9Wk5l9_mCRQWQ8NF_OjUBBCrlam1-LYHdq52J8XtvahFOpM7KPo43-1d"/>
+<div class="absolute bottom-1 right-1 w-3 h-3 bg-tertiary rounded-full border-2 border-surface animate-pulse"></div>
+</div>
+<div>
+<p class="text-label-md font-label-md text-primary tracking-widest uppercase">Concierge Prime</p>
+<h2 class="text-headline-md font-headline-md text-on-surface">Alpha One</h2>
+</div>
+</div>
+</div>
+<!-- Identity & Voice Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-sm">person_pin</span>
+<span class="text-label-md font-label-md uppercase tracking-wider">Identity &amp; Voice</span>
+</div>
+<!-- Welcome Message Input -->
+<div class="glass-card rounded-xl p-4">
+<label class="block text-label-md font-label-md text-on-surface-variant mb-2 ml-1">Welcome Message</label>
+<input class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-body-md font-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Enter opening phrase..." type="text" value="Hello, this is Alpha from {{Business_Name}}. How can I assist you today?"/>
+</div>
+<!-- Voice Selection Card -->
+<div class="grid grid-cols-2 gap-4">
+<div class="glass-card rounded-xl p-4 flex flex-col justify-between">
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-2">Current Voice</label>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary voice-pulse" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+<span class="text-body-lg font-body-lg">Aria</span>
+</div>
+</div>
+<button class="mt-4 text-primary text-label-md font-label-md flex items-center gap-1 hover:underline active:scale-95 transition-transform">
+                        Change <span class="material-symbols-outlined text-xs">chevron_right</span>
+</button>
+</div>
+<div class="glass-card rounded-xl p-4 flex flex-col justify-between">
+<div>
+<label class="block text-label-md font-label-md text-on-surface-variant mb-2">Language</label>
+<select class="w-full bg-transparent border-none p-0 text-body-lg font-body-lg focus:ring-0 cursor-pointer appearance-none">
+<option selected="" value="en-us">English (US)</option>
+<option value="hi-in">Hindi (IN)</option>
+<option value="es-es">Spanish (ES)</option>
+</select>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant self-end text-sm">language</span>
+</div>
+</div>
+</section>
+<!-- Core Intelligence Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-sm">psychology</span>
+<span class="text-label-md font-label-md uppercase tracking-wider">Core Intelligence</span>
+</div>
+<!-- System Prompt Editor -->
+<div class="glass-card rounded-xl overflow-hidden">
+<div class="flex justify-between items-center px-4 py-2 border-b border-white/5 bg-white/5">
+<span class="text-label-md font-label-md text-on-surface-variant">System Prompt</span>
+<div class="flex gap-2">
+<button class="text-[10px] bg-primary/20 text-primary px-2 py-1 rounded font-bold hover:bg-primary/30">TEMPLATES</button>
+</div>
+</div>
+<textarea class="w-full h-40 bg-transparent p-4 text-body-sm font-mono-md focus:ring-0 border-none outline-none resize-none custom-scrollbar" placeholder="Define the behavior, persona, and constraints of your AI agent...">You are a helpful and professional customer service agent for {{Business_Name}}. Your tone is friendly, concise, and solution-oriented. 
+
+Guidelines:
+1. Always confirm the customer's name.
+2. If asked about pricing, refer to the 'Standard Plan'.
+3. Do not offer discounts exceeding 10%.</textarea>
+<div class="px-4 py-2 bg-black/20 flex gap-2 overflow-x-auto no-scrollbar border-t border-white/5">
+<span class="text-[10px] bg-white/5 px-2 py-1 rounded-full whitespace-nowrap cursor-pointer hover:bg-white/10 transition-colors">#Business_Name</span>
+<span class="text-[10px] bg-white/5 px-2 py-1 rounded-full whitespace-nowrap cursor-pointer hover:bg-white/10 transition-colors">#Opening_Hours</span>
+<span class="text-[10px] bg-white/5 px-2 py-1 rounded-full whitespace-nowrap cursor-pointer hover:bg-white/10 transition-colors">#Policy_URL</span>
+</div>
+</div>
+<!-- Knowledge Base -->
+<div class="glass-card rounded-xl p-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-label-md font-label-md text-on-surface">Knowledge Base</h3>
+<button class="text-primary flex items-center gap-1 text-label-md font-label-md active:scale-95">
+<span class="material-symbols-outlined text-sm">add_circle</span> Add Source
+                    </button>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-3 bg-black/20 rounded-lg border border-white/5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">description</span>
+<div class="flex flex-col">
+<span class="text-body-sm font-body-md leading-none">FAQs_2024.pdf</span>
+<span class="text-[10px] text-on-surface-variant">42KB • Synced 2h ago</span>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant text-sm hover:text-error">delete</button>
+</div>
+<div class="flex items-center justify-between p-3 bg-black/20 rounded-lg border border-white/5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">link</span>
+<div class="flex flex-col">
+<span class="text-body-sm font-body-md leading-none">codex-docs.com/help</span>
+<span class="text-[10px] text-on-surface-variant">Live URL Sync</span>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant text-sm hover:text-error">delete</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Logistics & Scheduling Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-sm">event_available</span>
+<span class="text-label-md font-label-md uppercase tracking-wider">Logistics &amp; Scheduling</span>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<!-- Phone Number -->
+<div class="glass-card rounded-xl p-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-primary">phone_iphone</span>
+</div>
+<div>
+<p class="text-label-md font-label-md text-on-surface-variant">Assigned Number</p>
+<p class="text-body-md font-mono-md">+1 (555) 012-3456</p>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-white transition-colors">content_copy</button>
+</div>
+<!-- Google Calendar -->
+<div class="glass-card rounded-xl p-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center border border-white/5">
+<img class="w-6 h-6 grayscale opacity-80" data-alt="Official Google Calendar icon logo on a transparent background for integration display purposes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArVV0IiLq9oymCmpvTpEthMmo6xJotUa_oVjpCLDqoOYzRq7sANEcBHh3gyKELTTNQJynn9iIa3Y7SSfMPFO0KGlOmEgTw8PM4-EZ51ZpyhkZuq26MEDPJWvZT1EI0knRKiJoYQO2DZX83PyF4zXfFG0chhyV_3Pf9GD5qkiALHWlsMENKEgOUclz5xKlpAT5bh8BwZoI22wMnmGqDcAekePSD37u8hMliCxnJi9Pdam3PlPsRAXMyBBJWIa1_e6TYvXQlk2CuVQRi"/>
+</div>
+<div>
+<p class="text-label-md font-label-md text-on-surface-variant">Google Calendar</p>
+<p class="text-body-sm font-body-md text-tertiary flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-tertiary rounded-full"></span> Connected
+                            </p>
+</div>
+</div>
+<button class="text-label-md font-label-md text-on-surface-variant border border-white/10 px-3 py-1 rounded-full hover:bg-white/5">Configure</button>
+</div>
+<!-- Business Hours -->
+<div class="glass-card rounded-xl p-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-label-md font-label-md text-on-surface">Active Hours</h3>
+<span class="text-[10px] text-on-surface-variant uppercase">PST timezone</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-body-sm text-on-surface-variant">Mon - Fri</span>
+<span class="text-body-sm font-mono-md bg-white/5 px-2 py-1 rounded">09:00 AM - 06:00 PM</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-body-sm text-on-surface-variant">Sat</span>
+<span class="text-body-sm font-mono-md bg-white/5 px-2 py-1 rounded">10:00 AM - 02:00 PM</span>
+</div>
+<div class="flex items-center justify-between opacity-50">
+<span class="text-body-sm text-on-surface-variant">Sun</span>
+<span class="text-body-sm font-mono-md italic">Closed</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Spacer for FAB -->
+<div class="h-12"></div>
+</main>
+<!-- Testing & Deployment Fixed Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 p-4 bg-surface/80 backdrop-blur-2xl border-t border-white/10 flex flex-col gap-3">
+<div class="flex gap-3 h-14">
+<button class="flex-1 glass-card rounded-xl flex items-center justify-center gap-2 text-on-surface-variant hover:text-white transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">labs</span>
+<span class="font-bold text-label-md tracking-wider">TEST CALL</span>
+</button>
+<button class="flex-[1.5] gradient-border-button rounded-xl flex items-center justify-center gap-2 text-on-primary shadow-2xl active:scale-95 transition-all">
+<span class="material-symbols-outlined">save</span>
+<span class="font-bold text-label-md tracking-wider">SAVE CHANGES</span>
+</button>
+</div>
+</footer>
+<!-- Bottom Nav (Hidden on focus/task-driven pages but as per instructions we determine relevance) -->
+<!-- Determined active: "Agents" -->
+<nav class="hidden md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-t border-white/10 shadow-2xl">
+<a class="flex flex-col items-center justify-center text-outline" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold bg-primary/10 rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline" href="#">
+<span class="material-symbols-outlined">phone_in_talk</span>
+<span class="font-label-md text-label-md">Phone</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for toggle
+        const toggle = document.getElementById('publish-toggle');
+        toggle.addEventListener('change', (e) => {
+            const label = e.target.nextElementSibling;
+            if (e.target.checked) {
+                console.log("Agent Live");
+            } else {
+                console.log("Agent Offline");
+            }
+        });
+
+        // Atmospheric effect: Subtle cursor glow (if on desktop view)
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 768) {
+                const glow = document.createElement('div');
+                glow.className = 'fixed pointer-events-none w-64 h-64 bg-primary/5 rounded-full blur-[100px] z-[-1]';
+                glow.style.left = e.clientX - 128 + 'px';
+                glow.style.top = e.clientY - 128 + 'px';
+                document.body.appendChild(glow);
+                setTimeout(() => glow.remove(), 100);
+            }
+        });
+    </script>
+</body></html>

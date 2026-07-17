@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Codex Call AI - Secure Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-border-br: rgba(255, 255, 255, 0.02);
+        }
+
+        body {
+            background-color: #0A0C10;
+            overflow: hidden;
+            font-family: 'Geist', sans-serif;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, var(--glass-border) 0%, var(--glass-border-br) 100%) 1;
+        }
+
+        .glass-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .glass-input:focus {
+            border-color: #c0c1ff;
+            box-shadow: 0 0 15px rgba(192, 193, 255, 0.15);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-primary-gradient {
+            background: linear-gradient(135deg, #494bd6 0%, #6f00be 100%);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .btn-primary-gradient:active {
+            transform: scale(0.96);
+        }
+
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 6s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translate(-100%, -100%) rotate(45deg); }
+            100% { transform: translate(100%, 100%) rotate(45deg); }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.4;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#490080",
+                      "secondary-fixed": "#f0dbff",
+                      "secondary-fixed-dim": "#ddb7ff",
+                      "surface-container-highest": "#333539",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "on-secondary-fixed-variant": "#6900b3",
+                      "primary-fixed": "#e1e0ff",
+                      "error": "#ffb4ab",
+                      "surface-container-low": "#1a1c20",
+                      "primary-container": "#8083ff",
+                      "inverse-surface": "#e2e2e8",
+                      "on-secondary-container": "#d6a9ff",
+                      "on-error": "#690005",
+                      "on-tertiary-container": "#000608",
+                      "on-tertiary": "#00363e",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "inverse-primary": "#494bd6",
+                      "background": "#111318",
+                      "secondary": "#ddb7ff",
+                      "on-primary-container": "#0d0096",
+                      "on-error-container": "#ffdad6",
+                      "tertiary": "#2fd9f4",
+                      "on-secondary-fixed": "#2c0051",
+                      "outline": "#908fa0",
+                      "inverse-on-surface": "#2f3035",
+                      "on-tertiary-fixed": "#001f25",
+                      "tertiary-fixed-dim": "#2fd9f4",
+                      "tertiary-fixed": "#a2eeff",
+                      "surface-bright": "#37393e",
+                      "surface-container": "#1e2024",
+                      "tertiary-container": "#008395",
+                      "surface-tint": "#c0c1ff",
+                      "on-background": "#e2e2e8",
+                      "on-tertiary-fixed-variant": "#004e5a",
+                      "surface": "#111318",
+                      "on-surface-variant": "#c7c4d7",
+                      "on-primary-fixed": "#07006c",
+                      "on-surface": "#e2e2e8",
+                      "surface-container-high": "#282a2e",
+                      "on-primary": "#1000a9",
+                      "outline-variant": "#464554",
+                      "error-container": "#93000a",
+                      "surface-variant": "#333539",
+                      "surface-dim": "#111318",
+                      "surface-container-lowest": "#0c0e12",
+                      "secondary-container": "#6f00be",
+                      "primary": "#c0c1ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-mobile": "20px",
+                      "margin-desktop": "48px",
+                      "gutter": "24px",
+                      "container-max-width": "1440px"
+              },
+              "fontFamily": {
+                      "label-md": ["Geist"],
+                      "headline-lg-mobile": ["Hanken Grotesk"],
+                      "headline-xl": ["Hanken Grotesk"],
+                      "mono-md": ["Geist"],
+                      "headline-md": ["Hanken Grotesk"],
+                      "headline-lg": ["Hanken Grotesk"],
+                      "body-sm": ["Geist"],
+                      "body-lg": ["Geist"],
+                      "body-md": ["Geist"]
+              },
+              "fontSize": {
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-margin-mobile md:p-margin-desktop bg-surface-dim">
+<!-- Atmospheric Background Layers -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none">
+<div class="orb w-[500px] h-[500px] bg-primary/20 -top-40 -left-40"></div>
+<div class="orb w-[600px] h-[600px] bg-secondary/10 -bottom-40 -right-40"></div>
+</div>
+<!-- Main Container -->
+<main class="relative z-10 w-full max-w-[480px]">
+<!-- Header Section -->
+<header class="text-center mb-10">
+<div class="flex justify-center items-center mb-6">
+<span class="material-symbols-outlined text-[48px] text-primary" style="font-variation-settings: 'FILL' 1;">bubble_chart</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg md:font-headline-xl md:text-headline-xl text-on-surface mb-2">Welcome Back</h1>
+<p class="font-body-md text-on-surface-variant opacity-80">Access your enterprise AI voice command center.</p>
+</header>
+<!-- Glassmorphism Login Card -->
+<div class="glass-card rounded-[2rem] p-8 md:p-10 shimmer">
+<form onsubmit="event.preventDefault();" class="space-y-6">
+
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant block uppercase tracking-widest px-1" for="email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">mail</span>
+<input class="w-full h-14 pl-12 pr-4 glass-input rounded-xl font-body-md text-on-surface placeholder:text-outline/50 outline-none" id="email" placeholder="name@company.com" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center px-1">
+<label class="font-label-md text-label-md text-on-surface-variant block uppercase tracking-widest" for="password">Password</label>
+<a class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors" href="#">Forgot Password?</a>
+
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">lock</span>
+<input class="w-full h-14 pl-12 pr-12 glass-input rounded-xl font-body-md text-on-surface placeholder:text-outline/50 outline-none" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- Primary Action Row -->
+<div class="flex gap-4 pt-2">
+<button class="flex-grow h-14 btn-primary-gradient rounded-xl font-headline-md text-headline-md text-white shadow-lg shadow-primary/20 flex items-center justify-center gap-2" onclick="loginUser(document.getElementById('email').value, document.getElementById('password').value)" type="button">
+    <span>Sign In</span>
+</button>
+
+                    
+<button class="w-14 h-14 glass-card rounded-xl flex items-center justify-center text-on-surface hover:bg-white/5 transition-all group" title="Biometric Login" type="button">
+<span class="material-symbols-outlined text-[32px] group-hover:scale-110 transition-transform">face</span>
+</button>
+</div>
+<!-- Divider -->
+<div class="relative py-4 flex items-center">
+<div class="flex-grow border-t border-outline/20"></div>
+<span class="px-4 font-label-md text-label-md text-outline">OR CONTINUE WITH</span>
+<div class="flex-grow border-t border-outline/20"></div>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-4">
+<button class="h-12 border border-outline/20 rounded-xl flex items-center justify-center gap-3 font-body-sm text-on-surface hover:bg-white/5 transition-colors" type="button">
+<div class="w-5 h-5 flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="currentColor"></path><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="currentColor"></path><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="currentColor"></path><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="currentColor"></path></svg>
+</div>
+                        Google
+                    </button>
+<button class="h-12 border border-outline/20 rounded-xl flex items-center justify-center gap-3 font-body-sm text-on-surface hover:bg-white/5 transition-colors" type="button">
+<div class="w-5 h-5 flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 24 24"><path d="M17.05 20.28c-.96.95-2.04 1.72-3.1 1.72-1.01 0-1.39-.61-2.61-.61-1.23 0-1.65.59-2.6.59-1.01 0-2.18-.84-3.15-1.78-1.98-1.93-3.48-5.46-3.48-8.86 0-3.5 2.18-5.34 4.25-5.34 1.1 0 2.13.75 2.8 1.43.68.68 1.13.78 1.13.78s.4-.1 1.18-.78c1.07-1.07 2.22-1.43 2.92-1.43 2.15 0 4.14 1.77 4.14 5.25 0 .54-.08 1.16-.24 1.84-.52 2.22-1.66 4.95-2.66 6.19l.01.01M12.03 7.25c-.24-1.93 1.34-3.66 3.12-4.14.33 2.21-1.89 3.98-3.12 4.14z" fill="currentColor"></path></svg>
+</div>
+                        Apple
+                    </button>
+</div>
+</form>
+</div>
+<!-- Footer Link -->
+<footer class="mt-8 text-center">
+<p class="font-body-sm text-on-surface-variant">
+                Don't have an account? 
+                <a class="text-primary font-semibold hover:underline underline-offset-4 decoration-primary/30 transition-all" href="{{DATA:SCREEN:SCREEN_13}}">Create an account</a>
+</p>
+</footer>
+</main>
+<!-- Security Badge (Floating) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-white/5 opacity-60">
+<span class="material-symbols-outlined text-[16px] text-tertiary">verified_user</span>
+<span class="font-label-md text-[10px] tracking-widest text-on-surface-variant uppercase">AES-256 End-to-End Encryption Enabled</span>
+</div>
+<!-- Mouse Gradient Interaction Script -->
+<script>
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.orb');
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 0.05;
+                const tx = (x - window.innerWidth / 2) * speed;
+                const ty = (y - window.innerHeight / 2) * speed;
+                orb.style.transform = `translate(${tx}px, ${ty}px)`;
+            });
+        });
+    </script>
+</body></html>

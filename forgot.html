@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reset Password | Codex Call AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid;
+            border-image-source: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-image-slice: 1;
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #494bd6 0%, #6f00be 100%);
+        }
+        .input-glow:focus-within {
+            box-shadow: 0 0 15px rgba(192, 193, 255, 0.2);
+            border-color: #c0c1ff;
+        }
+        .atmospheric-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(73, 75, 214, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#490080",
+                      "secondary-fixed": "#f0dbff",
+                      "secondary-fixed-dim": "#ddb7ff",
+                      "surface-container-highest": "#333539",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "on-secondary-fixed-variant": "#6900b3",
+                      "primary-fixed": "#e1e0ff",
+                      "error": "#ffb4ab",
+                      "surface-container-low": "#1a1c20",
+                      "primary-container": "#8083ff",
+                      "inverse-surface": "#e2e2e8",
+                      "on-secondary-container": "#d6a9ff",
+                      "on-error": "#690005",
+                      "on-tertiary-container": "#000608",
+                      "on-tertiary": "#00363e",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "inverse-primary": "#494bd6",
+                      "background": "#111318",
+                      "secondary": "#ddb7ff",
+                      "on-primary-container": "#0d0096",
+                      "on-error-container": "#ffdad6",
+                      "tertiary": "#2fd9f4",
+                      "on-secondary-fixed": "#2c0051",
+                      "outline": "#908fa0",
+                      "inverse-on-surface": "#2f3035",
+                      "on-tertiary-fixed": "#001f25",
+                      "tertiary-fixed-dim": "#2fd9f4",
+                      "tertiary-fixed": "#a2eeff",
+                      "surface-bright": "#37393e",
+                      "surface-container": "#1e2024",
+                      "tertiary-container": "#008395",
+                      "surface-tint": "#c0c1ff",
+                      "on-background": "#e2e2e8",
+                      "on-tertiary-fixed-variant": "#004e5a",
+                      "surface": "#111318",
+                      "on-surface-variant": "#c7c4d7",
+                      "on-primary-fixed": "#07006c",
+                      "on-surface": "#e2e2e8",
+                      "surface-container-high": "#282a2e",
+                      "on-primary": "#1000a9",
+                      "outline-variant": "#464554",
+                      "error-container": "#93000a",
+                      "surface-variant": "#333539",
+                      "surface-dim": "#111318",
+                      "surface-container-lowest": "#0c0e12",
+                      "secondary-container": "#6f00be",
+                      "primary": "#c0c1ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-mobile": "20px",
+                      "margin-desktop": "48px",
+                      "gutter": "24px",
+                      "container-max-width": "1440px"
+              },
+              "fontFamily": {
+                      "label-md": ["Geist"],
+                      "headline-lg-mobile": ["Hanken Grotesk"],
+                      "headline-xl": ["Hanken Grotesk"],
+                      "mono-md": ["Geist"],
+                      "headline-md": ["Hanken Grotesk"],
+                      "headline-lg": ["Hanken Grotesk"],
+                      "body-sm": ["Geist"],
+                      "body-lg": ["Geist"],
+                      "body-md": ["Geist"]
+              },
+              "fontSize": {
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary/30 min-h-screen flex items-center justify-center p-margin-mobile md:p-margin-desktop relative">
+<!-- Atmospheric Background Elements -->
+<div class="atmospheric-glow -top-24 -left-24 opacity-60"></div>
+<div class="atmospheric-glow -bottom-24 -right-24 opacity-40"></div>
+<!-- Navigation suppressed per "The Destination Rule" for Transactional flows -->
+<main class="w-full max-w-md z-10">
+<!-- Brand Identity Header -->
+<div class="flex flex-col items-center mb-10 space-y-4">
+<div class="w-16 h-16 rounded-2xl primary-gradient flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-4xl" data-icon="bubble_chart">bubble_chart</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                Codex Call AI
+            </h1>
+</div>
+<!-- Reset Password Card -->
+<div class="glass-panel rounded-xl p-8 md:p-10 shadow-2xl relative overflow-hidden">
+<!-- Subtle internal glow -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/10 blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<header class="mb-8">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Reset Password</h2>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                    Enter your email address and we'll send you a link to reset your password.
+                </p>
+</header>
+<form class="space-y-6" id="resetForm" onsubmit="event.preventDefault(); handleResetSubmit();">
+<!-- Email Input Field -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-primary uppercase tracking-widest" for="email">
+                        Email Address
+                    </label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-outline group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</div>
+<input class="w-full bg-surface-container-lowest/50 border border-outline-variant rounded-lg py-4 pl-12 pr-4 text-on-surface placeholder:text-outline/50 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all backdrop-blur-md input-glow" id="email" placeholder="name@company.com" required="" type="email"/>
+</div>
+</div>
+<!-- Primary Action Button -->
+<a class="w-full primary-gradient text-white font-label-md text-label-md py-4 rounded-lg flex items-center justify-center space-x-2 shadow-xl shadow-primary/20 active:scale-[0.98] transition-transform hover:brightness-110" href="{{DATA:SCREEN:SCREEN_23}}">
+<span>Send Reset Link</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</form>
+<!-- Loading State Placeholder (Hidden by default) -->
+<div class="hidden absolute inset-0 bg-surface/80 backdrop-blur-md flex flex-center flex-col items-center justify-center text-center p-8 z-20" id="loadingState">
+<div class="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4"></div>
+<p class="font-headline-md text-headline-md text-primary">Sending...</p>
+</div>
+<!-- Success State Placeholder (Hidden by default) -->
+<div class="hidden absolute inset-0 bg-surface backdrop-blur-md flex flex-col items-center justify-center text-center p-8 z-20" id="successState">
+<div class="w-16 h-16 bg-tertiary-container/30 text-tertiary rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-4xl" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Check your email</h3>
+<p class="font-body-md text-on-surface-variant mb-8">
+                    We've sent a password reset link to your email address. Please follow the instructions to continue.
+                </p>
+<button class="text-primary font-label-md text-label-md hover:underline" onclick="resetUI()">
+                    Didn't receive the email? Try again
+                </button>
+</div>
+</div>
+<!-- Secondary Navigation -->
+<div class="mt-10 text-center">
+<a class="inline-flex items-center space-x-2 text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="{{DATA:SCREEN:SCREEN_25}}">
+<span class="material-symbols-outlined text-[18px]" data-icon="keyboard_backspace">keyboard_backspace</span>
+<span>Back to Login</span>
+</a>
+</div>
+</main>
+<!-- Footer Copyright -->
+<footer class="fixed bottom-8 left-0 w-full text-center pointer-events-none">
+<p class="font-label-md text-label-md text-outline/30 uppercase tracking-[0.2em]">
+            © 2024 Codex Intelligence Systems
+        </p>
+</footer>
+<script>
+        function handleResetSubmit() {
+            const form = document.getElementById('resetForm');
+            const loading = document.getElementById('loadingState');
+            const success = document.getElementById('successState');
+            
+            loading.classList.remove('hidden');
+            
+            // Simulate network request
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                success.classList.remove('hidden');
+                success.style.opacity = '0';
+                setTimeout(() => {
+                    success.style.transition = 'opacity 0.5s ease-in-out';
+                    success.style.opacity = '1';
+                }, 50);
+            }, 1500);
+        }
+
+        function resetUI() {
+            const success = document.getElementById('successState');
+            const emailInput = document.getElementById('email');
+            
+            success.style.opacity = '0';
+            setTimeout(() => {
+                success.classList.add('hidden');
+                emailInput.value = '';
+                emailInput.focus();
+            }, 500);
+        }
+
+        // Simple mouse tracking for atmospheric effect
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.querySelector('.atmospheric-glow:first-child');
+            const x = e.clientX - 300;
+            const y = e.clientY - 300;
+            glow.style.transform = `translate(${x/20}px, ${y/20}px)`;
+        });
+    </script>
+</body></html>

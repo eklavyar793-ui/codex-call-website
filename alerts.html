@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoiceOS AI - Usage Alerts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Shared Components Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#004e5a",
+                    "tertiary": "#2fd9f4",
+                    "surface": "#111318",
+                    "primary-container": "#8083ff",
+                    "outline-variant": "#464554",
+                    "on-tertiary-fixed": "#001f25",
+                    "surface-container-lowest": "#0c0e12",
+                    "on-error": "#690005",
+                    "secondary-fixed": "#f0dbff",
+                    "secondary": "#ddb7ff",
+                    "on-secondary-container": "#d6a9ff",
+                    "surface-container-high": "#282a2e",
+                    "tertiary-container": "#008395",
+                    "surface-variant": "#333539",
+                    "surface-container-highest": "#333539",
+                    "on-tertiary": "#00363e",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "on-primary-fixed": "#07006c",
+                    "inverse-surface": "#e2e2e8",
+                    "surface-tint": "#c0c1ff",
+                    "surface-dim": "#111318",
+                    "background": "#111318",
+                    "inverse-on-surface": "#2f3035",
+                    "on-primary-container": "#0d0096",
+                    "outline": "#908fa0",
+                    "error-container": "#93000a",
+                    "on-error-container": "#ffdad6",
+                    "inverse-primary": "#494bd6",
+                    "error": "#ffb4ab",
+                    "tertiary-fixed": "#a2eeff",
+                    "on-tertiary-container": "#000608",
+                    "primary-fixed": "#e1e0ff",
+                    "primary": "#c0c1ff",
+                    "on-surface": "#e2e2e8",
+                    "on-secondary-fixed": "#2c0051",
+                    "secondary-container": "#6f00be",
+                    "on-background": "#e2e2e8",
+                    "on-primary": "#1000a9",
+                    "on-surface-variant": "#c7c4d7",
+                    "surface-container": "#1e2024",
+                    "surface-bright": "#37393e",
+                    "secondary-fixed-dim": "#ddb7ff",
+                    "surface-container-low": "#1a1c20",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "on-secondary-fixed-variant": "#6900b3",
+                    "on-secondary": "#490080",
+                    "tertiary-fixed-dim": "#2fd9f4"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "48px",
+                    "margin-mobile": "20px",
+                    "unit": "8px",
+                    "container-max-width": "1440px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "body-sm": ["Geist"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-lg": ["Geist"],
+                    "mono-md": ["Geist"],
+                    "body-md": ["Geist"],
+                    "label-md": ["Geist"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-xl": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #0A0C10;
+        color: #e2e2e8;
+        -webkit-font-smoothing: antialiased;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(12px);
+        border: 1px solid transparent;
+        border-image: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%) 1;
+        border-radius: 1rem;
+        overflow: hidden;
+      }
+      .glass-border {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .active-glow {
+        box-shadow: 0 0 15px rgba(192, 193, 255, 0.3);
+      }
+      .gradient-primary {
+        background: linear-gradient(135deg, #494bd6 0%, #6f00be 100%);
+      }
+      .cyan-glow {
+        box-shadow: 0 0 20px rgba(47, 217, 244, 0.2);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+      }
+      .toggle-checkbox:checked + .toggle-label {
+        background-color: #c0c1ff;
+      }
+      .toggle-checkbox:checked + .toggle-label .toggle-dot {
+        transform: translateX(100%);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-body-md pb-24">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface/5 dark:bg-surface/5 backdrop-blur-xl border-b border-white/10 shadow-none">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-on-surface-variant active:scale-95 duration-200" onclick="window.history.back()">arrow_back</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Usage Alerts</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-headline-md">graphic_eq</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-white/5 p-2 rounded-full transition-colors cursor-pointer">notifications</span>
+</div>
+</div>
+</header>
+<main class="max-w-xl mx-auto px-margin-mobile py-8 space-y-8">
+<!-- Introduction Header -->
+<section class="space-y-1">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Manage Quotas</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Configure automated triggers to keep your team within operational limits.</p>
+</section>
+<!-- Threshold Settings -->
+<section class="space-y-4">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest px-1">Active Thresholds</h3>
+<!-- AI Call Minutes -->
+<div class="glass-card p-5 space-y-4 relative overflow-hidden">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">timer</span>
+</div>
+<div>
+<h4 class="font-body-md font-semibold text-on-surface">AI Call Minutes</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Monthly credit allowance</p>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full cursor-pointer">
+<input checked="" class="absolute w-6 h-6 opacity-0 z-10 cursor-pointer toggle-checkbox" id="minutes_toggle" type="checkbox"/>
+<label class="block overflow-hidden h-6 rounded-full bg-white/10 cursor-pointer toggle-label transition-colors" for="minutes_toggle">
+<span class="block w-6 h-6 rounded-full bg-white shadow-sm transform transition-transform duration-200 ease-in-out toggle-dot"></span>
+</label>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-label-md">
+<span class="text-on-surface-variant">Current Usage: 8,420 / 10,000 mins</span>
+<span class="text-tertiary">84%</span>
+</div>
+<div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary cyan-glow" style="width: 84%"></div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<button class="px-3 py-2 text-xs font-semibold rounded-lg bg-primary-container text-on-primary-container active:scale-95 transition-all">At 80%</button>
+<button class="px-3 py-2 text-xs font-semibold rounded-lg bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10">At 90%</button>
+<button class="px-3 py-2 text-xs font-semibold rounded-lg bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10">Limit</button>
+</div>
+</div>
+<!-- Active Agents -->
+<div class="glass-card p-5 space-y-4">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-secondary/10 rounded-lg">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<h4 class="font-body-md font-semibold text-on-surface">Active Agents</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Parallel voice instances</p>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full cursor-pointer">
+<input class="absolute w-6 h-6 opacity-0 z-10 cursor-pointer toggle-checkbox" id="agents_toggle" type="checkbox"/>
+<label class="block overflow-hidden h-6 rounded-full bg-white/10 cursor-pointer toggle-label transition-colors" for="agents_toggle">
+<span class="block w-6 h-6 rounded-full bg-white shadow-sm transform transition-transform duration-200 ease-in-out toggle-dot"></span>
+</label>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-label-md">
+<span class="text-on-surface-variant">Current Usage: 42 / 50 agents</span>
+<span class="text-primary">84%</span>
+</div>
+<div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary active-glow" style="width: 84%"></div>
+</div>
+</div>
+<select class="w-full bg-surface-container-high border border-white/10 rounded-xl px-4 py-3 text-on-surface font-body-sm focus:ring-2 focus:ring-primary focus:outline-none appearance-none cursor-pointer">
+<option>Notify me when limit reached</option>
+<option>Notify me at 90% capacity</option>
+<option>Notify me at 50% capacity</option>
+</select>
+</div>
+<!-- Team Seats -->
+<div class="glass-card p-5 space-y-4">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-tertiary/10 rounded-lg">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+<div>
+<h4 class="font-body-md font-semibold text-on-surface">Team Seats</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">User licenses and roles</p>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full cursor-pointer">
+<input checked="" class="absolute w-6 h-6 opacity-0 z-10 cursor-pointer toggle-checkbox" id="seats_toggle" type="checkbox"/>
+<label class="block overflow-hidden h-6 rounded-full bg-white/10 cursor-pointer toggle-label transition-colors" for="seats_toggle">
+<span class="block w-6 h-6 rounded-full bg-white shadow-sm transform transition-transform duration-200 ease-in-out toggle-dot"></span>
+</label>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-label-md">
+<span class="text-on-surface-variant">Current Usage: 12 / 12 seats</span>
+<span class="text-error">100%</span>
+</div>
+<div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-error" style="width: 100%"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-error/10 border border-error/20 rounded-xl">
+<span class="font-body-sm text-error">Critical: Capacity reached</span>
+<button class="text-label-md font-bold text-on-surface uppercase tracking-tight">Upgrade Plan</button>
+</div>
+</div>
+</section>
+<!-- Notification Channels -->
+<section class="space-y-4">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest px-1">Auto-Recharge</h3>
+<div class="glass-card p-5 space-y-4">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div>
+<h4 class="font-body-md font-semibold text-on-surface">Auto-Recharge Credits</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Automatically add call minutes when balance falls below a threshold.</p>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full cursor-pointer">
+<input class="absolute w-6 h-6 opacity-0 z-10 cursor-pointer toggle-checkbox" id="recharge_toggle" type="checkbox"/>
+<label class="block overflow-hidden h-6 rounded-full bg-white/10 cursor-pointer toggle-label transition-colors" for="recharge_toggle">
+<span class="block w-6 h-6 rounded-full bg-white shadow-sm transform transition-transform duration-200 ease-in-out toggle-dot"></span>
+</label>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-label-md text-on-surface-variant uppercase">When balance is below</label>
+<div class="relative">
+<select class="w-full bg-surface-container-high border border-white/10 rounded-xl px-4 py-2 text-on-surface font-body-sm focus:ring-2 focus:ring-primary focus:outline-none appearance-none cursor-pointer">
+<option>500 mins</option>
+<option>1,000 mins</option>
+<option>2,000 mins</option>
+</select>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-label-md text-on-surface-variant uppercase">Add credits</label>
+<div class="relative">
+<select class="w-full bg-surface-container-high border border-white/10 rounded-xl px-4 py-2 text-on-surface font-body-sm focus:ring-2 focus:ring-primary focus:outline-none appearance-none cursor-pointer">
+<option>2,000 mins</option>
+<option>5,000 mins</option>
+<option>10,000 mins</option>
+</select>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-2 border-t border-white/5">
+<span class="material-symbols-outlined text-on-surface-variant text-body-sm">credit_card</span>
+<p class="text-xs text-on-surface-variant">Using Visa ending in 4242</p>
+</div>
+</div>
+</section><section class="space-y-4">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest px-1">Channels</h3>
+<div class="glass-card divide-y divide-white/5">
+<!-- Email -->
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">mail</span>
+<div>
+<p class="text-on-surface font-semibold">Email Alerts</p>
+<p class="text-body-sm text-on-surface-variant">admin@voiceos.ai</p>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full cursor-pointer">
+<input checked="" class="absolute w-6 h-6 opacity-0 z-10 cursor-pointer toggle-checkbox" id="email_chan" type="checkbox"/>
+<label class="block overflow-hidden h-6 rounded-full bg-white/10 cursor-pointer toggle-label transition-colors" for="email_chan">
+<span class="block w-6 h-6 rounded-full bg-white shadow-sm transform transition-transform duration-200 ease-in-out toggle-dot"></span>
+</label>
+</div>
+</div>
+<!-- Push -->
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">notifications_active</span>
+<div>
+<p class="text-on-surface font-semibold">Push Notifications</p>
+<p class="text-body-sm text-on-surface-variant">Mobile &amp; Desktop app</p>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full cursor-pointer">
+<input checked="" class="absolute w-6 h-6 opacity-0 z-10 cursor-pointer toggle-checkbox" id="push_chan" type="checkbox"/>
+<label class="block overflow-hidden h-6 rounded-full bg-white/10 cursor-pointer toggle-label transition-colors" for="push_chan">
+<span class="block w-6 h-6 rounded-full bg-white shadow-sm transform transition-transform duration-200 ease-in-out toggle-dot"></span>
+</label>
+</div>
+</div>
+<!-- Slack/Discord -->
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">webhook</span>
+<div>
+<p class="text-on-surface font-semibold">Webhooks (Slack/Discord)</p>
+<p class="text-body-sm text-on-surface-variant">Manage webhook URLs</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Recent Alert History -->
+<section class="space-y-4">
+<div class="flex justify-between items-center px-1">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Recent History</h3>
+<button class="text-primary text-label-md font-bold uppercase">Clear All</button>
+</div>
+<div class="space-y-2">
+<!-- Alert Item 1 -->
+<div class="glass-card p-4 flex gap-4 items-center">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-error/20 text-error">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div class="flex-1">
+<p class="text-on-surface font-medium">Minutes limit reached</p>
+<p class="text-xs text-on-surface-variant">Subscription has hit 100% cap</p>
+</div>
+<span class="text-xs text-on-surface-variant whitespace-nowrap">2h ago</span>
+</div>
+<!-- Alert Item 2 -->
+<div class="glass-card p-4 flex gap-4 items-center">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-tertiary/20 text-tertiary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div class="flex-1">
+<p class="text-on-surface font-medium">Minutes threshold: 80%</p>
+<p class="text-xs text-on-surface-variant">Automated trigger: System alerted Admin</p>
+</div>
+<span class="text-xs text-on-surface-variant whitespace-nowrap">6h ago</span>
+</div>
+<!-- Alert Item 3 -->
+<div class="glass-card p-4 flex gap-4 items-center opacity-60">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 text-on-surface-variant">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<div class="flex-1">
+<p class="text-on-surface font-medium">Seat limit reached</p>
+<p class="text-xs text-on-surface-variant">New user invited but no seats available</p>
+</div>
+<span class="text-xs text-on-surface-variant whitespace-nowrap">1d ago</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface/5 dark:bg-surface/5 backdrop-blur-xl border-t border-white/10 shadow-none">
+<div class="flex justify-around items-center h-20 pb-safe px-4">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md mt-1">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined">settings_voice</span>
+<span class="font-label-md text-label-md mt-1">Agents</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined">call</span>
+<span class="font-label-md text-label-md mt-1">Phone</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl px-4 py-1 active:scale-90 duration-150 cursor-pointer">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md mt-1">Analytics</span>
+</div>
+</div>
+</nav>
+<!-- Floating Action Button - Only for Relevant Task Context (Save Settings) -->
+<button class="fixed bottom-24 right-6 w-14 h-14 gradient-primary rounded-full flex items-center justify-center shadow-2xl active:scale-90 transition-all z-40">
+<span class="material-symbols-outlined text-white">save</span>
+</button>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('.toggle-checkbox').forEach(toggle => {
+            toggle.addEventListener('change', (e) => {
+                const card = e.target.closest('.glass-card');
+                if (card) {
+                    if (e.target.checked) {
+                        card.style.borderColor = 'rgba(192, 193, 255, 0.3)';
+                        card.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                    } else {
+                        card.style.borderColor = 'transparent';
+                        card.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                    }
+                }
+            });
+        });
+
+        // Initialize state colors for checked items on load
+        document.querySelectorAll('.toggle-checkbox').forEach(toggle => {
+            if (toggle.checked) {
+                const card = toggle.closest('.glass-card');
+                if (card) {
+                    card.style.borderColor = 'rgba(192, 193, 255, 0.3)';
+                    card.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                }
+            }
+        });
+    </script>
+</body></html>

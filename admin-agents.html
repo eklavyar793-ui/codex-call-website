@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .glow-primary {
+            box-shadow: 0 0 20px rgba(128, 131, 255, 0.2);
+        }
+        .sidebar-item-active {
+            background: rgba(192, 193, 255, 0.1);
+            border-left: 3px solid #c0c1ff;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        
+        .status-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#494bd6",
+                        "on-error-container": "#ffdad6",
+                        "outline": "#908fa0",
+                        "error-container": "#93000a",
+                        "on-primary-container": "#0d0096",
+                        "error": "#ffb4ab",
+                        "on-primary": "#1000a9",
+                        "secondary-container": "#6f00be",
+                        "on-background": "#e2e2e8",
+                        "primary": "#c0c1ff",
+                        "on-surface": "#e2e2e8",
+                        "on-secondary-fixed": "#2c0051",
+                        "primary-fixed": "#e1e0ff",
+                        "tertiary-fixed": "#a2eeff",
+                        "on-tertiary-container": "#000608",
+                        "tertiary-fixed-dim": "#2fd9f4",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "on-secondary": "#490080",
+                        "surface-container-low": "#1a1c20",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "surface-container": "#1e2024",
+                        "surface-bright": "#37393e",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "on-surface-variant": "#c7c4d7",
+                        "surface-container-lowest": "#0c0e12",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#001f25",
+                        "primary-container": "#8083ff",
+                        "outline-variant": "#464554",
+                        "tertiary": "#2fd9f4",
+                        "surface": "#111318",
+                        "on-tertiary-fixed-variant": "#004e5a",
+                        "tertiary-container": "#008395",
+                        "surface-container-high": "#282a2e",
+                        "secondary-fixed": "#f0dbff",
+                        "secondary": "#ddb7ff",
+                        "on-secondary-container": "#d6a9ff",
+                        "on-primary-fixed": "#07006c",
+                        "inverse-surface": "#e2e2e8",
+                        "on-tertiary": "#00363e",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "surface-container-highest": "#333539",
+                        "surface-variant": "#333539",
+                        "inverse-on-surface": "#2f3035",
+                        "background": "#111318",
+                        "surface-dim": "#111318",
+                        "surface-tint": "#c0c1ff"
+                    },
+                    "fontFamily": {
+                        "mono-md": ["Geist"],
+                        "body-md": ["Geist"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-lg": ["Geist"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden">
+<!-- Navigation Drawer -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container/80 backdrop-blur-md border-r border-white/10 flex flex-col p-4 gap-2 z-[60] hidden md:flex">
+<div class="flex items-center gap-3 mb-8 px-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">settings_voice</span>
+<span class="font-headline-md text-headline-md text-primary">Codex Call AI</span>
+</div>
+<div class="flex items-center gap-3 p-3 mb-6 bg-white/5 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-tertiary flex items-center justify-center text-on-primary font-bold">A</div>
+<div class="overflow-hidden">
+<p class="font-label-md text-label-md text-on-surface truncate">System Admin</p>
+<p class="text-[10px] text-outline truncate">Superuser Access</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">api</span>
+<span class="font-label-md text-label-md">Integrations</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-md text-label-md">Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">shield</span>
+<span class="font-label-md text-label-md">Security</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 min-h-screen flex flex-col relative">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 z-50 bg-surface/50 backdrop-blur-xl border-b border-white/10 shadow-xl flex justify-between items-center px-margin-desktop py-4">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-lg text-headline-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-tertiary">Codex Call AI Admin</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-white/5 border border-white/10 px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-outline mr-2 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm w-48 text-on-surface placeholder-outline" placeholder="Search agents..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">help</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">settings</span>
+<div class="w-10 h-10 rounded-xl glass-card flex items-center justify-center p-0.5 overflow-hidden">
+<img class="w-full h-full object-cover rounded-lg" data-alt="A professional close-up headshot of a modern corporate administrator in a dark studio setting. The lighting is dramatic, with subtle indigo and cyan rim lights highlighting the facial features. The style is crisp, high-definition digital photography with a blurred tech-inspired background, emphasizing authority and high-performance AI management." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDksUtDjD85GT1L9sJvwPeHDnmReNXVKCSoEMAeDd8Db9BSZPqb1bK7IdHeJS7fR9g_BWdZfr1SV8rtFQIwxKqRdmG_RpS6_134KNNpcbYQAowuFOVJFzWbuTo3F6JpB_SJPzUAPF7u4UOw_on5xgMUgENNJv8beedVvZfo3OkXKSwFJxwJaVOq-xuw48UNrvWqqR5Gja7VtbxwW0_hKj2zQ58oRnQ7HdbS6QjLUQZIe6SYPW6Mjw2xxfSHAFQAk6W6-goT_qyMTju"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="flex-1 p-margin-desktop z-10 relative">
+<!-- Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+<div class="glass-card p-6 rounded-2xl">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">smart_toy</span>
+<span class="text-xs font-bold text-tertiary">+12%</span>
+</div>
+<p class="text-outline font-label-md mb-1">Total Active Agents</p>
+<h3 class="text-headline-md font-headline-md text-on-surface">1,284</h3>
+</div>
+<div class="glass-card p-6 rounded-2xl">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-secondary bg-secondary/10 p-2 rounded-lg">call</span>
+<span class="text-xs font-bold text-tertiary">+5.4k</span>
+</div>
+<p class="text-outline font-label-md mb-1">24h Call Volume</p>
+<h3 class="text-headline-md font-headline-md text-on-surface">42,901</h3>
+</div>
+<div class="glass-card p-6 rounded-2xl">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-tertiary bg-tertiary/10 p-2 rounded-lg">timer</span>
+<span class="text-xs font-bold text-error">-0.4s</span>
+</div>
+<p class="text-outline font-label-md mb-1">Avg. Latency</p>
+<h3 class="text-headline-md font-headline-md text-on-surface">240ms</h3>
+</div>
+<div class="glass-card p-6 rounded-2xl">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">payments</span>
+<span class="text-xs font-bold text-tertiary">+22%</span>
+</div>
+<p class="text-outline font-label-md mb-1">Compute Cost</p>
+<h3 class="text-headline-md font-headline-md text-on-surface">$12,402</h3>
+</div>
+</div>
+<!-- Management Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Agent Global View</h2>
+<p class="text-body-sm text-outline">Real-time status and operational controls for all provisioned AI entities.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-white/5 border border-white/10 px-4 py-2 rounded-lg font-label-md text-on-surface flex items-center gap-2 hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span> Filter
+                    </button>
+<button class="bg-gradient-to-r from-primary to-inverse-primary px-6 py-2 rounded-lg font-label-md text-on-primary font-bold shadow-lg hover:brightness-110 transition-all active:scale-95">
+                        Create New Agent
+                    </button>
+</div>
+</div>
+<!-- Agent Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+<!-- Agent Card 1 -->
+<div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="w-24 h-24 rounded-2xl bg-surface-container-highest flex-shrink-0 flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 rounded-full bg-tertiary status-pulse"></span>
+<h4 class="font-headline-md text-body-lg text-on-surface">Alpha Customer Support</h4>
+</div>
+<p class="text-outline text-body-sm mb-4">Account: Tesla Motors Global</p>
+<div class="grid grid-cols-3 gap-4 mb-6">
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Calls</p>
+<p class="font-mono-md text-on-surface">12.4k</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">CSAT</p>
+<p class="font-mono-md text-on-surface">4.8/5</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Cost</p>
+<p class="font-mono-md text-on-surface">$2.1k</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 glass-card rounded-lg text-label-md text-on-surface hover:bg-white/10">Logs</button>
+<button class="flex-1 py-2 glass-card rounded-lg text-label-md text-on-surface hover:bg-white/10">Configure</button>
+<button class="w-10 h-10 glass-card rounded-lg flex items-center justify-center hover:bg-white/10">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Agent Card 2 -->
+<div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="w-24 h-24 rounded-2xl bg-surface-container-highest flex-shrink-0 flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-4xl text-secondary" style="font-variation-settings: 'FILL' 1;">campaign</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 rounded-full bg-tertiary status-pulse"></span>
+<h4 class="font-headline-md text-body-lg text-on-surface">Outbound Sales Lead Gen</h4>
+</div>
+<p class="text-outline text-body-sm mb-4">Account: Salesforce HQ</p>
+<div class="grid grid-cols-3 gap-4 mb-6">
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Calls</p>
+<p class="font-mono-md text-on-surface">8.1k</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Conv.</p>
+<p class="font-mono-md text-on-surface">14.2%</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Cost</p>
+<p class="font-mono-md text-on-surface">$3.5k</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 glass-card rounded-lg text-label-md text-on-surface hover:bg-white/10">Logs</button>
+<button class="flex-1 py-2 glass-card rounded-lg text-label-md text-on-surface hover:bg-white/10">Configure</button>
+<button class="w-10 h-10 glass-card rounded-lg flex items-center justify-center hover:bg-white/10">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Agent Card 3 -->
+<div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="w-24 h-24 rounded-2xl bg-surface-container-highest flex-shrink-0 flex items-center justify-center border border-white/5 opacity-50">
+<span class="material-symbols-outlined text-4xl text-outline" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<h4 class="font-headline-md text-body-lg text-on-surface opacity-60">Healthcare Scheduler</h4>
+</div>
+<p class="text-outline text-body-sm mb-4">Account: United Health Group</p>
+<div class="grid grid-cols-3 gap-4 mb-6 opacity-40">
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Calls</p>
+<p class="font-mono-md text-on-surface">0</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Uptime</p>
+<p class="font-mono-md text-on-surface">N/A</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Cost</p>
+<p class="font-mono-md text-on-surface">$0</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 glass-card rounded-lg text-label-md text-on-surface hover:bg-white/10">Logs</button>
+<button class="flex-1 py-2 glass-card rounded-lg text-label-md text-on-surface hover:bg-white/10">Configure</button>
+<button class="w-10 h-10 glass-card rounded-lg flex items-center justify-center hover:bg-white/10">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Agent Card 4 -->
+<div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="w-24 h-24 rounded-2xl bg-surface-container-highest flex-shrink-0 flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-4xl text-tertiary" style="font-variation-settings: 'FILL' 1;">flight_takeoff</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="w-2 h-2 rounded-full bg-tertiary status-pulse"></span>
+<h4 class="font-headline-md text-body-lg text-on-surface">Travel Concierge AI</h4>
+</div>
+<p class="text-outline text-body-sm mb-4">Account: Delta Airlines</p>
+<div class="grid grid-cols-3 gap-4 mb-6">
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Calls</p>
+<p class="font-mono-md text-on-surface">22.9k</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Resolved</p>
+<p class="font-mono-md text-on-surface">91%</p>
+</div>
+<div>
+<p class="text-[10px] uppercase tracking-wider text-outline mb-1">Cost</p>
+<p class="font-mono-md text-on-surface">$4.2k</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 glass-card rounded-lg text-label-md text-on-surface hover:bg-white/10">Logs</button>
+<button class="flex-1 py-2 glass-card rounded-lg text-label-md text-on-surface hover:bg-white/10">Configure</button>
+<button class="w-10 h-10 glass-card rounded-lg flex items-center justify-center hover:bg-white/10">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Visual Insight Area -->
+<div class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 glass-card p-8 rounded-3xl min-h-[400px] flex flex-col">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="font-headline-md text-on-surface">Global Traffic Flow</h3>
+<p class="text-body-sm text-outline">Real-time call routing visualization across regions.</p>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-primary/20 text-primary text-[10px] rounded-full font-bold">LIVE</span>
+<span class="px-3 py-1 bg-white/5 text-outline text-[10px] rounded-full font-bold">NETWORK STABLE</span>
+</div>
+</div>
+<div class="flex-1 relative rounded-2xl overflow-hidden border border-white/5 bg-black/20">
+<div class="absolute inset-0 flex items-center justify-center text-outline/20">
+<span class="material-symbols-outlined text-[120px]">language</span>
+</div>
+<!-- Simulated Network Animation -->
+<div class="absolute inset-0 bg-cover bg-center opacity-60" data-alt="A high-tech digital map showing global telecommunication paths. The map is dark indigo with glowing cyan and purple lines connecting major cities worldwide. Pulsing light nodes represent active call volume. The style is cinematic, futuristic data visualization, similar to an advanced mission control center display. Neon glow effects and a subtle digital grid overlay the map." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDW1l3o627dPcs1_VgmtR5b12gJZSFtHmRuO8pNso3yl8uh2nr7rDkmlt1n2zLmBxfUMeOsicGzsiCko26j22Tra5Klvp_xbwa9wQRU_G07nkdd6vs1mhSWiduK3gsFANzFcSGQX_g4vr7yFTwWJhxpuNoerHGXFrGDWTC79gqWuDuZ4H-2ie5UjwCeQbWxg4ZAypml8fASIXS7WYmSCfVsI3QHXRjBBijcojpdw_JeTECaNqeE1G4L4g9JGz0mhV-wG71BWLQyyGq0')"></div>
+<div class="absolute bottom-4 left-4 p-4 glass-card rounded-xl">
+<p class="text-[10px] text-outline mb-2">HOTSPOTS</p>
+<div class="space-y-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-xs text-on-surface">North America (High)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-xs text-on-surface">Western Europe (Normal)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-card p-8 rounded-3xl flex flex-col">
+<h3 class="font-headline-md text-on-surface mb-6">Recent Activity</h3>
+<div class="space-y-6 flex-1">
+<div class="flex gap-4">
+<div class="w-2 h-2 rounded-full bg-tertiary mt-2"></div>
+<div>
+<p class="text-body-sm text-on-surface">Agent <span class="text-primary">Tesla_Support_04</span> deployed.</p>
+<p class="text-[10px] text-outline">2 minutes ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-2 h-2 rounded-full bg-error mt-2"></div>
+<div>
+<p class="text-body-sm text-on-surface">Provisioning error in <span class="text-error">Region US-East-1</span>.</p>
+<p class="text-[10px] text-outline">14 minutes ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-2 h-2 rounded-full bg-primary mt-2"></div>
+<div>
+<p class="text-body-sm text-on-surface">Billing cycle completed for <span class="text-primary">Salesforce</span>.</p>
+<p class="text-[10px] text-outline">1 hour ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-2 h-2 rounded-full bg-tertiary mt-2"></div>
+<div>
+<p class="text-body-sm text-on-surface">System scale-up: +40 instances.</p>
+<p class="text-[10px] text-outline">2 hours ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-2 h-2 rounded-full bg-outline mt-2"></div>
+<div>
+<p class="text-body-sm text-on-surface">Agent <span class="text-outline">Legacy_Bot_01</span> deactivated.</p>
+<p class="text-[10px] text-outline">4 hours ago</p>
+</div>
+</div>
+</div>
+<button class="w-full py-3 mt-6 border border-white/10 rounded-xl text-label-md text-outline hover:text-on-surface transition-colors">View All Logs</button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full mt-auto border-t border-white/5 flex justify-between items-center px-margin-desktop py-6 z-10 relative">
+<span class="font-label-md text-label-md text-outline">© 2024 Codex Call AI Intelligence. All rights reserved.</span>
+<div class="flex gap-6">
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">Documentation</a>
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">API Reference</a>
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">Status</a>
+</div>
+</footer>
+</main>
+<!-- Floating Action Button for Mobile -->
+<button class="md:hidden fixed bottom-6 right-6 w-14 h-14 rounded-full bg-primary text-on-primary shadow-2xl flex items-center justify-center z-[70] active:scale-90 transition-transform">
+<span class="material-symbols-outlined">add</span>
+</button>
+<script>
+        // Micro-interactions and subtle effects
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Simple Toggle Feedback
+        document.querySelectorAll('input[type="checkbox"]').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const card = this.closest('.glass-card');
+                const avatar = card.querySelector('.material-symbols-outlined');
+                const textElements = card.querySelectorAll('h4, p');
+                
+                if(this.checked) {
+                    card.style.opacity = "1";
+                    avatar.parentElement.style.opacity = "1";
+                    textElements.forEach(el => el.classList.remove('opacity-60', 'opacity-40'));
+                } else {
+                    card.style.opacity = "0.7";
+                    avatar.parentElement.style.opacity = "0.5";
+                    textElements.forEach(el => {
+                        if(el.tagName === 'H4') el.classList.add('opacity-60');
+                        else el.classList.add('opacity-40');
+                    });
+                }
+            });
+        });
+    </script>
+</body></html>

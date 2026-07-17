@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoiceOS Admin | Codex Call AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%) 1;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #c0c1ff, #2fd9f4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .status-glow {
+            box-shadow: 0 0 15px rgba(47, 217, 244, 0.4);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#494bd6",
+                        "on-error-container": "#ffdad6",
+                        "outline": "#908fa0",
+                        "error-container": "#93000a",
+                        "on-primary-container": "#0d0096",
+                        "error": "#ffb4ab",
+                        "on-primary": "#1000a9",
+                        "secondary-container": "#6f00be",
+                        "on-background": "#e2e2e8",
+                        "primary": "#c0c1ff",
+                        "on-surface": "#e2e2e8",
+                        "on-secondary-fixed": "#2c0051",
+                        "primary-fixed": "#e1e0ff",
+                        "tertiary-fixed": "#a2eeff",
+                        "on-tertiary-container": "#000608",
+                        "tertiary-fixed-dim": "#2fd9f4",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "on-secondary": "#490080",
+                        "surface-container-low": "#1a1c20",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "surface-container": "#1e2024",
+                        "surface-bright": "#37393e",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "on-surface-variant": "#c7c4d7",
+                        "surface-container-lowest": "#0c0e12",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#001f25",
+                        "primary-container": "#8083ff",
+                        "outline-variant": "#464554",
+                        "tertiary": "#2fd9f4",
+                        "surface": "#111318",
+                        "on-tertiary-fixed-variant": "#004e5a",
+                        "tertiary-container": "#008395",
+                        "surface-container-high": "#282a2e",
+                        "secondary-fixed": "#f0dbff",
+                        "secondary": "#ddb7ff",
+                        "on-secondary-container": "#d6a9ff",
+                        "on-primary-fixed": "#07006c",
+                        "inverse-surface": "#e2e2e8",
+                        "on-tertiary": "#00363e",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "surface-container-highest": "#333539",
+                        "surface-variant": "#333539",
+                        "inverse-on-surface": "#2f3035",
+                        "background": "#111318",
+                        "surface-dim": "#111318",
+                        "surface-tint": "#c0c1ff"
+                    },
+                    "fontFamily": {
+                        "mono-md": ["Geist"],
+                        "body-md": ["Geist"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-lg": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md selection:bg-primary selection:text-on-primary">
+<!-- Navigation Drawer (SideNav) -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-surface-container/80 backdrop-blur-md border-r border-white/10 flex flex-col p-4 gap-2 z-[60] hidden md:flex">
+<div class="px-2 py-6 mb-4">
+<span class="font-headline-md text-headline-md text-primary tracking-tight">Codex Call AI</span>
+</div>
+<div class="flex items-center gap-3 p-3 mb-6 glass-card rounded-xl">
+<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center text-on-primary font-bold">SA</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">System Admin</span>
+<span class="font-body-sm text-body-sm text-outline">Superuser Access</span>
+</div>
+</div>
+<div class="space-y-1">
+<!-- Active: Dashboard -->
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined">api</span>
+<span class="font-label-md text-label-md">Integrations</span>
+</a>
+</div>
+<div class="mt-auto space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined">shield</span>
+<span class="font-label-md text-label-md">Security</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="md:ml-64 min-h-screen flex flex-col relative overflow-x-hidden">
+<!-- Background Animation -->
+<div class="fixed inset-0 z-0 opacity-30 pointer-events-none">
+</div>
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface/50 backdrop-blur-xl border-b border-white/10 shadow-xl flex justify-between items-center px-6 md:px-12 py-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">settings_voice</span>
+<h1 class="font-headline-lg text-headline-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-tertiary">Codex Call AI Admin</h1>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">search</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional close-up studio portrait of a technology executive, mid-40s, with a friendly expression. The lighting is dramatic and high-contrast with purple and blue backlighting to match the dark futuristic UI aesthetic. The background is a blurred server room with glowing fiber optic lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvISB7lNS9fPLmNoKo3hYyZltKxbEucXjf1_3K0BX1b23_fXVnjHxMi5ka6AeW72q5YBA5BTYU-wCrHn16PU6HjWhSFlZMSHX35XC7ao1yU-UUXB2dOd63eHf4lRVtXYiOFl6Po_o4luS6-lR8rK85lO8m27R6znftGPGU0hU2Z6-NLX2-npGEunoK10ziqbqZcb1RNv_keMi0a5VRDV8F_6LKQCNvAxeZMcqjupf1xL9OxAC5KYRD85e_5jZmGUorm-AnzXsK7l-I"/>
+</div>
+</div>
+</header>
+<!-- Content Grid -->
+<div class="flex-grow p-6 md:p-12 z-10">
+<div class="max-w-[1440px] mx-auto space-y-8">
+<!-- Welcome Section -->
+<section>
+<h2 class="font-headline-xl text-headline-xl text-on-surface">Dashboard <span class="text-primary">Overview</span></h2>
+<p class="font-body-lg text-body-lg text-outline mt-2">Real-time performance metrics for Codex Call AI Infrastructure.</p>
+</section>
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Total Users -->
+<div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-48 group">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">group</span>
+</div>
+<span class="font-label-md text-label-md text-primary">+12.5%</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-outline block">Total Users</span>
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">1,284,502</span>
+</div>
+<div class="h-8 w-full mt-2 overflow-hidden opacity-50 group-hover:opacity-100 transition-opacity">
+<div class="flex items-end gap-1 h-full">
+<div class="w-full bg-primary/40 rounded-t-sm h-[40%]"></div>
+<div class="w-full bg-primary/40 rounded-t-sm h-[60%]"></div>
+<div class="w-full bg-primary/40 rounded-t-sm h-[45%]"></div>
+<div class="w-full bg-primary/40 rounded-t-sm h-[75%]"></div>
+<div class="w-full bg-primary/40 rounded-t-sm h-[55%]"></div>
+<div class="w-full bg-primary/40 rounded-t-sm h-[90%]"></div>
+</div>
+</div>
+</div>
+<!-- Active Agents -->
+<div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-48 group">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-tertiary/10 rounded-lg text-tertiary">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<span class="font-label-md text-label-md text-tertiary">Live Now</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-outline block">Active Agents</span>
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">42,901</span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<div class="w-2 h-2 rounded-full bg-tertiary animate-pulse status-glow"></div>
+<span class="font-label-md text-label-md text-tertiary uppercase tracking-widest">Healthy</span>
+</div>
+</div>
+<!-- Monthly Revenue -->
+<div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-48 group">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-secondary-container/20 rounded-lg text-secondary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="font-label-md text-label-md text-secondary">+8.2%</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-outline block">Monthly Revenue</span>
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">$2.4M</span>
+</div>
+<div class="w-full bg-white/5 h-1.5 rounded-full mt-4">
+<div class="bg-gradient-to-r from-secondary to-primary h-full rounded-full w-[78%]"></div>
+</div>
+</div>
+<!-- System Status -->
+<div class="glass-card p-6 rounded-2xl flex flex-col justify-between h-48 group bg-gradient-to-br from-white/[0.03] to-tertiary/10">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-white/10 rounded-lg text-on-surface">
+<span class="material-symbols-outlined">hub</span>
+</div>
+<span class="font-label-md text-label-md text-outline">v4.2.0</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-outline block">System Status</span>
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">99.98%</span>
+</div>
+<span class="font-label-md text-label-md text-tertiary">All nodes operational</span>
+</div>
+</section>
+<!-- Middle Content: Charts & Recent Activity -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Revenue Analytics Card -->
+<div class="lg:col-span-2 glass-card p-8 rounded-3xl min-h-[400px] flex flex-col">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Network Traffic</h3>
+<p class="font-body-sm text-body-sm text-outline">Call volume vs. Concurrent Agents</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-label-md font-label-md border border-white/5 transition-all">Daily</button>
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary text-label-md font-label-md transition-all">Weekly</button>
+</div>
+</div>
+<div class="flex-grow flex items-end justify-between gap-4 pb-4 px-4">
+<!-- Mock Visualization -->
+<div class="w-full h-48 relative flex items-end gap-3">
+<div class="w-full bg-primary/20 rounded-xl h-[40%] hover:h-[45%] transition-all duration-500"></div>
+<div class="w-full bg-primary/20 rounded-xl h-[65%] hover:h-[70%] transition-all duration-500"></div>
+<div class="w-full bg-primary/40 rounded-xl h-[55%] hover:h-[60%] transition-all duration-500"></div>
+<div class="w-full bg-primary/60 rounded-xl h-[85%] hover:h-[90%] transition-all duration-500 relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-surface p-2 rounded border border-white/10 text-[10px] whitespace-nowrap shadow-xl">Peak: 1.2M</div>
+</div>
+<div class="w-full bg-primary/40 rounded-xl h-[70%] hover:h-[75%] transition-all duration-500"></div>
+<div class="w-full bg-primary/20 rounded-xl h-[50%] hover:h-[55%] transition-all duration-500"></div>
+<div class="w-full bg-primary/10 rounded-xl h-[30%] hover:h-[35%] transition-all duration-500"></div>
+</div>
+</div>
+</div>
+<!-- Recent Deployments / Activity -->
+<div class="glass-card p-8 rounded-3xl flex flex-col h-full">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Recent Events</h3>
+<div class="space-y-6 flex-grow overflow-y-auto pr-2">
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded-full bg-tertiary/20 flex items-center justify-center text-tertiary shrink-0">
+<span class="material-symbols-outlined scale-75">update</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface leading-tight">Agent v2.4 Patch Deployed</p>
+<span class="font-label-md text-label-md text-outline">2 mins ago • Infrastructure</span>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined scale-75">person_add</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface leading-tight">Enterprise Tier Upgrade: TechCorp</p>
+<span class="font-label-md text-label-md text-outline">14 mins ago • Billing</span>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded-full bg-error/20 flex items-center justify-center text-error shrink-0">
+<span class="material-symbols-outlined scale-75">warning</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface leading-tight">Latency Spike Detected: Asia-East</p>
+<span class="font-label-md text-label-md text-outline">1 hour ago • System</span>
+</div>
+</div>
+<div class="flex gap-4 items-start opacity-60">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined scale-75">security</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface leading-tight">Firewall Rules Synchronized</p>
+<span class="font-label-md text-label-md text-outline">3 hours ago • Security</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-on-surface font-label-md transition-all">View All Activity</button>
+</div>
+</section>
+<!-- Featured Agent Grid -->
+<section>
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Top Performing Agents</h3>
+<a class="text-primary hover:underline font-label-md" href="#">View Leaderboard</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Agent Card 1 -->
+<div class="glass-card rounded-2xl overflow-hidden group">
+<div class="h-40 relative">
+<img class="w-full h-full object-cover" data-alt="A sleek, hyper-realistic 3D rendering of a female AI robot head with translucent crystalline skin revealing glowing purple circuitry. The lighting is cold and atmospheric with teal highlights. The setting is a dark tech laboratory with floating holographic data panels." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKxhoWTD90hlikmMT_lyJY-EMMMAlqEZKHqmkvPRSycZ2uVvKstaEOPIOi3ST9h6tBPt_vxzRODbdDXUbXaXQ1H6_433D7v5sagA4qqcDtavJo7v7zsqFLHsN66MmqbNIcoqRsO6y5XwVhv0u-YyKEpnxpzcfEkOn2riCTQNSpneXpZOtDhgSWCYGJu0kKACrtmmgqq5cgfMVLVLsztIFOZJpjOhqVJGTAzMlxWrsTEZHbp2fG8ufGScA59bvRwKUkPvGvKdXg0trq"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#2fd9f4]"></div>
+<span class="font-label-md text-label-md text-white font-bold">ACTIVE</span>
+</div>
+</div>
+<div class="p-6">
+<h4 class="font-headline-md text-on-surface">Codex Prime</h4>
+<p class="font-body-sm text-outline mb-4">Customer Support Specialization</p>
+<div class="flex justify-between text-label-md">
+<span class="text-outline">Efficiency: <span class="text-on-surface">98%</span></span>
+<span class="text-outline">Sentiment: <span class="text-tertiary">Positive</span></span>
+</div>
+</div>
+</div>
+<!-- Agent Card 2 -->
+<div class="glass-card rounded-2xl overflow-hidden group">
+<div class="h-40 relative">
+<img class="w-full h-full object-cover" data-alt="A high-tech digital illustration of a male AI persona, depicted as a semi-transparent golden-yellow hologram of a man in a business suit. The background is a dense matrix of glowing data points and flowing code in shades of deep blue. The lighting is cinematic and focused, suggesting high authority and intelligence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvbKBoonUMb8kE5XT8z7JRDSAu5bQ4wWKmA1ZLCE-QaNCGJAmWcv2_R6U1se-zn3Pqzqcou6z27ibWetlFyMq-2x7tbVUfHUs5SUwsuDXsN_KBOV7OF-8umvBteDJ38LlCP4T_b324FAND6bweWdtacx1eHqHURofNiHTr7qHat7kvY7m57_tYOMSjKVqsDhxAa7iDx14QefNH_amJ-cNJ4oJGUbfWz8i4IZPIfZ49BKKxEYJp8GGH95YKSEOdh98yMhLdkrpg3NyK"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#2fd9f4]"></div>
+<span class="font-label-md text-label-md text-white font-bold">ACTIVE</span>
+</div>
+</div>
+<div class="p-6">
+<h4 class="font-headline-md text-on-surface">Nexus Sales</h4>
+<p class="font-body-sm text-outline mb-4">Inbound Sales Optimization</p>
+<div class="flex justify-between text-label-md">
+<span class="text-outline">Efficiency: <span class="text-on-surface">94%</span></span>
+<span class="text-outline">Conversion: <span class="text-secondary">+12%</span></span>
+</div>
+</div>
+</div>
+<!-- Agent Card 3 -->
+<div class="glass-card rounded-2xl overflow-hidden group">
+<div class="h-40 relative">
+<img class="w-full h-full object-cover" data-alt="An abstract visualization of an AI brain, constructed from millions of tiny interconnected fiber-optic strands glowing in vibrant neon pink and electric blue. The object is floating in a dark, empty void, creating a strong sense of depth and focus. The lighting is brilliant and multi-directional, casting soft color glows onto the invisible floor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlZpEH5ZJuvg56LLZ8UTphjQjVy6WiT8a_YzAOLqTtyDw5gMUkq6IihzicmgE3iGOexJVakoxPWdBWALPljCKVItoxFAcBwPJ9kUYTLO8FeKMiUY5y_AhoFWeZs8w8D6oQMl3gO_xCMCyl9d1S7C1SwEodc-IR7tDrO5uOLJkvqrB2K3BgEuSBa9UEwq7SsqzEcXpE6vDy2wMyKHDphZjJaM8vt7OXJdZlfaYU3KJz7wNJsIdaZJ3-pDOdXzEBBQHOAuM9fqoNNmCZ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute bottom-4 left-4 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-outline shadow-[0_0_8px_#908fa0]"></div>
+<span class="font-label-md text-label-md text-white font-bold">IDLE</span>
+</div>
+</div>
+<div class="p-6">
+<h4 class="font-headline-md text-on-surface">Aurora Logic</h4>
+<p class="font-body-sm text-outline mb-4">Complex Query Resolution</p>
+<div class="flex justify-between text-label-md">
+<span class="text-outline">Efficiency: <span class="text-on-surface">--</span></span>
+<span class="text-outline">Last Active: <span class="text-on-surface">4h ago</span></span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full bg-transparent border-t border-white/5 flex justify-between items-center px-6 md:px-12 py-6 z-10">
+<span class="font-label-md text-label-md text-outline">© 2024 Codex Call AI Intelligence. All rights reserved.</span>
+<div class="flex gap-6">
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">Documentation</a>
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">API Reference</a>
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">Status</a>
+</div>
+</footer>
+</main>
+<!-- Mobile Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface-container/90 backdrop-blur-xl border-t border-white/10 flex justify-around items-center z-[70] px-4">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-label-md">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-outline hover:text-on-surface">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-label-md">Users</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-outline hover:text-on-surface">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="text-[10px] font-label-md">Agents</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-outline hover:text-on-surface">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-[10px] font-label-md">Billing</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-outline hover:text-on-surface">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-label-md">Settings</span>
+</button>
+</nav>
+<!-- Interactions Script -->
+<script>
+        // Subtle Mouse parallax for glass cards
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.glass-card');
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const cardX = rect.left + rect.width / 2;
+                const cardY = rect.top + rect.height / 2;
+
+                const angleX = (cardY - mouseY) / 60;
+                const angleY = (mouseX - cardX) / 60;
+
+                card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-2px)`;
+            });
+        });
+
+        document.addEventListener('mouseleave', () => {
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+            });
+        });
+    </script>
+<!-- Firebase SDKs -->
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
+ 
+
+<!-- Admin Access Check -->
+<script>const firebaseConfig = {
+    apiKey: "AIzaSyBQfaDWU25bMxTmKQKEe8W1Hb_Y2LHe3Hc",
+    authDomain: "codexcallai.firebaseapp.com",
+    projectId: "codexcallai",
+    storageBucket: "codexcallai.firebasestorage.app",
+    messagingSenderId: "560219905261",
+    appId: "1:560219905261:web:a8dc2fc3f70aed8d0ec0e4"
+  };
+
+  // Initialize Firebase
+   if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+ 
+
+
+  firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+          if (user.email !== "eklavyar733@gmail.com") {
+              alert("Access Denied! You are not the admin.");
+              window.location.href = "index.html";
+          }
+      } else {
+          window.location.href = "login_page.html";
+      }
+  });
+</script>
+ 
+</body></html>

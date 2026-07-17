@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Webhooks &amp; Events | Codex Call AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Geist', sans-serif;
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid;
+            border-image-source: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-image-slice: 1;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        .gradient-button {
+            background: linear-gradient(135deg, #494bd6 0%, #6f00be 100%);
+            transition: opacity 0.2s ease;
+        }
+        .gradient-button:hover {
+            opacity: 0.9;
+        }
+        .status-glow-active { box-shadow: 0 0 12px rgba(47, 217, 244, 0.3); }
+        .status-glow-warning { box-shadow: 0 0 12px rgba(255, 180, 171, 0.3); }
+        
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-slow { animation: pulse-slow 3s infinite ease-in-out; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#37393e",
+                      "secondary": "#ddb7ff",
+                      "surface": "#111318",
+                      "outline-variant": "#464554",
+                      "inverse-surface": "#e2e2e8",
+                      "on-surface": "#e2e2e8",
+                      "on-secondary-fixed-variant": "#6900b3",
+                      "on-primary": "#1000a9",
+                      "on-secondary": "#490080",
+                      "error-container": "#93000a",
+                      "on-background": "#e2e2e8",
+                      "on-primary-fixed": "#07006c",
+                      "tertiary-fixed-dim": "#2fd9f4",
+                      "tertiary": "#2fd9f4",
+                      "surface-container-low": "#1a1c20",
+                      "primary-container": "#8083ff",
+                      "on-surface-variant": "#c7c4d7",
+                      "on-error": "#690005",
+                      "surface-dim": "#111318",
+                      "tertiary-container": "#008395",
+                      "error": "#ffb4ab",
+                      "surface-container-lowest": "#0c0e12",
+                      "on-primary-container": "#0d0096",
+                      "outline": "#908fa0",
+                      "surface-tint": "#c0c1ff",
+                      "on-secondary-fixed": "#2c0051",
+                      "on-tertiary-container": "#000608",
+                      "surface-container": "#1e2024",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "surface-variant": "#333539",
+                      "surface-container-highest": "#333539",
+                      "on-tertiary-fixed-variant": "#004e5a",
+                      "secondary-fixed-dim": "#ddb7ff",
+                      "secondary-container": "#6f00be",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "primary": "#c0c1ff",
+                      "secondary-fixed": "#f0dbff",
+                      "on-secondary-container": "#d6a9ff",
+                      "primary-fixed": "#e1e0ff",
+                      "inverse-on-surface": "#2f3035",
+                      "tertiary-fixed": "#a2eeff",
+                      "background": "#111318",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary-fixed": "#001f25",
+                      "on-tertiary": "#00363e",
+                      "surface-container-high": "#282a2e",
+                      "inverse-primary": "#494bd6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "20px",
+                      "container-max-width": "1440px",
+                      "margin-desktop": "48px",
+                      "gutter": "24px",
+                      "unit": "8px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Geist"],
+                      "body-md": ["Geist"],
+                      "headline-md": ["Hanken Grotesk"],
+                      "headline-xl": ["Hanken Grotesk"],
+                      "headline-lg": ["Hanken Grotesk"],
+                      "body-sm": ["Geist"],
+                      "mono-md": ["Geist"],
+                      "headline-lg-mobile": ["Hanken Grotesk"],
+                      "label-md": ["Geist"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/50 backdrop-blur-xl border-b border-white/10 flex justify-between items-center px-margin-mobile h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl">bubble_chart</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Codex Call AI</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-24 px-margin-mobile max-w-screen-xl mx-auto">
+<!-- Animated Background Element -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+
+</div>
+<!-- Header Action Section -->
+<section class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Webhooks &amp; Events</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage automated real-time triggers for your enterprise workflow.</p>
+</div>
+<button class="gradient-button px-6 py-3 rounded-xl flex items-center justify-center gap-2 text-white font-bold active:scale-95 transition-transform shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add</span>
+<span>Create Webhook</span>
+</button>
+</section>
+<!-- Filter Chips -->
+<section class="mb-8 flex items-center gap-3 overflow-x-auto hide-scrollbar pb-2">
+<button class="px-5 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 font-label-md text-label-md whitespace-nowrap">All Connections</button>
+<button class="px-5 py-2 rounded-full bg-surface-container hover:bg-surface-variant text-on-surface-variant border border-white/5 font-label-md text-label-md whitespace-nowrap transition-colors">Active</button>
+<button class="px-5 py-2 rounded-full bg-surface-container hover:bg-surface-variant text-on-surface-variant border border-white/5 font-label-md text-label-md whitespace-nowrap transition-colors">Paused</button>
+<button class="px-5 py-2 rounded-full bg-surface-container hover:bg-surface-variant text-on-surface-variant border border-white/5 font-label-md text-label-md whitespace-nowrap transition-colors">Failed</button>
+</section>
+<!-- Webhook Grid (Asymmetric Bento-ish Style) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+<!-- Twilio Card -->
+<div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20">
+<span class="material-symbols-outlined text-red-400">call</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md leading-tight">Twilio</h3>
+<p class="text-[10px] uppercase tracking-wider text-outline">Voice &amp; SMS</p>
+</div>
+</div>
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary/10 text-tertiary text-[11px] font-bold status-glow-active">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                            ACTIVE
+                        </span>
+</div>
+<div class="bg-black/20 rounded-lg p-3 flex items-center justify-between mb-4 border border-white/5">
+<span class="font-mono-md text-mono-md text-on-surface-variant truncate">https://api.codex.ai/wh/tw_8291...</span>
+<button class="text-primary hover:text-secondary transition-colors"><span class="material-symbols-outlined text-sm">content_copy</span></button>
+</div>
+<div class="flex items-center gap-4 text-sm mb-6">
+<div class="flex-1">
+<p class="text-outline text-[11px] uppercase mb-1">Success Rate</p>
+<div class="flex items-center gap-2">
+<span class="text-tertiary font-bold">99.8%</span>
+<div class="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[99.8%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface text-sm font-semibold transition-colors">Logs</button>
+<button class="flex-1 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-sm font-semibold transition-colors border border-primary/20">Manage</button>
+</div>
+</div>
+<!-- OpenAI Card -->
+<div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center border border-green-500/20">
+<span class="material-symbols-outlined text-green-400">psychology</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md leading-tight">OpenAI</h3>
+<p class="text-[10px] uppercase tracking-wider text-outline">Realtime API</p>
+</div>
+</div>
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary/10 text-tertiary text-[11px] font-bold status-glow-active">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                            ACTIVE
+                        </span>
+</div>
+<div class="bg-black/20 rounded-lg p-3 flex items-center justify-between mb-4 border border-white/5">
+<span class="font-mono-md text-mono-md text-on-surface-variant truncate">https://api.codex.ai/wh/oa_9122...</span>
+<button class="text-primary hover:text-secondary transition-colors"><span class="material-symbols-outlined text-sm">content_copy</span></button>
+</div>
+<div class="flex items-center gap-4 text-sm mb-6">
+<div class="flex-1">
+<p class="text-outline text-[11px] uppercase mb-1">Success Rate</p>
+<div class="flex items-center gap-2">
+<span class="text-tertiary font-bold">100%</span>
+<div class="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface text-sm font-semibold transition-colors">Logs</button>
+<button class="flex-1 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-sm font-semibold transition-colors border border-primary/20">Manage</button>
+</div>
+</div>
+<!-- Stripe Card (Warning State) -->
+<div class="glass-card rounded-2xl p-6 flex flex-col justify-between border-error/20">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+<span class="material-symbols-outlined text-blue-400">payments</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md leading-tight">Stripe</h3>
+<p class="text-[10px] uppercase tracking-wider text-outline">Payments</p>
+</div>
+</div>
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error/10 text-error text-[11px] font-bold status-glow-warning">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                            ISSUE
+                        </span>
+</div>
+<div class="bg-black/20 rounded-lg p-3 flex items-center justify-between mb-4 border border-white/5">
+<span class="font-mono-md text-mono-md text-on-surface-variant truncate">https://api.codex.ai/wh/st_4412...</span>
+<button class="text-primary hover:text-secondary transition-colors"><span class="material-symbols-outlined text-sm">content_copy</span></button>
+</div>
+<div class="flex items-center gap-4 text-sm mb-6">
+<div class="flex-1">
+<p class="text-outline text-[11px] uppercase mb-1">Success Rate</p>
+<div class="flex items-center gap-2">
+<span class="text-error font-bold">84.2%</span>
+<div class="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-error w-[84%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface text-sm font-semibold transition-colors">Logs</button>
+<button class="flex-1 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-sm font-semibold transition-colors border border-primary/20">Manage</button>
+</div>
+</div>
+<!-- Google Calendar -->
+<div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-yellow-500/10 flex items-center justify-center border border-yellow-500/20">
+<span class="material-symbols-outlined text-yellow-400">calendar_month</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md leading-tight">Google Calendar</h3>
+<p class="text-[10px] uppercase tracking-wider text-outline">Scheduling</p>
+</div>
+</div>
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary/10 text-tertiary text-[11px] font-bold status-glow-active">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                            ACTIVE
+                        </span>
+</div>
+<div class="bg-black/20 rounded-lg p-3 flex items-center justify-between mb-4 border border-white/5">
+<span class="font-mono-md text-mono-md text-on-surface-variant truncate">https://api.codex.ai/wh/gc_0039...</span>
+<button class="text-primary hover:text-secondary transition-colors"><span class="material-symbols-outlined text-sm">content_copy</span></button>
+</div>
+<div class="flex items-center gap-4 text-sm mb-6">
+<div class="flex-1">
+<p class="text-outline text-[11px] uppercase mb-1">Success Rate</p>
+<div class="flex items-center gap-2">
+<span class="text-tertiary font-bold">99.1%</span>
+<div class="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[99%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface text-sm font-semibold transition-colors">Logs</button>
+<button class="flex-1 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-sm font-semibold transition-colors border border-primary/20">Manage</button>
+</div>
+</div>
+<!-- Slack -->
+<div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
+<span class="material-symbols-outlined text-purple-400">chat_bubble</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md leading-tight">Slack</h3>
+<p class="text-[10px] uppercase tracking-wider text-outline">Notifications</p>
+</div>
+</div>
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-tertiary/10 text-tertiary text-[11px] font-bold status-glow-active">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                            ACTIVE
+                        </span>
+</div>
+<div class="bg-black/20 rounded-lg p-3 flex items-center justify-between mb-4 border border-white/5">
+<span class="font-mono-md text-mono-md text-on-surface-variant truncate">https://api.codex.ai/wh/sl_8821...</span>
+<button class="text-primary hover:text-secondary transition-colors"><span class="material-symbols-outlined text-sm">content_copy</span></button>
+</div>
+<div class="flex items-center gap-4 text-sm mb-6">
+<div class="flex-1">
+<p class="text-outline text-[11px] uppercase mb-1">Success Rate</p>
+<div class="flex items-center gap-2">
+<span class="text-tertiary font-bold">98.5%</span>
+<div class="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[98%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface text-sm font-semibold transition-colors">Logs</button>
+<button class="flex-1 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-sm font-semibold transition-colors border border-primary/20">Manage</button>
+</div>
+</div>
+<!-- Zapier (Paused State) -->
+<div class="glass-card rounded-2xl p-6 flex flex-col justify-between opacity-70">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center border border-orange-500/20">
+<span class="material-symbols-outlined text-orange-400">conversion_path</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md leading-tight">Zapier</h3>
+<p class="text-[10px] uppercase tracking-wider text-outline">Automation</p>
+</div>
+</div>
+<span class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-outline-variant/20 text-outline text-[11px] font-bold">
+                            PAUSED
+                        </span>
+</div>
+<div class="bg-black/20 rounded-lg p-3 flex items-center justify-between mb-4 border border-white/5">
+<span class="font-mono-md text-mono-md text-on-surface-variant truncate">https://api.codex.ai/wh/zp_1211...</span>
+<button class="text-primary hover:text-secondary transition-colors"><span class="material-symbols-outlined text-sm">content_copy</span></button>
+</div>
+<div class="flex items-center gap-4 text-sm mb-6">
+<div class="flex-1">
+<p class="text-outline text-[11px] uppercase mb-1">Success Rate</p>
+<div class="flex items-center gap-2">
+<span class="text-outline font-bold">N/A</span>
+<div class="h-1 flex-1 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-outline-variant/30 w-0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-on-surface text-sm font-semibold transition-colors">Logs</button>
+<button class="flex-1 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-sm font-semibold transition-colors border border-primary/20">Resume</button>
+</div>
+</div>
+</section>
+<!-- Recent Deliveries Section -->
+<section class="glass-panel rounded-3xl p-6 md:p-8 overflow-hidden relative">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md text-headline-md">Recent Deliveries</h3>
+<button class="text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+                    View Live Feed <span class="material-symbols-outlined text-sm">open_in_new</span>
+</button>
+</div>
+<div class="space-y-4">
+<!-- Log Item 1 -->
+<div class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-center justify-center">
+<span class="text-tertiary font-mono-md text-xs font-bold px-2 py-0.5 rounded bg-tertiary/10">200 OK</span>
+</div>
+<div>
+<p class="font-mono-md text-mono-md font-bold text-on-surface">call.initiated</p>
+<p class="text-[11px] text-outline">Twilio Production • 2m ago</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="hidden md:block font-mono-md text-xs text-outline-variant">#evt_91a2...</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+<!-- Log Item 2 -->
+<div class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-center justify-center">
+<span class="text-tertiary font-mono-md text-xs font-bold px-2 py-0.5 rounded bg-tertiary/10">200 OK</span>
+</div>
+<div>
+<p class="font-mono-md text-mono-md font-bold text-on-surface">payment.succeeded</p>
+<p class="text-[11px] text-outline">Stripe Master • 15m ago</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="hidden md:block font-mono-md text-xs text-outline-variant">#evt_77z4...</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+<!-- Log Item 3 (Error) -->
+<div class="flex items-center justify-between p-4 rounded-xl bg-error/5 border border-error/10 hover:bg-error/10 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-center justify-center">
+<span class="text-error font-mono-md text-xs font-bold px-2 py-0.5 rounded bg-error/10">400 ERR</span>
+</div>
+<div>
+<p class="font-mono-md text-mono-md font-bold text-error">transcript.completed</p>
+<p class="text-[11px] text-error/60">OpenAI Realtime • 42m ago</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="hidden md:block font-mono-md text-xs text-error/40">#evt_00c1...</span>
+<span class="material-symbols-outlined text-error/60 group-hover:text-error transition-colors">chevron_right</span>
+</div>
+</div>
+<!-- Log Item 4 -->
+<div class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-center justify-center">
+<span class="text-tertiary font-mono-md text-xs font-bold px-2 py-0.5 rounded bg-tertiary/10">200 OK</span>
+</div>
+<div>
+<p class="font-mono-md text-mono-md font-bold text-on-surface">calendar.event_created</p>
+<p class="text-[11px] text-outline">Google Calendar • 1h ago</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="hidden md:block font-mono-md text-xs text-outline-variant">#evt_32x9...</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Floating Glow Decoration -->
+<div class="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/10 blur-[100px] rounded-full"></div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-t border-white/10 flex justify-around items-center px-4 py-3 pb-safe shadow-2xl rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-outline hover:text-secondary transition-colors active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline hover:text-secondary transition-colors active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline hover:text-secondary transition-colors active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">phone_in_talk</span>
+<span class="font-label-md text-label-md">Phone</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold bg-primary/10 rounded-xl px-3 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+</nav>
+<!-- Micro-interaction Scripts -->
+<script>
+        // Simple Copy to Clipboard Simulation
+        document.querySelectorAll('button').forEach(btn => {
+            if(btn.querySelector('.material-symbols-outlined')?.innerText === 'content_copy') {
+                btn.onclick = () => {
+                    const original = btn.innerHTML;
+                    btn.innerHTML = '<span class="material-symbols-outlined text-sm text-tertiary">check</span>';
+                    setTimeout(() => btn.innerHTML = original, 2000);
+                };
+            }
+        });
+
+        // Hover atmosphere effect
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.querySelector('.bg-primary\\/10.blur-\\[100px\\]');
+            if(glow) {
+                const moveX = (e.clientX - window.innerWidth / 2) / 20;
+                const moveY = (e.clientY - window.innerHeight / 2) / 20;
+                glow.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
+        });
+    </script>
+</body></html>

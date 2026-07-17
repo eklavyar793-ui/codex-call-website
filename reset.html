@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reset Password | Codex Call AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#490080",
+                        "secondary-fixed": "#f0dbff",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "surface-container-highest": "#333539",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "primary-fixed": "#e1e0ff",
+                        "error": "#ffb4ab",
+                        "surface-container-low": "#1a1c20",
+                        "primary-container": "#8083ff",
+                        "inverse-surface": "#e2e2e8",
+                        "on-secondary-container": "#d6a9ff",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#000608",
+                        "on-tertiary": "#00363e",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "inverse-primary": "#494bd6",
+                        "background": "#0A0C10",
+                        "secondary": "#ddb7ff",
+                        "on-primary-container": "#0d0096",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#2fd9f4",
+                        "on-secondary-fixed": "#2c0051",
+                        "outline": "#908fa0",
+                        "inverse-on-surface": "#2f3035",
+                        "on-tertiary-fixed": "#001f25",
+                        "tertiary-fixed-dim": "#2fd9f4",
+                        "tertiary-fixed": "#a2eeff",
+                        "surface-bright": "#37393e",
+                        "surface-container": "#1e2024",
+                        "tertiary-container": "#008395",
+                        "surface-tint": "#c0c1ff",
+                        "on-background": "#e2e2e8",
+                        "on-tertiary-fixed-variant": "#004e5a",
+                        "surface": "#111318",
+                        "on-surface-variant": "#c7c4d7",
+                        "on-primary-fixed": "#07006c",
+                        "on-surface": "#e2e2e8",
+                        "surface-container-high": "#282a2e",
+                        "on-primary": "#1000a9",
+                        "outline-variant": "#464554",
+                        "error-container": "#93000a",
+                        "surface-variant": "#333539",
+                        "surface-dim": "#111318",
+                        "surface-container-lowest": "#0c0e12",
+                        "secondary-container": "#6f00be",
+                        "primary": "#c0c1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "container-max-width": "1440px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Geist"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "mono-md": ["Geist"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-sm": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "body-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02)) 1;
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #494bd6 0%, #6f00be 100%);
+        }
+        .strength-bar {
+            height: 4px;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .floating-orb {
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 12s infinite ease-in-out;
+        }
+        .hidden-state {
+            display: none !important;
+        }
+        .success-checkmark {
+            animation: check-scale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes check-scale {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen font-body-md">
+<!-- Atmospheric Background -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary rounded-full floating-orb"></div>
+<div class="absolute top-1/2 -right-48 w-[500px] h-[500px] bg-secondary rounded-full floating-orb" style="animation-delay: -3s;"></div>
+<div class="absolute -bottom-24 left-1/3 w-80 h-80 bg-tertiary rounded-full floating-orb" style="animation-delay: -6s;"></div>
+</div>
+<!-- Top Navigation Bar (Shared Component Strategy) -->
+<header class="fixed top-0 w-full z-50 bg-surface/50 backdrop-blur-xl border-b border-white/10 h-16 flex justify-between items-center px-margin-mobile md:px-margin-desktop">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="bubble_chart">bubble_chart</span>
+<span class="font-headline-md text-headline-md font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Codex Call AI</span>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Support</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Status</a>
+</div>
+</header>
+<main class="flex-grow flex items-center justify-center pt-24 pb-12 px-margin-mobile z-10">
+<!-- Reset Form Container -->
+<div class="w-full max-w-md glass-panel p-8 rounded-xl shadow-2xl relative" id="reset-container">
+<!-- Default Form State -->
+<div id="password-form-state">
+<div class="mb-8">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-2">New Password</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Please choose a strong password to protect your account.</p>
+</div>
+<form class="space-y-6" id="resetForm" onsubmit="handleReset(event)">
+<!-- New Password Field -->
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-on-surface-variant" for="new_password">New Password</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest/50 border border-white/10 rounded-lg px-4 py-3 text-on-surface placeholder-outline-variant focus:outline-none focus:border-primary transition-all pr-12" id="new_password" name="new_password" oninput="checkStrength(this.value)" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface transition-colors" onclick="toggleVisibility('new_password')" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+<!-- Password Strength Indicator -->
+<div class="mt-2 space-y-1">
+<div class="flex gap-1 h-1">
+<div class="strength-bar flex-1 bg-white/10 rounded-full" id="strength-1"></div>
+<div class="strength-bar flex-1 bg-white/10 rounded-full" id="strength-2"></div>
+<div class="strength-bar flex-1 bg-white/10 rounded-full" id="strength-3"></div>
+<div class="strength-bar flex-1 bg-white/10 rounded-full" id="strength-4"></div>
+</div>
+<p class="font-label-md text-label-md text-outline" id="strength-text">Enter a password</p>
+</div>
+</div>
+<!-- Confirm Password Field -->
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-on-surface-variant" for="confirm_password">Confirm New Password</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest/50 border border-white/10 rounded-lg px-4 py-3 text-on-surface placeholder-outline-variant focus:outline-none focus:border-primary transition-all pr-12" id="confirm_password" name="confirm_password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline-variant hover:text-on-surface transition-colors" onclick="toggleVisibility('confirm_password')" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Action Button -->
+<a class="w-full primary-gradient py-4 rounded-lg text-white font-bold font-label-md text-label-md shadow-lg shadow-primary/20 active:scale-95 transition-transform hover:brightness-110 flex items-center justify-center gap-2" href="{{DATA:SCREEN:SCREEN_25}}">
+                        Update Password
+                        <span class="material-symbols-outlined text-[18px]" data-icon="lock_reset">lock_reset</span>
+</a>
+</form>
+</div>
+<!-- Success State (Hidden initially) -->
+<div class="hidden-state flex flex-col items-center text-center py-6" id="success-state">
+<div class="w-20 h-20 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 success-checkmark">
+<span class="material-symbols-outlined text-primary text-[48px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Password Updated</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 px-4">Your account security has been updated successfully. You can now log in with your new credentials.</p>
+<a class="w-full border border-white/10 bg-white/5 hover:bg-white/10 py-4 rounded-lg text-on-surface font-bold font-label-md text-label-md transition-all" href="#">
+                    Proceed to Dashboard
+                </a>
+</div>
+</div>
+<!-- Decorative UI Element (Phone Visualization Context) -->
+<div class="hidden lg:block fixed right-margin-desktop top-1/2 -translate-y-1/2 w-80 pointer-events-none">
+<div class="glass-panel p-6 rounded-2xl relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-tertiary/20 rounded-full blur-2xl group-hover:bg-tertiary/40 transition-all duration-700"></div>
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="shield">shield</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Vault Secure</p>
+<p class="text-[10px] text-outline uppercase tracking-widest">Active</p>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-2/3 shadow-[0_0_8px_rgba(192,193,255,0.5)]"></div>
+</div>
+<div class="flex justify-between font-label-md text-label-md text-outline text-[10px]">
+<span>SECURITY THRESHOLD</span>
+<span>85%</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Identity -->
+<footer class="w-full py-8 px-margin-mobile flex flex-col items-center gap-4 text-outline z-10">
+<p class="font-body-sm text-body-sm">© 2024 Codex Call AI. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-[12px] hover:text-on-surface transition-colors" href="#">Privacy Policy</a>
+<a class="text-[12px] hover:text-on-surface transition-colors" href="#">Terms of Service</a>
+</div>
+</footer>
+<script>
+        function toggleVisibility(inputId) {
+            const input = document.getElementById(inputId);
+            const btn = input.nextElementSibling.querySelector('span');
+            if (input.type === "password") {
+                input.type = "text";
+                btn.innerText = "visibility_off";
+            } else {
+                input.type = "password";
+                btn.innerText = "visibility";
+            }
+        }
+
+        function checkStrength(val) {
+            const bars = [
+                document.getElementById('strength-1'),
+                document.getElementById('strength-2'),
+                document.getElementById('strength-3'),
+                document.getElementById('strength-4')
+            ];
+            const text = document.getElementById('strength-text');
+            
+            let strength = 0;
+            if (val.length > 5) strength++;
+            if (val.length > 8) strength++;
+            if (/[A-Z]/.test(val) && /[0-9]/.test(val)) strength++;
+            if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+            bars.forEach((bar, i) => {
+                bar.classList.remove('bg-error', 'bg-secondary', 'bg-tertiary', 'bg-primary');
+                bar.classList.add('bg-white/10');
+                if (i < strength) {
+                    if (strength === 1) bar.classList.add('bg-error');
+                    else if (strength === 2) bar.classList.add('bg-secondary');
+                    else if (strength === 3) bar.classList.add('bg-tertiary');
+                    else bar.classList.add('bg-primary');
+                    bar.classList.remove('bg-white/10');
+                }
+            });
+
+            const labels = ["Weak", "Fair", "Good", "Strong"];
+            text.innerText = val.length > 0 ? labels[strength - 1] || "Weak" : "Enter a password";
+            
+            if (strength === 1) text.className = "font-label-md text-label-md text-error";
+            else if (strength === 4) text.className = "font-label-md text-label-md text-primary";
+            else text.className = "font-label-md text-label-md text-outline";
+        }
+
+        function handleReset(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalContent = btn.innerHTML;
+            
+            // Mock Loading
+            btn.disabled = true;
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span> Updating...`;
+            
+            setTimeout(() => {
+                document.getElementById('password-form-state').classList.add('hidden-state');
+                document.getElementById('success-state').classList.remove('hidden-state');
+            }, 1500);
+        }
+    </script>
+</body></html>

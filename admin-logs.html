@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoiceOS Admin | Security &amp; Audit Logs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            font-family: 'Geist', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02)) 1;
+        }
+
+        .glass-border {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .primary-gradient {
+            background: linear-gradient(135deg, #8083ff 0%, #6f00be 100%);
+        }
+
+        .glow-indigo {
+            box-shadow: 0 0 20px rgba(128, 131, 255, 0.2);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .status-active { color: #2fd9f4; }
+        .status-warning { color: #ffb4ab; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#494bd6",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#908fa0",
+                      "error-container": "#93000a",
+                      "on-primary-container": "#0d0096",
+                      "error": "#ffb4ab",
+                      "on-primary": "#1000a9",
+                      "secondary-container": "#6f00be",
+                      "on-background": "#e2e2e8",
+                      "primary": "#c0c1ff",
+                      "on-surface": "#e2e2e8",
+                      "on-secondary-fixed": "#2c0051",
+                      "primary-fixed": "#e1e0ff",
+                      "tertiary-fixed": "#a2eeff",
+                      "on-tertiary-container": "#000608",
+                      "tertiary-fixed-dim": "#2fd9f4",
+                      "on-secondary-fixed-variant": "#6900b3",
+                      "on-secondary": "#490080",
+                      "surface-container-low": "#1a1c20",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "surface-container": "#1e2024",
+                      "surface-bright": "#37393e",
+                      "secondary-fixed-dim": "#ddb7ff",
+                      "on-surface-variant": "#c7c4d7",
+                      "surface-container-lowest": "#0c0e12",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed": "#001f25",
+                      "primary-container": "#8083ff",
+                      "outline-variant": "#464554",
+                      "tertiary": "#2fd9f4",
+                      "surface": "#111318",
+                      "on-tertiary-fixed-variant": "#004e5a",
+                      "tertiary-container": "#008395",
+                      "surface-container-high": "#282a2e",
+                      "secondary-fixed": "#f0dbff",
+                      "secondary": "#ddb7ff",
+                      "on-secondary-container": "#d6a9ff",
+                      "on-primary-fixed": "#07006c",
+                      "inverse-surface": "#e2e2e8",
+                      "on-tertiary": "#00363e",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "surface-container-highest": "#333539",
+                      "surface-variant": "#333539",
+                      "inverse-on-surface": "#2f3035",
+                      "background": "#111318",
+                      "surface-dim": "#111318",
+                      "surface-tint": "#c0c1ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "20px",
+                      "margin-desktop": "48px",
+                      "unit": "8px",
+                      "container-max-width": "1440px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "mono-md": ["Geist"],
+                      "body-md": ["Geist"],
+                      "headline-lg": ["Hanken Grotesk"],
+                      "body-lg": ["Geist"],
+                      "headline-lg-mobile": ["Hanken Grotesk"],
+                      "body-sm": ["Geist"],
+                      "label-md": ["Geist"],
+                      "headline-md": ["Hanken Grotesk"],
+                      "headline-xl": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                      "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary/30">
+<!-- Navigation Drawer -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container dark:bg-surface-container backdrop-blur-md border-r border-white/10 shadow-2xl flex flex-col h-full p-4 gap-2 z-[60] hidden md:flex">
+<div class="flex items-center gap-3 mb-8 px-2">
+<span class="material-symbols-outlined text-primary text-3xl">settings_voice</span>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Codex Call AI</h1>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Navigation Items Mapping -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">payments</span>
+<span class="font-label-md text-label-md">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-xl">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg shadow-lg shadow-primary/10" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="font-label-md text-label-md">Security</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-white/10">
+<div class="flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-full glass-border flex items-center justify-center bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a tech-savvy female system administrator in her late 30s, wearing modern minimalist spectacles, set against a blurred background of a dark high-tech server room with glowing blue and indigo lights. The style is professional corporate photography with deep shadows and vibrant cyan accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxU36wF8c2PyLD7ljiBbQ601tmGXEFwbQe-zP_OpNkK2FuLENza128E4-n8AJIa45mRm1tXjWCTnhld1zpCNU_-lNURbfEvijlNjRemwEq_UNxh8NBExFgKy8qOWpSZocbdmLeoG0kInaogagaxNxhB2gxQ0kIqN09o0NZW9hFxYxbEynSOUMjRL1J1M5baowVm6Khepu685LOhnnon6xZwHWwuI6xeODUmf9lcOjsq1rY4Be_LYxphKW6hQbbk5yRibrw1dMEPoB1"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">System Admin</span>
+<span class="font-body-sm text-body-sm text-outline">Superuser Access</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:pl-64 flex flex-col min-h-screen">
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 z-50 bg-surface/50 dark:bg-surface/50 backdrop-blur-xl border-b border-white/10 shadow-xl flex justify-between items-center px-6 md:px-margin-desktop py-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined md:hidden text-primary">menu</span>
+<h2 class="font-headline-lg text-headline-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-tertiary">Security &amp; Audit</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex bg-surface-container-lowest glass-border rounded-full px-4 py-1.5 items-center gap-2">
+<span class="material-symbols-outlined text-sm text-tertiary" style="font-variation-settings: 'FILL' 1;">circle</span>
+<span class="font-label-md text-label-md text-on-surface-variant">System Status: Optimal</span>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary font-bold text-xs">SA</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="flex-1 p-6 md:p-margin-desktop space-y-gutter relative">
+<!-- Atmospheric Background Element -->
+<div class="fixed top-0 right-0 -z-10 opacity-30">
+</div>
+<!-- Bento Grid Header -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Stat Card 1 -->
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2">
+<span class="font-label-md text-label-md text-outline uppercase tracking-widest">Active Sessions</span>
+<div class="flex items-end justify-between">
+<span class="font-headline-xl text-headline-xl text-on-surface">1,284</span>
+<span class="text-tertiary font-mono-md text-mono-md flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> 12%
+                        </span>
+</div>
+<div class="w-full bg-white/5 h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="h-full primary-gradient w-[65%]"></div>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="glass-card p-6 rounded-xl flex flex-col gap-2">
+<span class="font-label-md text-label-md text-outline uppercase tracking-widest">Failed Logins (24h)</span>
+<div class="flex items-end justify-between">
+<span class="font-headline-xl text-headline-xl text-error">42</span>
+<span class="text-error/80 font-mono-md text-mono-md flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">security</span> Locked
+                        </span>
+</div>
+<div class="w-full bg-white/5 h-1.5 rounded-full mt-2 overflow-hidden">
+<div class="h-full bg-error w-[15%]"></div>
+</div>
+</div>
+<!-- Security Score Card (Asymmetric) -->
+<div class="glass-card p-6 rounded-xl md:col-span-2 relative overflow-hidden group">
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-md text-label-md text-outline uppercase tracking-widest">Security Health Score</span>
+<h3 class="font-headline-lg text-headline-lg text-tertiary mt-1">98/100</h3>
+</div>
+<span class="material-symbols-outlined text-tertiary text-4xl opacity-50">verified_user</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs">All AI agents are currently operating under strict SSL/TLS 1.3 protocols with active MFA enforcement.</p>
+</div>
+<div class="absolute -right-10 -bottom-10 w-48 h-48 bg-tertiary/10 rounded-full blur-3xl transition-all duration-500 group-hover:scale-150"></div>
+</div>
+</div>
+<!-- Detailed Audit Logs Table Section -->
+<section class="glass-card rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+<div class="p-6 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Administrative Audit Log</h3>
+<p class="font-body-sm text-body-sm text-outline">Real-time tracking of system-wide administrative modifications</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="bg-black/20 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-body-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all w-full md:w-64" placeholder="Filter by user, action..." type="text"/>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 glass-border rounded-lg hover:bg-white/5 transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                            Filter
+                        </button>
+<button class="primary-gradient px-4 py-2 rounded-lg font-label-md text-label-md text-on-primary-container shadow-lg shadow-primary/20 active:scale-95 transition-transform">
+                            Export CSV
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-white/2 border-b border-white/5">
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider">Timestamp</th>
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider">Administrator</th>
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider">Action Type</th>
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider">Resource</th>
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 font-label-md text-label-md text-outline uppercase tracking-wider text-right">Details</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/2 transition-colors">
+<td class="px-6 py-4 font-mono-md text-mono-md text-on-surface-variant">2024-05-24 14:22:10</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center text-secondary font-bold text-[10px]">JD</div>
+<span class="font-body-sm text-body-sm text-on-surface">James Donovan</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20 font-label-md text-[10px] uppercase">API_KEY_REVOKE</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-body-sm text-outline">Production_API_v2</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-tertiary font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Success
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-outline hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-white/2 transition-colors">
+<td class="px-6 py-4 font-mono-md text-mono-md text-on-surface-variant">2024-05-24 14:15:02</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary/20 flex items-center justify-center text-tertiary font-bold text-[10px]">SM</div>
+<span class="font-body-sm text-body-sm text-on-surface">Sarah Miller</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-md bg-secondary/10 text-secondary border border-secondary/20 font-label-md text-[10px] uppercase">ROLE_UPGRADE</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-body-sm text-outline">User_ID: #4492</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-tertiary font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Success
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-outline hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-white/2 transition-colors">
+<td class="px-6 py-4 font-mono-md text-mono-md text-on-surface-variant">2024-05-24 13:58:44</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-error/20 flex items-center justify-center text-error font-bold text-[10px]">SYS</div>
+<span class="font-body-sm text-body-sm text-on-surface">System Kernel</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-md bg-error/10 text-error border border-error/20 font-label-md text-[10px] uppercase">SSH_DENIED</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-body-sm text-outline">Node_US_East_4</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-error font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Blocked
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-outline hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-white/2 transition-colors">
+<td class="px-6 py-4 font-mono-md text-mono-md text-on-surface-variant">2024-05-24 12:45:19</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-[10px]">AL</div>
+<span class="font-body-sm text-body-sm text-on-surface">Alex Lee</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-md bg-primary/10 text-primary border border-primary/20 font-label-md text-[10px] uppercase">SCHEMA_EDIT</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-body-sm text-outline">Voice_Patterns_DB</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-tertiary font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Success
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-outline hover:text-on-surface">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer -->
+<div class="p-4 border-t border-white/5 flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-outline">Showing 1-20 of 4,821 entries</span>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/5 text-outline"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center bg-primary/20 text-primary font-bold font-label-md text-label-md">1</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/5 text-outline font-label-md text-label-md">2</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/5 text-outline font-label-md text-label-md">3</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/5 text-outline"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</section>
+<!-- Lower Grid: Role Management & Login Map -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Role Management -->
+<div class="lg:col-span-1 glass-card rounded-xl p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-headline-md text-on-surface">Active Roles</h4>
+<span class="material-symbols-outlined text-tertiary cursor-pointer">add_circle</span>
+</div>
+<div class="space-y-4 mt-2">
+<div class="flex items-center justify-between p-3 rounded-lg bg-white/2 glass-border">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">admin_panel_settings</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Super Admin</p>
+<p class="font-body-sm text-body-sm text-outline">3 assigned</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-sm">settings</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg bg-white/2 glass-border">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">support_agent</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Voice Engineer</p>
+<p class="font-body-sm text-body-sm text-outline">12 assigned</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-sm">settings</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg bg-white/2 glass-border">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">analytics</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Data Analyst</p>
+<p class="font-body-sm text-body-sm text-outline">8 assigned</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-sm">settings</span>
+</div>
+</div>
+</div>
+<!-- Geolocation of Recent Logins -->
+<div class="lg:col-span-2 glass-card rounded-xl p-6 relative min-h-[300px]">
+<div class="absolute inset-0 z-0 opacity-40">
+<div class="w-full h-full bg-cover bg-center" data-alt="A stylized futuristic dark world map with glowing cyan connection lines and pulse points representing global server locations. The aesthetic is high-tech, minimal, and data-driven, using a deep indigo and black color palette with vibrant neon cyan accents." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0Qf_uRT1wpNW2xNsyRgDN8PdTB8vLQrjF2Hn84LvtQEoX0gocI5Dhss0BysCOhHuMk5yyXOBrY2GNhYS06tbUZtmpI5yBCx8C5l_MyuDK4i10o2F5hp7xO9gt86DGDynjHtx465yY7jUI8XW7y7-GI4s1s_7wyexvr4A-yuiLNtcy1TS2NANrTdJ1EtEZEmIyIKqjNDt8krGbszY7NgYB5u6CILxqh-aF_cHxkg3VF95Yk1zYLd4ANMaRi1YCvLgz4tCj-TDxfDEz')"></div>
+</div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Login Traffic Analysis</h4>
+<p class="font-body-sm text-body-sm text-outline">Global administrative access distribution</p>
+</div>
+<div class="flex bg-black/40 p-1 rounded-lg border border-white/10">
+<button class="px-3 py-1 bg-primary text-on-primary text-[10px] rounded font-bold uppercase">Map</button>
+<button class="px-3 py-1 text-outline text-[10px] font-bold uppercase hover:text-white">Chart</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-3 bg-black/30 backdrop-blur rounded-lg border border-white/5">
+<p class="font-label-md text-label-md text-tertiary">London, UK</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">42 Active Sessions</p>
+</div>
+<div class="p-3 bg-black/30 backdrop-blur rounded-lg border border-white/5">
+<p class="font-label-md text-label-md text-primary">San Francisco, US</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">128 Active Sessions</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full mt-auto border-t border-white/5 flex justify-between items-center px-6 md:px-margin-desktop py-6">
+<span class="font-label-md text-label-md text-outline">© 2024 Codex Call AI Intelligence. All rights reserved.</span>
+<div class="flex gap-6">
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">Documentation</a>
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">API Reference</a>
+<a class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors" href="#">Status</a>
+</div>
+</footer>
+</main>
+<script>
+        // Micro-interactions and subtle glow effects
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.glass-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            });
+        });
+    </script>
+</body></html>

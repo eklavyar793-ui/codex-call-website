@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Codex Call AI Admin | Integrations &amp; API Oversight</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            font-family: 'Geist', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%) 1;
+        }
+
+        .premium-gradient-text {
+            background: linear-gradient(to right, #c0c1ff, #2fd9f4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .status-glow-success {
+            box-shadow: 0 0 15px rgba(47, 217, 244, 0.3);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(192, 193, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.98); }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 3s infinite ease-in-out;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#494bd6",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#908fa0",
+                      "error-container": "#93000a",
+                      "on-primary-container": "#0d0096",
+                      "error": "#ffb4ab",
+                      "on-primary": "#1000a9",
+                      "secondary-container": "#6f00be",
+                      "on-background": "#e2e2e8",
+                      "primary": "#c0c1ff",
+                      "on-surface": "#e2e2e8",
+                      "on-secondary-fixed": "#2c0051",
+                      "primary-fixed": "#e1e0ff",
+                      "tertiary-fixed": "#a2eeff",
+                      "on-tertiary-container": "#000608",
+                      "tertiary-fixed-dim": "#2fd9f4",
+                      "on-secondary-fixed-variant": "#6900b3",
+                      "on-secondary": "#490080",
+                      "surface-container-low": "#1a1c20",
+                      "primary-fixed-dim": "#c0c1ff",
+                      "surface-container": "#1e2024",
+                      "surface-bright": "#37393e",
+                      "secondary-fixed-dim": "#ddb7ff",
+                      "on-surface-variant": "#c7c4d7",
+                      "surface-container-lowest": "#0c0e12",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed": "#001f25",
+                      "primary-container": "#8083ff",
+                      "outline-variant": "#464554",
+                      "tertiary": "#2fd9f4",
+                      "surface": "#111318",
+                      "on-tertiary-fixed-variant": "#004e5a",
+                      "tertiary-container": "#008395",
+                      "surface-container-high": "#282a2e",
+                      "secondary-fixed": "#f0dbff",
+                      "secondary": "#ddb7ff",
+                      "on-secondary-container": "#d6a9ff",
+                      "on-primary-fixed": "#07006c",
+                      "inverse-surface": "#e2e2e8",
+                      "on-tertiary": "#00363e",
+                      "on-primary-fixed-variant": "#2f2ebe",
+                      "surface-container-highest": "#333539",
+                      "surface-variant": "#333539",
+                      "inverse-on-surface": "#2f3035",
+                      "background": "#111318",
+                      "surface-dim": "#111318",
+                      "surface-tint": "#c0c1ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "20px",
+                      "margin-desktop": "48px",
+                      "unit": "8px",
+                      "container-max-width": "1440px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "mono-md": ["Geist"],
+                      "body-md": ["Geist"],
+                      "headline-lg": ["Hanken Grotesk"],
+                      "body-lg": ["Geist"],
+                      "headline-lg-mobile": ["Hanken Grotesk"],
+                      "body-sm": ["Geist"],
+                      "label-md": ["Geist"],
+                      "headline-md": ["Hanken Grotesk"],
+                      "headline-xl": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                      "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="flex min-h-screen">
+<!-- Navigation Drawer (Mandatory Shell Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container dark:bg-surface-container backdrop-blur-md border-r border-white/10 shadow-2xl flex flex-col h-full p-4 gap-2 z-[60]">
+<!-- Brand Header -->
+<div class="flex items-center gap-3 px-2 py-4 mb-4">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">settings_voice</span>
+<span class="font-headline-md text-headline-md text-primary font-bold">Codex Call AI</span>
+</div>
+<!-- Profile Section -->
+<div class="flex items-center gap-3 p-3 glass-panel mb-6 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a high-level system administrator for a premium AI tech company. The person is looking directly at the camera with a confident expression. The lighting is dramatic with cool blue and deep purple highlights, reflecting a high-tech dark mode aesthetic. The background is a soft-focus data center with glowing server lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzv7yVtBUAKMraGx_PIINNpeCipYIebA1x69KBlmhClNEhAKwyYNuhYZDnv5x7-bmY-1Idg5bJ9mu7nKMpbErL2jqR1UA6CVbcsRwwtOIHPAmjnqzeWdluAD3cz_DLcOu2JY0jpO2UH1osLl_Gf05Gzw94IJe_EYU5braw2_W2Ff0AMEr9D8J_0ZfzO3IeY4zFGi42h9kfcVZ2nBHB-IdOVydBEpFiuE6pxB2IrU4ma2Rw-_wEAyL_nT56HC17jjvDbdessUbu18E8"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-on-surface font-bold">System Admin</span>
+<span class="font-body-sm text-outline text-[10px]">Superuser Access</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-md text-label-md">Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">api</span>
+<span class="font-label-md text-label-md">Integrations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<div class="my-4 border-t border-white/5"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-300 rounded-lg" href="#">
+<span class="material-symbols-outlined">shield</span>
+<span class="font-label-md text-label-md">Security</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-64 flex flex-col min-h-screen relative overflow-hidden">
+<!-- Background Atmospheric Element -->
+<!-- Top App Bar -->
+<header class="w-full sticky top-0 z-50 bg-surface/50 dark:bg-surface/50 backdrop-blur-xl border-b border-white/10 shadow-xl flex justify-between items-center px-margin-desktop py-4">
+<h1 class="font-headline-lg text-headline-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-tertiary">Integrations</h1>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
+<span class="w-2 h-2 rounded-full bg-tertiary status-glow-success animate-pulse"></span>
+<span class="font-label-md text-tertiary">API Status: Operational</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface transition-colors">notifications</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary/30 p-0.5">
+<img class="w-full h-full rounded-full object-cover" data-alt="Close up of a premium avatar placeholder for a system administrator. The image features a stylized, high-contrast digital portrait of a person with ethereal glowing light patterns reflecting on their face, set against an infinite dark void background. Professional, high-end technical aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVxaKt170xwcBCJYhBUy_efdWT-PY57jTf7XxUNVF9ED23CmMgwAsoxnAZCuUhMTeh8aGyX0ccYMkXsW5N3ikBkIQmCqN45V3jlHammyIiNjEWoS3xlCkPy6UuWMjqZlBgynuKo92w4oe3VQKUagNPYvEXcNMYKDUIDdstdiSvfVfcdL-jULNkqnY83aYAjgu8YYxpf5ZY8UbVwC1qCOuifyka0N_jzAfVk9lybMrCrzCEAy05FqXgFGeQki5g1jbfsiIA8ORKwNJV"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-margin-desktop space-y-gutter relative z-10">
+<!-- Quick Stats & Overview -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="glass-panel p-6 rounded-xl flex flex-col gap-2">
+<span class="font-label-md text-outline uppercase">Active Webhooks</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-on-surface">1,284</span>
+<span class="text-tertiary font-label-md">+12%</span>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl flex flex-col gap-2">
+<span class="font-label-md text-outline uppercase">Total API Calls (24h)</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-on-surface">4.2M</span>
+<span class="text-tertiary font-label-md">+5.4%</span>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl flex flex-col gap-2">
+<span class="font-label-md text-outline uppercase">Success Rate</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-xl text-headline-xl text-on-surface">99.98%</span>
+<span class="text-tertiary font-label-md">Stable</span>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl flex flex-col gap-2 border-l-4 border-l-tertiary/50">
+<span class="font-label-md text-outline uppercase">System Health</span>
+<div class="flex items-center gap-3">
+<span class="font-headline-xl text-headline-xl text-tertiary">Optimal</span>
+<span class="material-symbols-outlined text-tertiary text-4xl">verified_user</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid: Main Management Area -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- API Key Management (Bento Large) -->
+<div class="lg:col-span-8 glass-panel rounded-xl overflow-hidden flex flex-col">
+<div class="p-6 border-b border-white/5 flex justify-between items-center">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Global API Keys</h2>
+<p class="font-body-sm text-outline">Manage master authentication for external services.</p>
+</div>
+<button class="bg-gradient-to-br from-primary to-inverse-primary text-on-primary px-6 py-2 rounded-lg font-label-md hover:scale-[1.02] transition-transform active:scale-95">
+                            + Add New Key
+                        </button>
+</div>
+<div class="divide-y divide-white/5 overflow-x-auto custom-scrollbar">
+<!-- Key Entry 1 -->
+<div class="p-6 hover:bg-white/[0.02] transition-colors flex items-center justify-between group">
+<div class="flex items-center gap-6">
+<div class="w-12 h-12 rounded-xl bg-[#F22F46]/10 flex items-center justify-center border border-[#F22F46]/30">
+<span class="material-symbols-outlined text-[#F22F46]">call</span>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface font-semibold">Twilio Production</h3>
+<div class="flex items-center gap-3">
+<code class="font-mono-md text-mono-md text-outline">SK_7281...f9a2</code>
+<button class="material-symbols-outlined text-outline text-sm hover:text-primary transition-colors">content_copy</button>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-12">
+<div class="hidden md:flex flex-col items-end">
+<span class="font-label-md text-outline">Latency</span>
+<span class="font-mono-md text-tertiary">42ms</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-md text-outline">Usage</span>
+<div class="w-32 h-1.5 bg-white/5 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary" style="width: 65%;"></div>
+</div>
+</div>
+<button class="material-symbols-outlined text-outline hover:text-on-surface">more_vert</button>
+</div>
+</div>
+<!-- Key Entry 2 -->
+<div class="p-6 hover:bg-white/[0.02] transition-colors flex items-center justify-between group">
+<div class="flex items-center gap-6">
+<div class="w-12 h-12 rounded-xl bg-[#74aa9c]/10 flex items-center justify-center border border-[#74aa9c]/30">
+<span class="material-symbols-outlined text-[#74aa9c]">psychology</span>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface font-semibold">OpenAI GPT-4o</h3>
+<div class="flex items-center gap-3">
+<code class="font-mono-md text-mono-md text-outline">sk-proj-78...K2j1</code>
+<button class="material-symbols-outlined text-outline text-sm hover:text-primary transition-colors">content_copy</button>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-12">
+<div class="hidden md:flex flex-col items-end">
+<span class="font-label-md text-outline">Latency</span>
+<span class="font-mono-md text-tertiary">1.2s</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-md text-outline">Usage</span>
+<div class="w-32 h-1.5 bg-white/5 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary" style="width: 82%;"></div>
+</div>
+</div>
+<button class="material-symbols-outlined text-outline hover:text-on-surface">more_vert</button>
+</div>
+</div>
+<!-- Key Entry 3 -->
+<div class="p-6 hover:bg-white/[0.02] transition-colors flex items-center justify-between group">
+<div class="flex items-center gap-6">
+<div class="w-12 h-12 rounded-xl bg-[#6772e5]/10 flex items-center justify-center border border-[#6772e5]/30">
+<span class="material-symbols-outlined text-[#6772e5]">payments</span>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg text-on-surface font-semibold">Stripe Connect</h3>
+<div class="flex items-center gap-3">
+<code class="font-mono-md text-mono-md text-outline">rk_live_0...p8Wq</code>
+<button class="material-symbols-outlined text-outline text-sm hover:text-primary transition-colors">content_copy</button>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-12">
+<div class="hidden md:flex flex-col items-end">
+<span class="font-label-md text-outline">Latency</span>
+<span class="font-mono-md text-tertiary">115ms</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-md text-outline">Usage</span>
+<div class="w-32 h-1.5 bg-white/5 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary" style="width: 20%;"></div>
+</div>
+</div>
+<button class="material-symbols-outlined text-outline hover:text-on-surface">more_vert</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Webhook Health (Bento Sidebar) -->
+<div class="lg:col-span-4 glass-panel rounded-xl flex flex-col">
+<div class="p-6 border-b border-white/5">
+<h2 class="font-headline-md text-headline-md text-on-surface">Webhook Logs</h2>
+<p class="font-body-sm text-outline">Real-time health of ingress endpoints.</p>
+</div>
+<div class="flex-1 p-4 space-y-4 overflow-y-auto custom-scrollbar max-h-[500px]">
+<!-- Log Item 1 -->
+<div class="p-4 bg-white/5 rounded-lg border border-white/5 flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="bg-tertiary/20 text-tertiary text-[10px] font-bold px-2 py-0.5 rounded uppercase">200 OK</span>
+<span class="text-[10px] text-outline font-mono-md">14:22:05</span>
+</div>
+<p class="font-mono-md text-mono-md text-on-surface truncate">POST /api/webhooks/twilio</p>
+<div class="flex items-center gap-2 text-outline text-[11px]">
+<span class="material-symbols-outlined text-xs">speed</span>
+<span>Payload: 1.4kb</span>
+<span class="mx-1">•</span>
+<span>Duration: 85ms</span>
+</div>
+</div>
+<!-- Log Item 2 -->
+<div class="p-4 bg-white/5 rounded-lg border border-white/5 flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="bg-tertiary/20 text-tertiary text-[10px] font-bold px-2 py-0.5 rounded uppercase">200 OK</span>
+<span class="text-[10px] text-outline font-mono-md">14:21:48</span>
+</div>
+<p class="font-mono-md text-mono-md text-on-surface truncate">POST /api/webhooks/stripe</p>
+<div class="flex items-center gap-2 text-outline text-[11px]">
+<span class="material-symbols-outlined text-xs">speed</span>
+<span>Payload: 4.2kb</span>
+<span class="mx-1">•</span>
+<span>Duration: 132ms</span>
+</div>
+</div>
+<!-- Log Item 3 Error -->
+<div class="p-4 bg-error/10 rounded-lg border border-error/30 flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="bg-error/20 text-error text-[10px] font-bold px-2 py-0.5 rounded uppercase">500 ERROR</span>
+<span class="text-[10px] text-outline font-mono-md">14:19:12</span>
+</div>
+<p class="font-mono-md text-mono-md text-error truncate">POST /api/webhooks/openai</p>
+<div class="flex items-center gap-2 text-outline text-[11px]">
+<span class="material-symbols-outlined text-xs">warning</span>
+<span>Token timeout after 30s</span>
+</div>
+</div>
+<!-- Log Item 4 -->
+<div class="p-4 bg-white/5 rounded-lg border border-white/5 flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="bg-tertiary/20 text-tertiary text-[10px] font-bold px-2 py-0.5 rounded uppercase">200 OK</span>
+<span class="text-[10px] text-outline font-mono-md">14:18:55</span>
+</div>
+<p class="font-mono-md text-mono-md text-on-surface truncate">POST /api/webhooks/customer-sync</p>
+<div class="flex items-center gap-2 text-outline text-[11px]">
+<span class="material-symbols-outlined text-xs">speed</span>
+<span>Payload: 0.8kb</span>
+<span class="mx-1">•</span>
+<span>Duration: 42ms</span>
+</div>
+</div>
+</div>
+<button class="p-4 text-primary text-center font-label-md hover:bg-white/5 transition-colors border-t border-white/5">
+                        View Detailed Logs
+                    </button>
+</div>
+</div>
+<!-- Ecosystem Visualizer Section -->
+<div class="glass-panel p-8 rounded-xl relative overflow-hidden h-80 flex flex-col items-center justify-center">
+<div class="absolute inset-0 z-0">
+</div>
+<div class="relative z-10 text-center space-y-4 max-w-2xl">
+<h2 class="font-headline-xl text-headline-xl premium-gradient-text">Connected Intelligence</h2>
+<p class="font-body-lg text-body-lg text-outline">Your Codex Call AI node is currently synchronized with 14 global services and processing 2,800 events per second through your encrypted API pipeline.</p>
+<div class="flex justify-center gap-4 pt-4">
+<button class="px-8 py-3 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-md text-primary font-bold hover:bg-primary hover:text-on-primary transition-all duration-300">Run Connectivity Test</button>
+<button class="px-8 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-on-surface font-bold hover:bg-white/10 transition-all duration-300">API Documentation</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full mt-auto border-t border-white/5 flex justify-between items-center px-margin-desktop py-6 relative z-20">
+<span class="font-label-md text-outline">© 2024 Codex Call AI Intelligence. All rights reserved.</span>
+<div class="flex gap-8">
+<a class="font-label-md text-outline hover:text-on-surface transition-colors" href="#">Documentation</a>
+<a class="font-label-md text-outline hover:text-on-surface transition-colors" href="#">API Reference</a>
+<a class="font-label-md text-outline hover:text-on-surface transition-colors" href="#">Status</a>
+</div>
+</footer>
+</main>
+<!-- Interactions Script -->
+<script>
+        // Subtle micro-interaction for glass panels
+        document.querySelectorAll('.glass-panel').forEach(panel => {
+            panel.addEventListener('mousemove', (e) => {
+                const rect = panel.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                panel.style.setProperty('--mouse-x', `${x}px`);
+                panel.style.setProperty('--mouse-y', `${y}px`);
+                
+                // Add a very subtle hover lift
+                panel.style.transform = 'translateY(-2px)';
+                panel.style.transition = 'transform 0.3s ease';
+            });
+            
+            panel.addEventListener('mouseleave', () => {
+                panel.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Copy Key functionality simulation
+        document.querySelectorAll('.material-symbols-outlined').forEach(icon => {
+            if (icon.innerText === 'content_copy') {
+                icon.addEventListener('click', () => {
+                    icon.innerText = 'check';
+                    icon.classList.add('text-tertiary');
+                    setTimeout(() => {
+                        icon.innerText = 'content_copy';
+                        icon.classList.remove('text-tertiary');
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+</body></html>

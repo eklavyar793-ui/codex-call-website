@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Create AI Agent | Codex Call AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#c0c1ff",
+                    "on-error": "#690005",
+                    "on-secondary-container": "#d6a9ff",
+                    "on-primary-fixed": "#07006c",
+                    "on-background": "#e2e2e8",
+                    "background": "#111318",
+                    "tertiary-fixed": "#a2eeff",
+                    "secondary-container": "#6f00be",
+                    "surface-bright": "#37393e",
+                    "outline-variant": "#464554",
+                    "on-tertiary": "#00363e",
+                    "on-tertiary-fixed": "#001f25",
+                    "tertiary-fixed-dim": "#2fd9f4",
+                    "secondary-fixed": "#f0dbff",
+                    "error": "#ffb4ab",
+                    "on-surface": "#e2e2e8",
+                    "primary-container": "#8083ff",
+                    "on-secondary": "#490080",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "on-primary": "#1000a9",
+                    "inverse-surface": "#e2e2e8",
+                    "on-secondary-fixed": "#2c0051",
+                    "primary-fixed": "#e1e0ff",
+                    "surface-container-low": "#1a1c20",
+                    "surface-dim": "#111318",
+                    "surface": "#111318",
+                    "on-secondary-fixed-variant": "#6900b3",
+                    "on-primary-container": "#0d0096",
+                    "outline": "#908fa0",
+                    "secondary": "#ddb7ff",
+                    "surface-container": "#1e2024",
+                    "secondary-fixed-dim": "#ddb7ff",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "on-surface-variant": "#c7c4d7",
+                    "surface-container-highest": "#333539",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#333539",
+                    "surface-container-lowest": "#0c0e12",
+                    "on-tertiary-container": "#000608",
+                    "inverse-on-surface": "#2f3035",
+                    "error-container": "#93000a",
+                    "primary": "#c0c1ff",
+                    "tertiary-container": "#008395",
+                    "surface-container-high": "#282a2e",
+                    "on-tertiary-fixed-variant": "#004e5a",
+                    "tertiary": "#2fd9f4",
+                    "inverse-primary": "#494bd6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "container-max-width": "1440px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "48px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-md": ["Geist"],
+                    "label-md": ["Geist"],
+                    "mono-md": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02)) 1;
+        }
+        .step-transition {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s linear;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #c0c1ff !important;
+            box-shadow: 0 0 10px rgba(192, 193, 255, 0.3);
+        }
+        .voice-active {
+            border-color: #c0c1ff !important;
+            background: rgba(192, 193, 255, 0.1) !important;
+        }
+        .hidden-step {
+            display: none;
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        .active-step {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="bg-surface/50 dark:bg-surface/50 backdrop-blur-xl border-b border-white/10 fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">bubble_chart</span>
+<h1 class="font-headline-md text-headline-md font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Codex Call AI</h1>
+</div>
+<button class="hover:bg-white/5 transition-colors active:scale-95 transition-transform p-2 rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-margin-mobile max-w-lg mx-auto relative min-h-screen">
+<!-- Step Indicator -->
+<div class="mb-10">
+<div class="flex justify-between items-center relative">
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-surface-container-highest -z-10 -translate-y-1/2"></div>
+<div class="absolute top-1/2 left-0 w-[0%] h-[2px] bg-primary -z-10 -translate-y-1/2 transition-all duration-500" id="progress-line"></div>
+<div class="flex flex-col items-center gap-2 group" data-step="1">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold transition-colors" id="step-node-1">1</div>
+<span class="font-label-md text-label-md text-primary">Identity</span>
+</div>
+<div class="flex flex-col items-center gap-2 group" data-step="2">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold transition-colors" id="step-node-2">2</div>
+<span class="font-label-md text-label-md text-outline">Voice</span>
+</div>
+<div class="flex flex-col items-center gap-2 group" data-step="3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold transition-colors" id="step-node-3">3</div>
+<span class="font-label-md text-label-md text-outline">Knowledge</span>
+</div>
+</div>
+</div>
+<form class="space-y-8" id="wizard-form">
+<!-- Step 1: Identity & Role -->
+<section class="active-step step-transition space-y-6" id="step-1">
+<div class="space-y-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Define Identity</h2>
+<p class="text-on-surface-variant font-body-sm">Start by giving your AI agent a name and a core professional purpose.</p>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-2"><label class="font-label-md text-label-md text-outline uppercase tracking-wider">Business Profile</label><select class="bg-surface-container-lowest border border-white/10 rounded-xl p-4 text-on-surface focus:ring-0 w-full appearance-none"><option>Main Business (Default)</option><option>Secondary Branch</option><option>E-commerce Store</option></select></div><div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-outline uppercase tracking-wider">Agent Name</label>
+<input class="bg-surface-container-lowest border border-white/10 rounded-xl p-4 text-on-surface focus:ring-0" placeholder="e.g., Clara Support" type="text"/>
+</div><div class="flex flex-col gap-2"><label class="font-label-md text-label-md text-outline uppercase tracking-wider">Assigned Phone Number</label><select class="bg-surface-container-lowest border border-white/10 rounded-xl p-4 text-on-surface focus:ring-0 w-full appearance-none"><option>+1 (555) 012-3456 (Available)</option><option>+1 (555) 987-6543 (Available)</option><option>Purchase New Number...</option></select></div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-outline uppercase tracking-wider">Primary Role</label>
+<div class="grid grid-cols-3 gap-3">
+<button class="role-btn p-3 rounded-xl border border-white/10 bg-surface-container-low font-label-md text-label-md hover:bg-white/5 transition-all text-center" type="button">Sales</button>
+<button class="role-btn p-3 rounded-xl border border-white/10 bg-surface-container-low font-label-md text-label-md hover:bg-white/5 transition-all text-center" type="button">Support</button>
+<button class="role-btn p-3 rounded-xl border border-white/10 bg-surface-container-low font-label-md text-label-md hover:bg-white/5 transition-all text-center" type="button">Billing</button>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-outline uppercase tracking-wider">Personality Description</label>
+<textarea class="bg-surface-container-lowest border border-white/10 rounded-xl p-4 text-on-surface focus:ring-0 resize-none" placeholder="Describe how the agent should sound (e.g., 'Empathetic, clear, and proactive')..." rows="4"></textarea>
+</div><div class="flex flex-col gap-2"><label class="font-label-md text-label-md text-outline uppercase tracking-wider">Custom AI Prompt (Behavior Instructions)</label><textarea class="bg-surface-container-lowest border border-white/10 rounded-xl p-4 text-on-surface focus:ring-0 resize-none" placeholder="Provide detailed instructions on how the agent should handle specific scenarios, edge cases, and its overall persona..." rows="6"></textarea></div>
+</div>
+</section>
+<!-- Step 2: Voice & Language -->
+<section class="hidden-step step-transition space-y-6" id="step-2">
+<div class="space-y-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Voice &amp; Language</h2>
+<p class="text-on-surface-variant font-body-sm">Choose the auditory persona that best matches your brand identity.</p>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-outline uppercase tracking-wider">Preferred Language</label>
+<select class="bg-surface-container-lowest border border-white/10 rounded-xl p-4 text-on-surface focus:ring-0 w-full appearance-none">
+<option>English (US)</option>
+<option>Spanish (ES)</option>
+<option>French (FR)</option>
+<option>German (DE)</option>
+</select>
+</div>
+<div class="flex flex-col gap-4">
+<label class="font-label-md text-label-md text-outline uppercase tracking-wider">Voice Profile</label>
+<!-- Voice Options -->
+<div class="space-y-3">
+<div class="voice-card glass-card rounded-xl p-4 flex items-center justify-between cursor-pointer group active:scale-95 transition-all">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">graphic_eq</span>
+</div>
+<div>
+<h3 class="font-body-md font-bold text-on-surface">Lyra - Premium Neural</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Sophisticated &amp; Calm</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors" type="button">
+<span class="material-symbols-outlined text-primary">play_arrow</span>
+</button>
+</div>
+<div class="voice-card glass-card rounded-xl p-4 flex items-center justify-between cursor-pointer group active:scale-95 transition-all">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">record_voice_over</span>
+</div>
+<div>
+<h3 class="font-body-md font-bold text-on-surface">Atlas - Narrative</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Authoritative &amp; Deep</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors" type="button">
+<span class="material-symbols-outlined text-secondary">play_arrow</span>
+</button>
+</div>
+<div class="voice-card glass-card rounded-xl p-4 flex items-center justify-between cursor-pointer group active:scale-95 transition-all">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">spatial_audio</span>
+</div>
+<div>
+<h3 class="font-body-md font-bold text-on-surface">Nova - Friendly</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Energetic &amp; Bright</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors" type="button">
+<span class="material-symbols-outlined text-tertiary">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Step 3: Knowledge Base -->
+<section class="hidden-step step-transition space-y-6" id="step-3">
+<div class="space-y-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Knowledge Base</h2>
+<p class="text-on-surface-variant font-body-sm">Fuel your agent with documents and data to provide accurate responses.</p>
+</div>
+<div class="space-y-6">
+<div class="border-2 border-dashed border-white/10 rounded-2xl p-8 flex flex-col items-center justify-center text-center gap-4 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-high flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-4xl">upload_file</span>
+</div>
+<div class="space-y-1">
+<p class="font-body-md font-bold text-on-surface">Click to upload documents</p>
+<p class="font-label-md text-label-md text-outline">PDF, DOCX, or TXT up to 50MB</p>
+</div>
+</div>
+<div class="space-y-4">
+<label class="font-label-md text-label-md text-outline uppercase tracking-wider">Attached Sources</label>
+<div class="space-y-3">
+<div class="glass-card rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+<span class="font-body-sm text-on-surface">customer_policy_2024.pdf</span>
+</div>
+<span class="material-symbols-outlined text-error cursor-pointer">delete</span>
+</div>
+<div class="glass-card rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">link</span>
+<span class="font-body-sm text-on-surface">https://docs.codexai.io</span>
+</div>
+<span class="material-symbols-outlined text-error cursor-pointer">delete</span>
+</div>
+</div>
+</div>
+<div class="space-y-4 pt-4 border-t border-white/10"><label class="font-label-md text-label-md text-outline uppercase tracking-wider">Calendar Integration</label><div class="grid grid-cols-2 gap-3"><button class="flex items-center justify-center gap-3 p-4 rounded-xl border border-white/10 bg-surface-container-low hover:bg-white/5 transition-all" type="button"><span class="material-symbols-outlined text-primary">calendar_today</span><span class="font-body-sm">Google Calendar</span></button><button class="flex items-center justify-center gap-3 p-4 rounded-xl border border-white/10 bg-surface-container-low hover:bg-white/5 transition-all" type="button"><span class="material-symbols-outlined text-primary">event</span><span class="font-body-sm">Outlook</span></button></div><div class="flex items-center gap-3 px-2"><input class="rounded border-white/10 bg-surface-container-lowest text-primary focus:ring-primary" id="auto-schedule" type="checkbox"/><label class="text-on-surface-variant font-body-sm" for="auto-schedule">Allow agent to automatically book appointments</label></div></div></div>
+</section>
+<!-- Navigation Actions -->
+<div class="flex items-center gap-4 pt-4">
+<button class="hidden flex-1 py-4 px-6 rounded-xl border border-white/20 text-on-surface font-bold hover:bg-white/5 transition-all active:scale-95" id="back-btn" type="button">
+                    Back
+                </button>
+<button class="flex-[2] py-4 px-6 rounded-xl bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-all active:scale-95" id="next-btn" type="button">
+                    Next Step
+                </button>
+</div>
+</form>
+</main>
+<!-- Bottom Nav Bar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-t border-white/10 rounded-t-xl shadow-2xl flex justify-around items-center px-4 py-3 pb-safe">
+<div class="flex flex-col items-center justify-center text-outline hover:text-secondary transition-colors active:scale-90 transition-transform">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary font-bold bg-primary/10 rounded-xl px-3 py-1 active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline hover:text-secondary transition-colors active:scale-90 transition-transform">
+<span class="material-symbols-outlined">phone_in_talk</span>
+<span class="font-label-md text-label-md">Phone</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline hover:text-secondary transition-colors active:scale-90 transition-transform">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</div>
+</nav>
+<script>
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        const nextBtn = document.getElementById('next-btn');
+        const backBtn = document.getElementById('back-btn');
+        const progressLine = document.getElementById('progress-line');
+
+        function updateUI() {
+            // Update sections
+            for (let i = 1; i <= totalSteps; i++) {
+                const section = document.getElementById(`step-${i}`);
+                const node = document.getElementById(`step-node-${i}`);
+                const label = document.querySelector(`[data-step="${i}"] span`);
+
+                if (i === currentStep) {
+                    section.classList.remove('hidden-step');
+                    section.classList.add('active-step');
+                    node.classList.replace('bg-surface-container-highest', 'bg-primary');
+                    node.classList.replace('text-on-surface-variant', 'text-on-primary');
+                    label.classList.replace('text-outline', 'text-primary');
+                } else if (i < currentStep) {
+                    section.classList.add('hidden-step');
+                    section.classList.remove('active-step');
+                    node.classList.replace('bg-surface-container-highest', 'bg-primary');
+                    node.classList.replace('text-on-surface-variant', 'text-on-primary');
+                    label.classList.replace('text-outline', 'text-primary');
+                } else {
+                    section.classList.add('hidden-step');
+                    section.classList.remove('active-step');
+                    node.classList.replace('bg-primary', 'bg-surface-container-highest');
+                    node.classList.replace('text-on-primary', 'text-on-surface-variant');
+                    label.classList.replace('text-primary', 'text-outline');
+                }
+            }
+
+            // Update Progress Bar
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            progressLine.style.width = `${progress}%`;
+
+            // Buttons logic
+            if (currentStep === 1) {
+                backBtn.classList.add('hidden');
+            } else {
+                backBtn.classList.remove('hidden');
+            }
+
+            if (currentStep === totalSteps) {
+                nextBtn.innerText = 'Launch Agent';
+                nextBtn.classList.replace('from-[#6366f1]', 'from-[#22c55e]');
+                nextBtn.classList.replace('to-[#a855f7]', 'to-[#16a34a]');
+            } else {
+                nextBtn.innerText = 'Next Step';
+                nextBtn.classList.replace('from-[#22c55e]', 'from-[#6366f1]');
+                nextBtn.classList.replace('to-[#16a34a]', 'to-[#a855f7]');
+            }
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateUI();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                alert('Agent creation process initiated!');
+            }
+        });
+
+        backBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateUI();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // Toggle role selections
+        document.querySelectorAll('.role-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('bg-primary/20', 'border-primary', 'text-primary'));
+                this.classList.add('bg-primary/20', 'border-primary', 'text-primary');
+            });
+        });
+
+        // Toggle voice selections
+        document.querySelectorAll('.voice-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.voice-card').forEach(c => c.classList.remove('voice-active'));
+                this.classList.add('voice-active');
+            });
+        });
+
+        // Initialize
+        updateUI();
+    </script>
+</body></html>

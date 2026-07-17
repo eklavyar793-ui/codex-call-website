@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Launch Platform - Codex call AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#1000a9",
+                    "on-secondary-fixed-variant": "#6900b3",
+                    "on-primary-fixed-variant": "#2f2ebe",
+                    "on-surface-variant": "#c7c4d7",
+                    "error": "#ffb4ab",
+                    "surface-container-high": "#282a2e",
+                    "tertiary-fixed-dim": "#2fd9f4",
+                    "surface-variant": "#333539",
+                    "on-primary-fixed": "#07006c",
+                    "surface-tint": "#c0c1ff",
+                    "on-tertiary-fixed": "#001f25",
+                    "inverse-primary": "#494bd6",
+                    "tertiary-fixed": "#a2eeff",
+                    "on-secondary-container": "#d6a9ff",
+                    "on-surface": "#e2e2e8",
+                    "on-secondary-fixed": "#2c0051",
+                    "on-error-container": "#ffdad6",
+                    "inverse-on-surface": "#2f3035",
+                    "secondary": "#ddb7ff",
+                    "surface-dim": "#111318",
+                    "outline-variant": "#464554",
+                    "secondary-fixed-dim": "#ddb7ff",
+                    "surface-container-lowest": "#0c0e12",
+                    "surface-container-low": "#1a1c20",
+                    "on-tertiary-container": "#000608",
+                    "secondary-container": "#6f00be",
+                    "primary-fixed": "#e1e0ff",
+                    "on-primary-container": "#0d0096",
+                    "background": "#111318",
+                    "outline": "#908fa0",
+                    "inverse-surface": "#e2e2e8",
+                    "surface": "#111318",
+                    "surface-bright": "#37393e",
+                    "primary-fixed-dim": "#c0c1ff",
+                    "tertiary": "#2fd9f4",
+                    "primary": "#c0c1ff",
+                    "error-container": "#93000a",
+                    "on-background": "#e2e2e8",
+                    "on-tertiary": "#00363e",
+                    "on-secondary": "#490080",
+                    "on-error": "#690005",
+                    "surface-container": "#1e2024",
+                    "on-tertiary-fixed-variant": "#004e5a",
+                    "primary-container": "#8083ff",
+                    "surface-container-highest": "#333539",
+                    "tertiary-container": "#008395",
+                    "secondary-fixed": "#f0dbff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "48px",
+                    "margin-mobile": "20px",
+                    "gutter": "24px",
+                    "unit": "8px",
+                    "container-max-width": "1440px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Geist"],
+                    "body-md": ["Geist"],
+                    "mono-md": ["Geist"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "label-md": ["Geist"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "headline-xl": ["Hanken Grotesk"],
+                    "body-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            font-family: 'Geist', sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02)) 1;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)) 1;
+        }
+
+        .primary-gradient-btn {
+            background: linear-gradient(135deg, #8083ff, #6f00be);
+            box-shadow: 0 4px 20px -5px rgba(128, 131, 255, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .primary-gradient-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px -5px rgba(128, 131, 255, 0.7);
+        }
+
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #c0c1ff;
+            background-color: #8083ff;
+            box-shadow: 0 0 10px rgba(128, 131, 255, 0.5);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .active-glow {
+            filter: drop-shadow(0 0 8px rgba(47, 217, 244, 0.4));
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        .bg-glow-blob {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(128, 131, 255, 0.08) 0%, rgba(10, 12, 16, 0) 70%);
+            z-index: -1;
+            animation: pulse-slow 10s infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen selection:bg-primary/30">
+<!-- Decorative Glows -->
+<div class="bg-glow-blob -top-48 -left-48"></div>
+<div class="bg-glow-blob -bottom-48 -right-48" style="animation-delay: -5s;"></div>
+<!-- Top Navigation Anchor -->
+<header class="w-full sticky top-0 z-50 bg-surface/5 backdrop-blur-xl border-b border-white/10 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="graphic_eq">graphic_eq</span>
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight"> Codex Call AI</span>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Agents</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Analytics</a>
+</nav>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-white/5 p-2 rounded-full transition-colors" data-icon="notifications">notifications</button>
+</div>
+</header>
+<main class="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-20">
+<!-- Progress Header -->
+<div class="mb-12">
+<div class="flex items-center gap-2 mb-4">
+<span class="text-tertiary font-mono-md text-mono-md tracking-widest uppercase">Step 04 / 04</span>
+<div class="h-[1px] w-12 bg-tertiary/30"></div>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-4">Final Step: Launch</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                Your AI infrastructure is primed and ready. Connect your domain and configure your deployment settings to take Codex Call live.
+            </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- LEFT COLUMN: Configurations -->
+<div class="md:col-span-7 space-y-8">
+<!-- Domain Selection -->
+<section class="glass-card p-8 rounded-xl">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="language">language</span>
+<h2 class="font-headline-md text-headline-md">Domain Selection</h2>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<!-- Subdomain Option -->
+<label class="relative flex items-center p-4 rounded-lg border border-white/10 bg-white/5 cursor-pointer hover:border-primary/50 transition-all group">
+<input checked="" class="hidden peer" name="domain_type" type="radio"/>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant peer-checked:border-primary peer-checked:bg-primary transition-all flex items-center justify-center">
+<div class="w-2 h-2 bg-on-primary rounded-full opacity-0 peer-checked:opacity-100"></div>
+</div>
+<div class="ml-4">
+<span class="font-body-md text-body-md block">Codex Subdomain</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">acme-corp.codexcall.ai</span>
+</div>
+<span class="ml-auto text-tertiary font-mono-md text-mono-md">Included</span>
+</label>
+<!-- Custom Domain Option -->
+<label class="relative flex items-center p-4 rounded-lg border border-white/10 bg-white/5 cursor-pointer hover:border-primary/50 transition-all group">
+<input class="hidden peer" name="domain_type" type="radio"/>
+<div class="w-5 h-5 rounded-full border-2 border-outline-variant peer-checked:border-primary peer-checked:bg-primary transition-all flex items-center justify-center">
+<div class="w-2 h-2 bg-on-primary rounded-full opacity-0 peer-checked:opacity-100"></div>
+</div>
+<div class="ml-4">
+<span class="font-body-md text-body-md block">Connect Custom Domain</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">e.g. calls.acme.com</span>
+</div>
+<span class="material-symbols-outlined ml-auto text-on-surface-variant" data-icon="arrow_forward">arrow_forward</span>
+</label>
+</div>
+</section>
+<!-- Deployment Settings -->
+<section class="glass-card p-8 rounded-xl">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="settings">settings</span>
+<h2 class="font-headline-md text-headline-md">Deployment Settings</h2>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md text-body-md text-on-surface">Enable Live Monitoring</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Real-time transcription and agent performance tracking.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-body-md text-body-md text-on-surface">Public API Access</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Allow 3rd party integrations to trigger agent workflows.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN: Checklist & Preview -->
+<div class="md:col-span-5 space-y-8">
+<!-- Launch Checklist -->
+<section class="glass-card p-8 rounded-xl border-l-4 border-l-tertiary">
+<h2 class="font-headline-md text-headline-md mb-6">Launch Checklist</h2>
+<ul class="space-y-4">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary active-glow" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md">AI Agents Configured</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary active-glow" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md">Billing Setup Complete</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary active-glow" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md">Phone System Integrated</span>
+</li>
+<li class="flex items-center gap-3 opacity-50">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+<span class="font-body-md text-body-md">SSL Certificate Provisioning</span>
+</li>
+</ul>
+</section>
+<!-- Success State Preview -->
+<div class="relative group overflow-hidden rounded-xl">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
+<div class="glass-card p-6 rounded-xl border border-white/5 relative z-20">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-tertiary rounded-full animate-pulse shadow-[0_0_8px_rgba(47,217,244,0.8)]"></div>
+<span class="text-xs font-mono-md uppercase tracking-widest text-tertiary">Ready to Launch</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="more_horiz">more_horiz</span>
+</div>
+<!-- Visualizer Mock -->
+<div class="flex items-end justify-center gap-1 h-20 mb-6">
+<div class="w-1.5 bg-primary/20 h-4 rounded-full"></div>
+<div class="w-1.5 bg-primary/40 h-8 rounded-full"></div>
+<div class="w-1.5 bg-primary/60 h-12 rounded-full"></div>
+<div class="w-1.5 bg-primary h-16 rounded-full active-glow"></div>
+<div class="w-1.5 bg-primary/60 h-10 rounded-full"></div>
+<div class="w-1.5 bg-primary/40 h-6 rounded-full"></div>
+<div class="w-1.5 bg-primary/20 h-4 rounded-full"></div>
+</div>
+<div class="text-center">
+<p class="font-headline-md text-headline-md text-on-surface mb-1">Preview Mode</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">"Hello, how can I help you today?"</p>
+</div>
+</div>
+<div class="absolute inset-0 bg-cover bg-center blur-xl opacity-20 scale-110 group-hover:scale-125 transition-transform duration-700" data-alt="A futuristic, high-tech interface showing a dark, glassmorphic dashboard with vibrant cyan voice waveforms and deep indigo accents. The overall atmosphere is premium, cinematic, and professional, representing a powerful AI platform ready to be deployed." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBlfgJPAuPsQizghdymHRMlOVU_gbQaitVhvKGMAft0wd-1UirMuhAdwVM09lJ5Q0pyfhgh0SXKRLMm9qvS3s4zERSg7Z6U-IdPs2NaaBq1HwNuPS3YxGw6rPU46kgYnl9uDTrudTKk8zN0UdYlIqIV7JR9kbvTQH-UksTzMVE1qi82UojlFVu2WYWiv9ls4yVHtkLXz3PdE2vpZ3kyvlDHxtiYbc01fRntcMpNWbQLA49E0A20nAtXRRDUOwDE_s4p_gmrztO64NYF')"></div>
+</div>
+<!-- Primary Action -->
+<button class="w-full py-5 rounded-xl font-headline-md text-headline-md text-white primary-gradient-btn flex items-center justify-center gap-3 active:scale-[0.98] transition-transform" id="launchBtn">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+                    Publish &amp; Go Live
+                </button>
+<p class="text-center font-body-sm text-body-sm text-on-surface-variant">
+                    By publishing, you agree to our <a class="underline hover:text-primary" href="#">Service Terms</a>.
+                </p>
+</div>
+</div>
+</main>
+<!-- Bottom Nav for Mobile -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface/5 backdrop-blur-xl border-t border-white/10 flex justify-around items-center h-20 pb-safe px-4">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="settings_voice">settings_voice</span>
+<span class="font-label-md text-label-md">Agents</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl px-4 py-1">
+<span class="material-symbols-outlined" data-icon="publish">publish</span>
+<span class="font-label-md text-label-md">Launch</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</div>
+</nav>
+<!-- Simple Interactivity Script -->
+<script>
+        document.getElementById('launchBtn').addEventListener('click', function() {
+            const btn = this;
+            const originalContent = btn.innerHTML;
+            
+            btn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Deploying Platform...
+            `;
+            btn.disabled = true;
+            btn.style.opacity = "0.8";
+
+            setTimeout(() => {
+                btn.innerHTML = `
+                    <span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+                    Platform is Live!
+                `;
+                btn.classList.replace('primary-gradient-btn', 'bg-tertiary-container');
+                btn.style.backgroundColor = '#008395';
+                btn.style.opacity = "1";
+                
+                // Add a little celebration confetti or notification effect logic here
+            }, 2500);
+        });
+    </script>
+</body></html>

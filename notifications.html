@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoiceOS AI - Notifications</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02)) 1;
+        }
+        .glass-card-hover:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        .status-glow-error { box-shadow: 0 0 15px rgba(255, 180, 171, 0.2); }
+        .status-glow-warning { box-shadow: 0 0 15px rgba(255, 218, 214, 0.1); }
+        .status-glow-success { box-shadow: 0 0 15px rgba(47, 217, 244, 0.2); }
+        
+        body {
+            background-color: #0A0C10;
+            color: #e2e2e8;
+            overflow-x: hidden;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#004e5a",
+                        "tertiary": "#2fd9f4",
+                        "surface": "#111318",
+                        "primary-container": "#8083ff",
+                        "outline-variant": "#464554",
+                        "on-tertiary-fixed": "#001f25",
+                        "surface-container-lowest": "#0c0e12",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#f0dbff",
+                        "secondary": "#ddb7ff",
+                        "on-secondary-container": "#d6a9ff",
+                        "surface-container-high": "#282a2e",
+                        "tertiary-container": "#008395",
+                        "surface-variant": "#333539",
+                        "surface-container-highest": "#333539",
+                        "on-tertiary": "#00363e",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "on-primary-fixed": "#07006c",
+                        "inverse-surface": "#e2e2e8",
+                        "surface-tint": "#c0c1ff",
+                        "surface-dim": "#111318",
+                        "background": "#111318",
+                        "inverse-on-surface": "#2f3035",
+                        "on-primary-container": "#0d0096",
+                        "outline": "#908fa0",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#494bd6",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#a2eeff",
+                        "on-tertiary-container": "#000608",
+                        "primary-fixed": "#e1e0ff",
+                        "primary": "#c0c1ff",
+                        "on-surface": "#e2e2e8",
+                        "on-secondary-fixed": "#2c0051",
+                        "secondary-container": "#6f00be",
+                        "on-background": "#e2e2e8",
+                        "on-primary": "#1000a9",
+                        "on-surface-variant": "#c7c4d7",
+                        "surface-container": "#1e2024",
+                        "surface-bright": "#37393e",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "surface-container-low": "#1a1c20",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "on-secondary": "#490080",
+                        "tertiary-fixed-dim": "#2fd9f4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "margin-mobile": "20px",
+                        "unit": "8px",
+                        "container-max-width": "1440px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-sm": ["Geist"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-lg": ["Geist"],
+                        "mono-md": ["Geist"],
+                        "body-md": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md">
+<!-- Header Overlay (TopAppBar mapping) -->
+<header class="w-full sticky top-0 z-50 bg-surface/5 dark:bg-surface/5 backdrop-blur-xl border-b border-white/10 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="graphic_eq">graphic_eq</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">VoiceOS AI</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-white/5 transition-colors p-2 rounded-full active:scale-95 duration-200" data-icon="search">search</button>
+<button class="material-symbols-outlined text-primary hover:bg-white/5 transition-colors p-2 rounded-full active:scale-95 duration-200" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-2xl mx-auto px-margin-mobile py-8 space-y-6">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-4">
+<div>
+<p class="font-label-md text-label-md text-primary uppercase tracking-widest mb-1">Status Center</p>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">Recent Activity</h2>
+</div>
+<button class="text-primary font-label-md text-label-md hover:underline">Mark all read</button>
+</div>
+<!-- Notification List -->
+<div class="space-y-4">
+<!-- 1. Critical Alert: AI Call Minutes Limit Reached -->
+<div class="glass-card glass-card-hover rounded-xl p-5 flex gap-4 items-start relative overflow-hidden group">
+<!-- Status Bar Gradient -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-error-container/20 flex items-center justify-center border border-error/30 status-glow-error">
+<span class="material-symbols-outlined text-error" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-grow space-y-2">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-error uppercase font-bold">Critical Alert</span>
+<span class="font-label-md text-label-md text-on-surface-variant">2m ago</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">AI Call Minutes Limit Reached</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                        Your enterprise workspace has consumed 100% of the allocated 5,000 minutes. Automated call routing has been paused.
+                    </p>
+<div class="pt-2">
+<button class="px-6 py-2.5 rounded-lg bg-gradient-to-br from-[#8083ff] to-[#6f00be] text-white font-label-md text-label-md transition-transform active:scale-95 shadow-lg shadow-primary-container/20">
+                            Upgrade Now
+                        </button>
+</div>
+</div>
+</div>
+<!-- 2. Warning Alert: AI Agents at 90% capacity -->
+<div class="glass-card glass-card-hover rounded-xl p-5 flex gap-4 items-start relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-fixed-dim"></div>
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-secondary-container/10 flex items-center justify-center border border-secondary/20 status-glow-warning">
+<span class="material-symbols-outlined text-secondary" data-icon="bolt">bolt</span>
+</div>
+<div class="flex-grow space-y-2">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-secondary uppercase font-bold">System Warning</span>
+<span class="font-label-md text-label-md text-on-surface-variant">45m ago</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">AI Agents at 90% Capacity</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                        9/10 active agent slots are currently processing high-priority customer streams. Latency may increase.
+                    </p>
+<div class="pt-2">
+<button class="px-6 py-2.5 rounded-lg border border-white/20 bg-white/5 backdrop-blur-md text-on-surface font-label-md text-label-md hover:bg-white/10 transition-all active:scale-95">
+                            Manage Agents
+                        </button>
+</div>
+</div>
+</div>
+<!-- 3. Success Notification: Billing Cycle Renewed -->
+<div class="glass-card glass-card-hover rounded-xl p-5 flex gap-4 items-start relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-tertiary-container/10 flex items-center justify-center border border-tertiary/20 status-glow-success">
+<span class="material-symbols-outlined text-tertiary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-grow space-y-1">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-tertiary uppercase font-bold">System Update</span>
+<span class="font-label-md text-label-md text-on-surface-variant">3h ago</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">Billing Cycle Renewed</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                        Your Professional Subscription for VoiceOS Pro has been successfully processed for October 2023. Receipt #VO-9921.
+                    </p>
+</div>
+</div>
+<!-- 4. General Info: New Model Available -->
+<div class="glass-card glass-card-hover rounded-xl p-5 flex gap-4 items-start relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary" data-icon="psychology">psychology</span>
+</div>
+<div class="flex-grow space-y-1">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-primary uppercase font-bold">New Release</span>
+<span class="font-label-md text-label-md text-on-surface-variant">5h ago</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">Neural-Sync v4.2 Now Active</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                        The latest low-latency voice model is now available for all English-speaking agents. 15% reduction in latency measured.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Ambient Decoration -->
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface/5 dark:bg-surface/5 backdrop-blur-xl border-t border-white/10 flex justify-around items-center h-20 pb-safe px-4">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings_voice">settings_voice</span>
+<span class="font-label-md text-label-md">Agents</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl px-4 py-1 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="font-label-md text-label-md">Alerts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+</nav>
+<!-- Visualizer Background (Webgl placeholder logic) -->
+
+<script>
+        // Micro-interaction for notification dismissal (simple UI-only)
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'BUTTON') {
+                    // Visual feedback for tap
+                    card.style.transform = 'scale(0.98)';
+                    setTimeout(() => card.style.transform = 'scale(1)', 100);
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Codex Call AI - Step 7: Test AI Agent</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Geist:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02)) 1;
+        }
+        .glass-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            border-color: #c0c1ff;
+            box-shadow: 0 0 15px rgba(192, 193, 255, 0.3);
+            outline: none;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .voice-glow {
+            animation: pulse-glow 3s infinite ease-in-out;
+            filter: blur(20px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "outline": "#908fa0",
+                        "surface-container-highest": "#333539",
+                        "primary-fixed": "#e1e0ff",
+                        "on-tertiary": "#00363e",
+                        "error-container": "#93000a",
+                        "surface-bright": "#37393e",
+                        "on-primary-fixed": "#07006c",
+                        "outline-variant": "#464554",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "surface-container": "#1e2024",
+                        "surface": "#111318",
+                        "on-error": "#690005",
+                        "surface-dim": "#111318",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "on-surface-variant": "#c7c4d7",
+                        "on-secondary": "#490080",
+                        "inverse-on-surface": "#2f3035",
+                        "on-tertiary-fixed-variant": "#004e5a",
+                        "secondary": "#ddb7ff",
+                        "on-primary-container": "#0d0096",
+                        "on-background": "#e2e2e8",
+                        "tertiary-fixed": "#a2eeff",
+                        "surface-tint": "#c0c1ff",
+                        "secondary-fixed": "#f0dbff",
+                        "on-primary": "#1000a9",
+                        "primary-container": "#8083ff",
+                        "on-surface": "#e2e2e8",
+                        "on-secondary-container": "#d6a9ff",
+                        "error": "#ffb4ab",
+                        "tertiary": "#2fd9f4",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "surface-container-lowest": "#0c0e12",
+                        "primary": "#c0c1ff",
+                        "on-tertiary-fixed": "#001f25",
+                        "inverse-surface": "#e2e2e8",
+                        "tertiary-container": "#008395",
+                        "surface-variant": "#333539",
+                        "background": "#111318",
+                        "surface-container-high": "#282a2e",
+                        "on-tertiary-container": "#000608",
+                        "tertiary-fixed-dim": "#2fd9f4",
+                        "secondary-container": "#6f00be",
+                        "on-secondary-fixed": "#2c0051",
+                        "surface-container-low": "#1a1c20",
+                        "inverse-primary": "#494bd6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "container-max-width": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-sm": ["Geist"],
+                        "body-md": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "headline-xl": ["Hanken Grotesk"],
+                        "body-lg": ["Geist"],
+                        "mono-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "mono-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/50 backdrop-blur-xl border-b border-white/10 flex justify-between items-center px-margin-desktop h-16">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-headline-md">bubble_chart</span>
+<span class="font-headline-md text-headline-md font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Codex Call AI</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-4">
+<span class="text-on-surface-variant font-label-md cursor-pointer hover:text-primary transition-colors">Setup Guide</span>
+<span class="text-on-surface-variant font-label-md cursor-pointer hover:text-primary transition-colors">Documentation</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-white/5 p-2 rounded-full transition-colors active:scale-95">notifications</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow pt-32 pb-24 px-margin-mobile md:px-margin-desktop max-w-container-max-width mx-auto w-full relative">
+<!-- Atmospheric Background Layer -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] pointer-events-none overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-background to-background"></div>
+</div>
+<div class="relative z-10">
+<!-- Progress Indicator -->
+<div class="mb-12 flex flex-col items-center">
+<div class="flex items-center gap-4 mb-4">
+<span class="font-label-md text-primary tracking-widest uppercase">Step 07 of 08</span>
+<div class="w-48 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[87.5%] shadow-[0_0_10px_rgba(192,193,255,0.5)]"></div>
+</div>
+<span class="font-label-md text-on-surface-variant">Test Call</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-center mb-4">Experience Your Agent</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant text-center max-w-2xl mx-auto">
+                    The agent is initialized and ready to deploy. Launch a live test call to your device to verify voice quality, response latency, and personality mapping.
+                </p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Status & Visualization Card -->
+<div class="lg:col-span-5 glass-card rounded-xl p-8 flex flex-col justify-center items-center relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-full voice-glow bg-tertiary-container/10 -z-10"></div>
+<div class="relative w-48 h-48 flex items-center justify-center mb-8">
+<!-- Concentric Rings -->
+<div class="absolute inset-0 rounded-full border border-primary/20 animate-pulse"></div>
+<div class="absolute inset-4 rounded-full border border-primary/40 animate-pulse duration-[2000ms]"></div>
+<div class="absolute inset-8 rounded-full border border-primary/60 animate-pulse duration-[1500ms]"></div>
+<!-- Core Visualizer -->
+<div class="relative w-24 h-24 rounded-full bg-gradient-to-b from-primary/20 to-secondary/20 flex items-center justify-center border border-primary/30 shadow-[0_0_30px_rgba(192,193,255,0.3)]">
+<div class="absolute inset-0 rounded-full border-2 border-primary border-t-transparent animate-spin duration-[3000ms]"></div>
+<span class="material-symbols-outlined text-primary text-[40px]" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+</div>
+</div>
+<div class="text-center space-y-2">
+<div class="flex items-center justify-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-mono-md text-mono-md text-tertiary uppercase tracking-tighter">System Ready</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Agent: Nova-7</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant px-4">
+                            Configured with "Concierge" personality and "Neural HD" voice profile.
+                        </p>
+<div class="mt-4 px-4 py-2 rounded-full bg-white/5 border border-white/10 inline-block">
+<p class="text-body-sm text-tertiary animate-pulse flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+        Agent Nova-7 is ready. Awaiting your call...
+    </p>
+</div></div>
+<div class="mt-12 w-full"><div class="space-y-4">
+<div class="flex justify-between items-end">
+<div class="space-y-1">
+<span class="block text-label-md text-on-surface-variant uppercase tracking-wider">System Latency</span>
+<div class="flex gap-1">
+<div class="w-8 h-1.5 rounded-full bg-tertiary"></div>
+<div class="w-8 h-1.5 rounded-full bg-tertiary"></div>
+<div class="w-8 h-1.5 rounded-full bg-tertiary/30"></div>
+<div class="w-8 h-1.5 rounded-full bg-tertiary/10"></div>
+</div>
+</div>
+<span class="text-headline-md font-mono-md text-tertiary">240<span class="text-body-sm">ms</span></span>
+</div>
+<div class="grid grid-cols-2 gap-4 pt-2 border-t border-white/5">
+<div>
+<span class="block text-[10px] text-outline uppercase">Audio Processing</span>
+<span class="text-body-sm text-on-surface">~45ms</span>
+</div>
+<div>
+<span class="block text-[10px] text-outline uppercase">Network Roundtrip</span>
+<span class="text-body-sm text-on-surface">~195ms</span>
+</div>
+</div>
+</div></div>
+</div>
+<!-- Dialer & Control Card -->
+<div class="lg:col-span-7 glass-card rounded-xl p-8">
+<div class="mb-8">
+<h3 class="font-headline-md text-headline-md mb-2">Call My Phone</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Enter your direct line below to initiate a real-time conversation.</p>
+</div>
+<div class="space-y-8">
+<!-- Input Field -->
+<div class="relative group">
+<label class="block font-label-md text-on-surface-variant mb-2 uppercase tracking-wide">Phone Number</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">public</span>
+<input class="w-full h-16 pl-14 pr-4 rounded-xl glass-input text-headline-md font-headline-md text-on-surface" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+</div>
+<!-- Keypad Mockup for Visual Interest -->
+<div class="grid grid-cols-3 gap-4 max-w-sm mx-auto">
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">1</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">2</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">3</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">4</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">5</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">6</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">7</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">8</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">9</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">*</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">0</button>
+<button class="h-14 rounded-lg bg-white/5 hover:bg-white/10 font-headline-md transition-colors active:scale-95 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_10px_rgba(192,193,255,0.1)]">#</button>
+</div>
+<!-- Action Button -->
+<button class="w-full h-16 rounded-xl bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container font-headline-md flex items-center justify-center gap-3 shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98] shadow-[0_0_20px_rgba(128,131,255,0.3)] animate-pulse" onclick="simulateCall()">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call</span>
+                            Call Now
+                        </button>
+</div>
+</div>
+</div>
+<!-- Footer Navigation Controls -->
+<div class="mt-12 flex justify-between items-center border-t border-white/5 pt-8">
+<button class="flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 text-on-surface-variant font-label-md hover:bg-white/5 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                    Back
+                </button>
+<div class="flex items-center gap-4">
+<button class="px-6 py-3 rounded-lg text-on-surface-variant font-label-md hover:text-primary transition-colors">Skip Test</button>
+<button class="px-8 py-3 rounded-lg bg-white text-background font-headline-md hover:bg-on-surface transition-all active:scale-95">
+                        Next Step
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Nav Bar (Mobile Only Filter Application) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-t border-white/10 flex justify-around items-center px-4 py-3 pb-safe">
+<div class="flex flex-col items-center justify-center text-outline">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary font-bold bg-primary/10 rounded-xl px-3 py-1">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-label-md text-label-md">Agents</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline">
+<span class="material-symbols-outlined">phone_in_talk</span>
+<span class="font-label-md text-label-md">Phone</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</div>
+</nav>
+<script>
+        function simulateCall() {
+            const btn = event.currentTarget;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = `
+                <span class="animate-spin material-symbols-outlined">progress_activity</span>
+                Connecting...
+            `;
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+            
+            setTimeout(() => {
+                btn.innerHTML = `
+                    <span class="material-symbols-outlined animate-pulse">ring_volume</span>
+                    Calling...
+                `;
+                btn.classList.remove('from-primary-container', 'to-secondary-container');
+                btn.classList.add('bg-error-container', 'text-on-error-container');
+            }, 1500);
+
+            setTimeout(() => {
+                alert('Test call simulation initiated. In a live environment, your device would be ringing now.');
+                btn.innerHTML = originalContent;
+                btn.classList.remove('bg-error-container', 'text-on-error-container', 'opacity-80', 'cursor-not-allowed');
+                btn.classList.add('from-primary-container', 'to-secondary-container');
+            }, 4000);
+        }
+    </script>
+</body></html>
