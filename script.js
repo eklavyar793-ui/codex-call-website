@@ -14,7 +14,7 @@ function loginUser(email, password) {
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
         alert("Login successful!");
-        window.location.href = "dashboard.html"; // Successful login goes to dashboard
+        window.location.href = "user-dashboard.html"; // Successful login goes to dashboard
     })
     .catch((error) => {
         alert("Login Error: " + error.message);
@@ -56,7 +56,7 @@ function googleLogin() {
     firebase.auth().signInWithPopup(provider)
     .then((result) => {
         alert("Google Login Successful!");
-        window.location.href = "dashboard.html";
+        window.location.href = "user-dashboard.html";
     })
     .catch((error) => {
         alert("Google Login Error: " + error.message);
