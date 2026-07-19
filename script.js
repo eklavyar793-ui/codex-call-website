@@ -1,7 +1,7 @@
-alert("script.js loaded");
 console.log("script.js loaded");
 // 1. LOGIN FUNCTION
 function loginUser(email, password) {
+  alert("loginUser function called");
     if (!email || !password) {
         alert("Please enter both email and password!");
         return;
