@@ -53,7 +53,7 @@ function logoutUser() {
 function googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    firebase.auth().signInWithPopup(provider)
+    firebase.auth().signInWithRedirect(provider);
     .then((result) => {
         alert("Google Login Successful!");
         window.location.href = "user-dashboard.html";
